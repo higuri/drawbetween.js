@@ -1,2 +1,2 @@
 # drawbetween.js
-Draw objects between two specified points.
+Draw objects on the specified line segment.

@@ -6,14 +6,19 @@ class DrawBetween {
   constructor(sel) {
     // TODO: error handling.
     const elem = document.querySelector(sel);
+    const cv = DrawBetween.appendCanvas(elem);
+    this.ctx = cv.getContext('2d');
+  }
+
+  // appendCanvas()
+  static appendCanvas(elem) {
     const width = elem.clientWidth;
     const height = elem.clientHeight;
-    console.log(`drawbetween: size=(${width}, ${height})`);
     const cv = document.createElement('canvas');
     cv.width = width;
     cv.height = height;
     elem.appendChild(cv);
-    this.ctx = cv.getContext('2d');
+    return cv;
   }
 
   // drawBetween()
@@ -81,33 +86,108 @@ class DrawBetween {
 
   // clear()
   clear() {
-    const width = this.ctx.canvas.width;
-    const height = this.ctx.canvas.height;
-    this.ctx.clearRect(0, 0, width, height);
+    const cv = this.ctx.canvas;
+    this.ctx.clearRect(0, 0, cv.width, cv.height);
   }
 
-  // line():
-  // TODO: options
-  // TODO: not cleared
-  line(p0, p1) {
+  // line()
+  line(p0, p1, options) {
+    const defaultOptions = {
+      width: 1,
+      color: '#000000',
+      lineDash: [0,0]
+    }
+    const opts = Object.assign(defaultOptions, options);
+    this.ctx.beginPath();
+    this.ctx.lineWidth = opts.width;
+    this.ctx.strokeStyle = opts.color;
+    this.ctx.setLineDash(opts.lineDash);
     this.ctx.moveTo(p0.x, p0.y);
     this.ctx.lineTo(p1.x, p1.y);
     this.ctx.stroke();
   }
 
+  // circles()
+  circles(p0, p1, options) {
+    const defaultOptions = {
+      radius: 10,
+      margin: 0,
+      strokeColor: '#000',
+      strokeWidth: 1,
+      fillColor: ''
+    };
+    const opts = Object.assign(defaultOptions, options);
+    const radius = opts.radius;
+    const margin = opts.margin;
+    if (opts.strokeWidth) {
+      this.ctx.lineWidth = opts.strokeWidth;
+      this.ctx.strokeStyle = opts.strokeColor;
+    }
+    if (opts.fillColor) {
+      this.ctx.fillStyle = opts.fillColor;
+    }
+    const drawCircle = (p) => {
+      this.ctx.beginPath();
+      this.ctx.arc(p.x, p.y, radius, 0, 2 * Math.PI);
+      if (opts.strokeWidth) {
+        this.ctx.stroke();
+      }
+      if (opts.fillColor) {
+        this.ctx.fill();
+      }
+    }
+    this.drawBetween(p0, p1, radius * 2, radius * 2, margin, drawCircle);
+  }
+
+  // rects()
+  rects(p0, p1, options) {
+    const defaultOptions = {
+      width: 20,
+      height: 20,
+      margin: 0,
+      strokeColor: '#000',
+      strokeWidth: 1,
+      fillColor: ''
+    };
+    const opts = Object.assign(defaultOptions, options);
+    const width = opts.width;
+    const height = opts.height;
+    const margin = opts.margin;
+    if (opts.strokeWidth) {
+      this.ctx.strokeStyle = opts.strokeWidth;
+      this.ctx.lineWidth = opts.strokeWidth;
+    }
+    if (opts.fillColor) {
+      this.ctx.fillStyle = opts.fillColor;
+    }
+    const drawRect = (p) => {
+      this.ctx.beginPath();
+      this.ctx.rect(p.x, p.y, width, height);
+      if (opts.fillColor) {
+        this.ctx.fill();
+      }
+      if (opts.strokeWidth) {
+        this.ctx.stroke();
+      }
+    }
+    this.drawBetween(p0, p1, width, height, margin, drawRect);
+  }
+
   // images()
-  images(imgurl, p0, p1,
-    options={
-      width: 10,
-      height: 10,
+  // TODO: anchor-pos (sx, sy)
+  images(p0, p1, imgurl, options) {
+    const defaultOptions = {
+      width: 'auto',
+      height: 'auto',
       margin: 0,
       borderColor: '#000',
-      borderWidth: 10
-    }) {
-    const margin = options.margin;
-    if (options.borderColor) {
-      this.ctx.strokeStyle = options.borderColor;
-      this.ctx.lineWidth = options.borderWidth;
+      borderWidth: 0
+    };
+    const opts = Object.assign(defaultOptions, options);
+    const margin = opts.margin;
+    if (opts.borderWidth) {
+      this.ctx.lineWidth = opts.borderWidth;
+      this.ctx.strokeStyle = opts.borderColor;
     }
     const doit = (img) => {
       const width = img.width;
@@ -125,15 +205,15 @@ class DrawBetween {
         let y = p.y;
         let w = width;
         let h = height;
-        if (options.borderColor) {
+        if (opts.borderWidth) {
           this.ctx.beginPath();
-          this.ctx.rect(p.x, p.y, width, height);
+          this.ctx.rect(x, y, w, h);
           this.ctx.stroke();
-          if (options.borderWidth) {
-            x = x + options.borderWidth;
-            y = y + options.borderWidth;
-            w = w - options.borderWidth * 2;
-            h = h - options.borderWidth * 2;
+          if (opts.borderWidth) {
+            x = x + opts.borderWidth;
+            y = y + opts.borderWidth;
+            w = w - opts.borderWidth * 2;
+            h = h - opts.borderWidth * 2;
           } else {
             x = x + 1;
             y = y + 1;
@@ -150,45 +230,5 @@ class DrawBetween {
       doit(img);
     }
     img.src = imgurl;
-  }
-
-  // rects()
-  rects(p0, p1,
-    options={
-      width: 10,
-      height: 10,
-      margin: 0,
-      strokeColor: '#000',
-      strokeWidth: 1,
-      fillColor: null
-    }) {
-    const width = options.width;
-    const height = options.height;
-    const margin = options.margin;
-    if (options.strokeColor) {
-      this.ctx.strokeStyle = options.strokeColor;
-      this.ctx.lineWidth = options.strokeWidth;
-    }
-    if (options.fillColor) {
-      this.ctx.fillStyle = options.fillColor;
-    }
-    const drawRect = (p) => {
-      this.ctx.beginPath();
-      this.ctx.rect(p.x, p.y, width, height);
-      if (options.fillColor) {
-        this.ctx.fill();
-      }
-      if (options.strokeColor) {
-        this.ctx.stroke();
-      }
-    }
-    this.drawBetween(p0, p1, width, height, margin, drawRect);
-  }
-
-  // circles()
-  circles() {
-    // this.ctx.arc(q0.x, q0.y, len, 0, 2 * Math.PI);
-    // this.ctx.arc(q1.x, q1.y, len, 0, 2 * Math.PI);
-    // this.ctx.fill();
   }
 }

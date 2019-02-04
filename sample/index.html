@@ -2,23 +2,155 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>TEST-IMGLINE</title>
+  <title>drawbetween.js</title>
   <script src="../index.js"></script>
   <script src="./index.js"></script>
   <style>
   <!--
   #root {
-    width: 500px;
-    height: 500px;
-    margin-top: 100px;
+    width: 700px;
+    height: 700px;
+    margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
     border: solid 5px;
+  }
+  #canvas {
+    width: 100%;
+    height: 400px;
+  }
+  #selectors {
+    width: 100%;
+    height: 300px;
+    border-top: solid 1px;
+  }
+  .sel {
+    width: 100%;
+    height: 25%;
+    border: dotted 1px;
+  }
+  .sel_values {
+    margin-left: 25px;
+  }
+  .sel_value {
+    width: 50px;
   }
   -->
   </style>
 </head>
 <body>
-  <div id="root"></div>
+  <div id="root">
+    <div id="canvas"></div>
+    <div id="selectors">
+      <div class="sel">
+        <input
+          type="radio" name="object"
+          value="line" class="radio" checked>line</input>
+        <div class="sel_values">
+          width
+          <input
+            type="text" id="line_width"
+            value="1" class="sel_value" />
+          color
+          <input
+            type="text" id="line_color"
+            value="#000" class="sel_value" />
+          lineDash
+          <input
+            type="text" id="line_dash"
+            value="0,0" class="sel_value" />
+        </div>
+      </div>
+      <div class="sel">
+        <input
+          type="radio" name="object"
+          value="circles" class="radio">circles</input>
+        <div class="sel_values">
+          radius
+          <input
+            type="text" id="circles_radius"
+            value="10" class="sel_value" />
+          margin
+          <input
+            type="text" id="circles_margin"
+            value="0" class="sel_value" />
+          <br>
+          strokeColor
+          <input
+            type="text" id="circles_stroke_color"
+            value="#000" class="sel_value" />
+          strokeWidth
+          <input
+            type="text" id="circles_stroke_width"
+            value="1" class="sel_value" />
+          fillColor
+          <input
+            type="text" id="circles_fill_color"
+            value="" class="sel_value" />
+        </div>
+      </div>
+      <div class="sel">
+        <input
+          type="radio" name="object"
+          value="rects" class="radio">rects</input>
+        <div class="sel_values">
+          width
+          <input
+            type="text" id="rects_width"
+            value="20" class="sel_value" />
+          height
+          <input
+            type="text" id="rects_height"
+            value="20" class="sel_value" />
+          margin
+          <input
+            type="text" id="rects_margin"
+            value="0" class="sel_value" />
+          <br>
+          strokeColor
+          <input
+            type="text" id="rects_stroke_color"
+            value="#000" class="sel_value" />
+          strokeWidth
+          <input
+            type="text" id="rects_stroke_width"
+            value="1" class="sel_value" />
+          fillColor
+          <input
+            type="text" id="rects_fill_color"
+            value="" class="sel_value" />
+        </div>
+      </div>
+      <div class="sel">
+        <input
+          type="radio" name="object"
+          value="images" class="radio">images</input>
+        <div class="sel_values">
+          <!-- TODO: file input -->
+          width
+          <input
+            type="text" id="images_width"
+            value="" class="sel_value" />
+          height
+          <input
+            type="text" id="images_height"
+            value="" class="sel_value" />
+          margin
+          <input
+            type="text" id="images_margin"
+            value="0" class="sel_value" />
+          <br>
+          borderColor
+          <input
+            type="text" id="images_border_color"
+            value="#000" class="sel_value" />
+          borderWidth
+          <input
+            type="text" id="images_border_width"
+            value="0" class="sel_value" />
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

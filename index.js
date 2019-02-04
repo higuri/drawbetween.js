@@ -5,7 +5,7 @@
 class DrawBetween {
   constructor(sel) {
     // TODO: error handling.
-    const elem = document.querySelector('#root');
+    const elem = document.querySelector(sel);
     const width = elem.clientWidth;
     const height = elem.clientHeight;
     console.log(`drawbetween: size=(${width}, ${height})`);

@@ -64,8 +64,8 @@ class DrawBetween {
     const points = []
     for (let i = 0; i < (n + 1); i++) {
       points.push({
-        x: p0.x + dx * i,
-        y: p0.y + dy * i
+        x: Math.floor(p0.x + dx * i),
+        y: Math.floor(p0.y + dy * i)
       });
     }
     return points;

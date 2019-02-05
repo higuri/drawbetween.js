@@ -1,5 +1,4 @@
 // drawbetween/index.js
-// TODO: comment
 
 // DrawBetween:
 class DrawBetween {
@@ -21,45 +20,48 @@ class DrawBetween {
     return cv;
   }
 
-  // drawBetween()
-  drawBetween(p0, p1, width, height, margin, drawer) {
-    // y = mx
+  // getPointsBetween()
+  //  return points between (p0, p1) at the interval.
+  //  TODO: sort option?
+  static getPointsBetween(p0, p1, interval) {
+    // line(p0->p1): y = mx
     const m = (p0.y - p1.y) / (p0.x - p1.x);
-    let l;
-    if (m * width < height) {
-      l = Math.sqrt(Math.pow(width, 2) + Math.pow(m * width, 2)) + margin;
-    } else {
-      l = Math.sqrt(Math.pow((1 / m) * height, 2) + Math.pow(height, 2)) + margin;
-    }
+    const l = interval;
+    // dx, dy: amount of change on X and Y to l on the Line(y=mx).
+    // l^2 = x^2 + y^2
+    // -> l^2 = x^2 + (mx)^2
+    // -> x^2 = l^2 / (m^2 + 1)
     const dx = Math.sqrt(Math.pow(l, 2) / (Math.pow(m, 2) + 1));
     const dy = m * dx;
-    const mid = {
+    if (Number.isNaN(dx) || Number.isNaN(dy)) {
+      return [];
+    }
+    // draw objects from the midpoint to
+    // two directions (+dx, +dy) and (-dx, -dy),
+    // in order to draw evenly.
+    const midp = {
       x: Math.floor((p0.x + p1.x) / 2),
       y: Math.floor((p0.y + p1.y) / 2)
     };
-    console.log(`m=${m}, l=${l}, dx=${dx}, dy=${dy}`);
-    if (Number.isNaN(dx) || Number.isNaN(dy)) {
-      return;
-    }
-    //
+    let pointsToDraw = [];
     let i = 0;
     while (true) {
-      // right:
+      // midp += (dx, dy)
       const q0 = {
-        x: Math.floor(mid.x + dx * i),
-        y: Math.floor(mid.y + dy * i)
+        x: Math.floor(midp.x + dx * i),
+        y: Math.floor(midp.y + dy * i)
       };
-      // left:
+      // midp -= (dx, dy)
       const q1 = {
-        x: Math.floor(mid.x - dx * i),
-        y: Math.floor(mid.y - dy * i)
+        x: Math.floor(midp.x - dx * i),
+        y: Math.floor(midp.y - dy * i)
       };
-      // vector(p0->q0++):
+      // vector(p0->q0):
       const v0 = {
         x: (q0.x + dx) - p0.x,
         y: (q0.y + dy) - p0.y,
       };
-      // vector(p1->q0++):
+      // vector(p1->q0):
       const v1 = {
         x: (q0.x + dx) - p1.x,
         y: (q0.y + dy) - p1.y,
@@ -71,17 +73,34 @@ class DrawBetween {
         Math.pow(v1.x, 2) + Math.pow(v1.y, 2));
       const cos = ip / (vl0 * vl1);
       if (0 < cos) {
-        drawer(p0);
-        drawer(p1);
+        pointsToDraw.push(p0);
+        pointsToDraw.push(p1);
         break;
       } else {
-        drawer(q0);
+        pointsToDraw.push(q0);
         if (q0.x !== q1.x && q0.y !== q1.y) {
-          drawer(q1);
+          pointsToDraw.push(q1);
         }
       }
       i += 1;
     }
+    return pointsToDraw;
+  }
+
+  // getPointsFor()
+  //   return points for drawing objects
+  //   whose size is (width, height) + margin.
+  static getPointsFor(p0, p1, width, height, margin) {
+    // line(p0->p1): y = mx
+    const m = (p0.y - p1.y) / (p0.x - p1.x);
+    // len: object's length on `y = mx` with margin.
+    let len = margin;
+    if (m * width < height) {
+      len += Math.sqrt(Math.pow(width, 2) + Math.pow(m * width, 2));
+    } else {
+      len += Math.sqrt(Math.pow((1 / m) * height, 2) + Math.pow(height, 2));
+    }
+    return DrawBetween.getPointsBetween(p0, p1, len);
   }
 
   // clear()
@@ -126,7 +145,8 @@ class DrawBetween {
     if (opts.fillColor) {
       this.ctx.fillStyle = opts.fillColor;
     }
-    const drawCircle = (p) => {
+    DrawBetween.getPointsFor(
+      p0, p1, radius * 2, radius * 2, margin).forEach((p) => {
       this.ctx.beginPath();
       this.ctx.arc(p.x, p.y, radius, 0, 2 * Math.PI);
       if (opts.strokeWidth) {
@@ -135,8 +155,7 @@ class DrawBetween {
       if (opts.fillColor) {
         this.ctx.fill();
       }
-    }
-    this.drawBetween(p0, p1, radius * 2, radius * 2, margin, drawCircle);
+    });
   }
 
   // rects()
@@ -160,7 +179,8 @@ class DrawBetween {
     if (opts.fillColor) {
       this.ctx.fillStyle = opts.fillColor;
     }
-    const drawRect = (p) => {
+    DrawBetween.getPointsFor(
+      p0, p1, width, height, margin).forEach((p) => {
       this.ctx.beginPath();
       this.ctx.rect(p.x, p.y, width, height);
       if (opts.fillColor) {
@@ -169,8 +189,7 @@ class DrawBetween {
       if (opts.strokeWidth) {
         this.ctx.stroke();
       }
-    }
-    this.drawBetween(p0, p1, width, height, margin, drawRect);
+    });
   }
 
   // images()
@@ -196,11 +215,8 @@ class DrawBetween {
       const l = Math.sqrt(Math.pow(width, 2) + Math.pow(m * width, 2));
       const dx = Math.sqrt(Math.pow(l, 2) / (Math.pow(m, 2) + 1));
       const dy = m * dx;
-      const mid = {
-        x: Math.floor((p0.x + p1.x) / 2),
-        y: Math.floor((p0.y + p1.y) / 2)
-      };
-      const drawImage = (p) => {
+      DrawBetween.getPointsFor(
+        p0, p1, width, height, 0).forEach((p) => {
         let x = p.x;
         let y = p.y;
         let w = width;
@@ -222,8 +238,7 @@ class DrawBetween {
           }
         }
         this.ctx.drawImage(img, x, y, w, h);
-      }
-      this.drawBetween(p0, p1, width, height, 0, drawImage);
+      });
     };
     const img = new Image();
     img.onload = () => {

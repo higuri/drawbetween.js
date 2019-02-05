@@ -167,8 +167,8 @@ class DrawBetween {
     const height = opts.height;
     const minInterval = opts.minInterval;
     if (opts.strokeWidth) {
-      this.ctx.strokeStyle = opts.strokeWidth;
       this.ctx.lineWidth = opts.strokeWidth;
+      this.ctx.strokeStyle = opts.strokeColor;
     }
     if (opts.fillColor) {
       this.ctx.fillStyle = opts.fillColor;

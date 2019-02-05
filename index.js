@@ -26,7 +26,6 @@ class DrawBetween {
 
   // getPointsBetween()
   //  return points between (p0, p1) with specified intervals.
-  //  TODO: sort option?
   static getPointsBetween(p0, p1, minInterval) {
     // len: length of (p0->p1)
     const len = Math.sqrt(
@@ -36,7 +35,7 @@ class DrawBetween {
     const n = Math.floor(len / minInterval);
     const remainder = len - (n * minInterval);
     // interval:
-    if (n < 1) { return []; }
+    if (n < 1) { return [p0]; }
     const interval = minInterval + remainder / n;
     // dx, dy: amount of change on X and Y to l on the Line(y=mx).
     const l = interval;
@@ -63,7 +62,7 @@ class DrawBetween {
       }
     }
     const points = []
-    for (let i = 0; i < n+1; i++) {
+    for (let i = 0; i < (n + 1); i++) {
       points.push({
         x: p0.x + dx * i,
         y: p0.y + dy * i

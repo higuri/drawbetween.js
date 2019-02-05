@@ -12,7 +12,7 @@ function main() {
   let imagesOpts = {};
   // canvas:
   const canvas = document.querySelector('#canvas');
-  let drawer = (p0, p1) => { draw.line(p0, p1, lineOpts) };
+  let drawer = (p0, p1) => { draw.circles(p0, p1, circlesOpts) };
   canvas.addEventListener('click', (evt) => {
     if (p0 && !fixed) {
       fixed = true;

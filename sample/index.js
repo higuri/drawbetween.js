@@ -85,9 +85,9 @@ function main() {
     'change', (evt) => {
     circlesOpts.radius = parseInt(evt.target.value);
   });
-  document.querySelector('#circles_margin').addEventListener(
+  document.querySelector('#circles_min_interval').addEventListener(
     'change', (evt) => {
-    circlesOpts.margin = parseInt(evt.target.value);
+    circlesOpts.minInterval = parseInt(evt.target.value);
   });
   document.querySelector('#circles_stroke_color').addEventListener(
     'change', (evt) => {
@@ -110,9 +110,9 @@ function main() {
     'change', (evt) => {
     rectsOpts.height = parseInt(evt.target.value);
   });
-  document.querySelector('#rects_margin').addEventListener(
+  document.querySelector('#rects_min_interval').addEventListener(
     'change', (evt) => {
-    rectsOpts.margin = parseInt(evt.target.value);
+    rectsOpts.minInterval = parseInt(evt.target.value);
   });
   document.querySelector('#rects_stroke_color').addEventListener(
     'change', (evt) => {
@@ -137,9 +137,9 @@ function main() {
     imagesOpts.height = evt.target.value ?
       parseInt(evt.target.value) : 'auto';
   });
-  document.querySelector('#images_margin').addEventListener(
+  document.querySelector('#images_min_interval').addEventListener(
     'change', (evt) => {
-    imagesOpts.margin = parseInt(evt.target.value);
+    imagesOpts.minInterval = parseInt(evt.target.value);
   });
   document.querySelector('#images_border_color').addEventListener(
     'change', (evt) => {

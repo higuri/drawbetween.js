@@ -11,11 +11,15 @@ class DrawBetween {
 
   // appendCanvas()
   static appendCanvas(elem) {
+    const cv = document.createElement('canvas');
     const width = elem.clientWidth;
     const height = elem.clientHeight;
-    const cv = document.createElement('canvas');
+    const rect = elem.getBoundingClientRect();
     cv.width = width;
     cv.height = height;
+    cv.style.position = 'absolute';
+    cv.style.top = `${rect.top}px`;
+    cv.style.left = `${rect.left}px`;
     elem.appendChild(cv);
     return cv;
   }

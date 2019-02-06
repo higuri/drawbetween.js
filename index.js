@@ -32,10 +32,10 @@ class DrawBetween {
       Math.pow((p0.x - p1.x), 2) + Math.pow((p0.y - p1.y), 2));
     // n: number of points
     if (minInterval < 1) { return []; }
-    const n = Math.floor(len / minInterval);
-    const remainder = len - (n * minInterval);
+    const _n = Math.floor(len / minInterval);
+    const remainder = len - (_n * minInterval);
+    const n = _n + 1;
     // interval:
-    if (n < 1) { return [p0]; }
     const interval = minInterval + remainder / n;
     // dx, dy: amount of change on X and Y to l on the Line(y=mx).
     const l = interval;
@@ -62,7 +62,7 @@ class DrawBetween {
       }
     }
     const points = []
-    for (let i = 0; i < (n + 1); i++) {
+    for (let i = 0; i < n; i++) {
       points.push({
         x: Math.floor(p0.x + dx * i),
         y: Math.floor(p0.y + dy * i)

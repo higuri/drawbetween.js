@@ -190,8 +190,8 @@ class DrawBetween {
   // TODO: anchor-pos (sx, sy)
   images(p0, p1, imgurl, options) {
     const defaultOptions = {
-      width: 'auto',
-      height: 'auto',
+      width: -1,
+      height: -1,
       minInterval: 0,
       borderColor: '#000',
       borderWidth: 0
@@ -203,8 +203,8 @@ class DrawBetween {
       this.ctx.strokeStyle = opts.borderColor;
     }
     const doit = (img) => {
-      const width = img.width;
-      const height = img.height;
+      const width = opts.width < 0 ? img.width : opts.width;
+      const height = opts.height < 0 ? img.height : opts.height;
       const m = (p0.y - p1.y) / (p0.x - p1.x);
       const l = Math.sqrt(Math.pow(width, 2) + Math.pow(m * width, 2));
       const dx = Math.sqrt(Math.pow(l, 2) / (Math.pow(m, 2) + 1));

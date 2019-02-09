@@ -1,4 +1,8 @@
 // drawbetween/index.js
+// TODO:
+// - add 'rotate' to opts
+// - lint
+// - add types (typescript)
 
 // DrawBetween:
 class DrawBetween {
@@ -12,14 +16,17 @@ class DrawBetween {
   // appendCanvas()
   static appendCanvas(elem) {
     const cv = document.createElement('canvas');
-    const width = elem.clientWidth;
-    const height = elem.clientHeight;
-    const rect = elem.getBoundingClientRect();
-    cv.width = width;
-    cv.height = height;
-    cv.style.position = 'absolute';
-    cv.style.top = `${rect.top}px`;
-    cv.style.left = `${rect.left}px`;
+    const resizeCv = (() => {
+      cv.width = elem.clientWidth;
+      cv.height = elem.clientHeight;
+    });
+    cv.style.pointerEvents = 'none';
+    resizeCv();
+    // make canvas responsive:
+    // TODO: actually it is not enough to just listen to
+    //       windows' resize event.
+    //       we should listen to the parent element's resize event...
+    window.addEventListener('resize', resizeCv);
     elem.appendChild(cv);
     return cv;
   }

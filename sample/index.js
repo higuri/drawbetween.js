@@ -34,8 +34,26 @@ function main() {
       drawer(p0, p1);
     }
   });
-  // selector:
+  // drawtypes:
   const radios = document.querySelectorAll('.radio');
+  const activateDrawType = ((t) => {
+    const types = ['line', 'circles', 'rects', 'images'];
+    for (const t1 of types) {
+      const eid0 = '#' + t1 + '_div';
+      const e0 = document.querySelector(eid0);
+      const eid1 = '#' + t1 + '_option';
+      const e1 = document.querySelector(eid1);
+      if (t === t1) {
+        e0.classList.remove('inactive');
+        e0.classList.add('active');
+        e1.classList.remove('hidden');
+      } else {
+        e0.classList.remove('active');
+        e0.classList.add('inactive');
+        e1.classList.add('hidden');
+      }
+    }
+  });
   for (let i = 0; i < radios.length; i++) {
     const radio = radios[i];
     radio.addEventListener('change', () => {
@@ -45,21 +63,25 @@ function main() {
             drawer = (p0, p1) => {
               draw.line(p0, p1, lineOpts)
             };
+            activateDrawType('line');
             break;
           case 'circles':
             drawer = (p0, p1) => {
               draw.circles(p0, p1, circlesOpts)
             };
+            activateDrawType('circles');
             break;
           case 'rects':
             drawer = (p0, p1) => {
               draw.rects(p0, p1, rectsOpts)
             };
+            activateDrawType('rects');
             break;
           case 'images':
             drawer = (p0, p1) => {
               draw.images(p0, p1, './image.png', imagesOpts)
             };
+            activateDrawType('images');
             break;
           default:
             break;

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- TODO: image file input -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -19,11 +20,13 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 50%;
+    height: 60%;
+    box-sizing: border-box;
     font-family: sans-serif;
     font-size: 100px;
     font-weight: bold;
     text-align: center;
+    border: solid 3px;
     color: rgba(0, 0, 0, 0.05);
     display: flex;
     justify-content: center;
@@ -34,145 +37,237 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 50%;
+    height: 60%;
   }
   #selectors {
     position: absolute;
-    top: 50%;
+    top: 60%;
     left: 0;
     width: 100%;
-    height: 50%;
+    height: 40%;
+    display: flex;
+    justify-content: center;
   }
-  .sel {
+  #drawtypes {
+    width: 100px;
+    height: 100%;
+  }
+  .drawtype {
     width: 100%;
     height: 25%;
-    border-top: dotted 1px;
+    display: flex;
     box-sizing: border-box;
+    justify-content: flex-center;
+    align-items: center;
+    border: solid 1px;
   }
-  .sel_values {
-    margin-left: 20px;
+  .active {
+    border-right: none;
   }
-  .sel_value {
+  .inactive {
+    background-color: #aaa; 
+  }
+  #options {
+    width: 225px;
+    height: 100%;
+    box-sizing: border-box;
+    border: solid 1px;
+    padding-right: 10px;
+    border-left: none;
+  }
+  .option {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: flex-end;
+  }
+  .option_value {
     width: 50px;
+  }
+  .hidden {
+    display: none;
   }
   -->
   </style>
 </head>
 <body>
   <div id="root">
+    <!-- background -->
     <div id="background">
       CLICK<br>
       AND<br>
       MOVE
     </div>
+    <!-- canvas -->
     <div id="canvas"></div>
+    <!-- selectors -->
     <div id="selectors">
-      <div class="sel">
-        <input
-          type="radio" name="object"
-          value="line" class="radio">line</input>
-        <div class="sel_values">
-          width
+      <div id="drawtypes">
+        <div id="line_div" class="drawtype inactive">
           <input
-            type="text" id="line_width"
-            value="1" class="sel_value" />
-          color
+            type="radio" name="object"
+            value="line" class="radio">
+          line
+          </input>
+        </div>
+        <div id="circles_div" class="drawtype active">
           <input
-            type="text" id="line_color"
-            value="#000" class="sel_value" />
-          lineDash
+            type="radio" name="object"
+            value="circles" class="radio" checked>
+          circles
+          </input>
+        </div>
+        <div id="rects_div" class="drawtype inactive">
           <input
-            type="text" id="line_dash"
-            value="0,0" class="sel_value" />
+            type="radio" name="object"
+            value="rects" class="radio">
+          rects
+          </input>
+        </div>
+        <div id="images_div" class="drawtype inactive">
+          <input
+            type="radio" name="object"
+            value="images" class="radio">
+          images
+          </input>
         </div>
       </div>
-      <div class="sel">
-        <input
-          type="radio" name="object"
-          value="circles" class="radio" checked>circles</input>
-        <div class="sel_values">
-          radius
-          <input
-            type="text" id="circles_radius"
-            value="10" class="sel_value" />
-          minInterval
-          <input
-            type="text" id="circles_min_interval"
-            value="0" class="sel_value" />
-          <br>
-          strokeColor
-          <input
-            type="text" id="circles_stroke_color"
-            value="#000" class="sel_value" />
-          strokeWidth
-          <input
-            type="text" id="circles_stroke_width"
-            value="1" class="sel_value" />
-          fillColor
-          <input
-            type="text" id="circles_fill_color"
-            value="" class="sel_value" />
+      <div id="options">
+        <!-- --------------- -->
+        <!-- option for line -->
+        <!-- --------------- -->
+        <div id="line_option" class="option hidden">
+          <div class="option_item">
+            width
+            <input
+              type="text" id="line_width"
+              value="1" class="option_value" />
+          </div>
+          <div class="option_item">
+            color
+            <input
+              type="text" id="line_color"
+              value="#000" class="option_value" />
+          </div>
+          <div class="option_item">
+            lineDash
+            <input
+              type="text" id="line_dash"
+              value="0,0" class="option_value" />
+          </div>
         </div>
-      </div>
-      <div class="sel">
-        <input
-          type="radio" name="object"
-          value="rects" class="radio">rects</input>
-        <div class="sel_values">
-          width
-          <input
-            type="text" id="rects_width"
-            value="20" class="sel_value" />
-          height
-          <input
-            type="text" id="rects_height"
-            value="20" class="sel_value" />
-          minInterval
-          <input
-            type="text" id="rects_min_interval"
-            value="0" class="sel_value" />
-          <br>
-          strokeColor
-          <input
-            type="text" id="rects_stroke_color"
-            value="#000" class="sel_value" />
-          strokeWidth
-          <input
-            type="text" id="rects_stroke_width"
-            value="1" class="sel_value" />
-          fillColor
-          <input
-            type="text" id="rects_fill_color"
-            value="" class="sel_value" />
+        <!-- ------------------ -->
+        <!-- option for circles -->
+        <!-- ------------------ -->
+        <div id="circles_option" class="option">
+          <div class="option_item">
+            radius
+            <input
+              type="text" id="circles_radius"
+              value="10" class="option_value" />
+          </div>
+          <div class="option_item">
+            minInterval
+            <input
+              type="text" id="circles_min_interval"
+              value="0" class="option_value" />
+          </div>
+          <div class="option_item">
+            strokeColor
+            <input
+              type="text" id="circles_stroke_color"
+              value="#000" class="option_value" />
+          </div>
+          <div class="option_item">
+            strokeWidth
+            <input
+              type="text" id="circles_stroke_width"
+              value="1" class="option_value" />
+          </div>
+          <div class="option_item">
+            fillColor
+            <input
+              type="text" id="circles_fill_color"
+              value="" class="option_value" />
+          </div>
         </div>
-      </div>
-      <div class="sel">
-        <input
-          type="radio" name="object"
-          value="images" class="radio">images</input>
-        <div class="sel_values">
-          <!-- TODO: file input -->
-          width
-          <input
-            type="text" id="images_width"
-            value="-1" class="sel_value" />
-          height
-          <input
-            type="text" id="images_height"
-            value="-1" class="sel_value" />
-          minInterval
-          <input
-            type="text" id="images_min_interval"
-            value="0" class="sel_value" />
-          <br>
-          borderColor
-          <input
-            type="text" id="images_border_color"
-            value="#000" class="sel_value" />
-          borderWidth
-          <input
-            type="text" id="images_border_width"
-            value="0" class="sel_value" />
+        <!-- ---------------- -->
+        <!-- option for rects -->
+        <!-- ---------------- -->
+        <div id="rects_option" class="option hidden">
+          <div class="option_item">
+            width
+            <input
+              type="text" id="rects_width"
+              value="20" class="option_value" />
+          </div>
+          <div class="option_item">
+            height
+            <input
+              type="text" id="rects_height"
+              value="20" class="option_value" />
+          </div>
+          <div class="option_item">
+            minInterval
+            <input
+              type="text" id="rects_min_interval"
+              value="0" class="option_value" />
+          </div>
+          <div class="option_item">
+            strokeColor
+            <input
+              type="text" id="rects_stroke_color"
+              value="#000" class="option_value" />
+          </div>
+          <div class="option_item">
+            strokeWidth
+            <input
+              type="text" id="rects_stroke_width"
+              value="1" class="option_value" />
+          </div>
+          <div class="option_item">
+            fillColor
+            <input
+              type="text" id="rects_fill_color"
+              value="" class="option_value" />
+          </div>
+        </div>
+        <!-- ----------------- -->
+        <!-- option for images -->
+        <!-- ----------------- -->
+        <div id="images_option" class="option hidden">
+          <div class="option_item">
+            width
+            <input
+              type="text" id="images_width"
+              value="-1" class="option_value" />
+          </div>
+          <div class="option_item">
+            height
+            <input
+              type="text" id="images_height"
+              value="-1" class="option_value" />
+          </div>
+          <div class="option_item">
+            minInterval
+            <input
+              type="text" id="images_min_interval"
+              value="0" class="option_value" />
+          </div>
+          <div class="option_item">
+            borderColor
+            <input
+              type="text" id="images_border_color"
+              value="#000" class="option_value" />
+          </div>
+          <div class="option_item">
+            borderWidth
+            <input
+              type="text" id="images_border_width"
+              value="0" class="option_value" />
+          </div>
         </div>
       </div>
     </div>

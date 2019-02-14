@@ -1,6 +1,8 @@
 // drawbetween/index.js
 // TODO:
 // - add 'rotate' to opts
+// - add shape type 'triangle'
+// - add options 'nItems'
 // - lint
 // - add types (typescript)
 
@@ -217,7 +219,7 @@ class DrawBetween {
       const dx = Math.sqrt(Math.pow(l, 2) / (Math.pow(m, 2) + 1));
       const dy = m * dx;
       DrawBetween.getPointsFor(
-        p0, p1, width, height, 0).forEach((p) => {
+        p0, p1, width, height, minInterval).forEach((p) => {
         let x = p.x;
         let y = p.y;
         let w = width;

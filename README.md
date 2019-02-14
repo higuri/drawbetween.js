@@ -15,15 +15,31 @@ npm install drawbetween
 ```
 
 ## Usage Example
-TODO
+### HTML
+```html
+<div id="canvas" style="width:100px; height:100px"></div>
+```
+
+### JavaScript
+```js
+const DrawBetween = require('drawbetween');
+
+const draw = new DrawBetween('#canvas');
+draw.circles({x: 25, y: 25}, {x: 75, y: 75});
+```
 
 ## API
+### line(p0, p1, options)
+### rects(p0, p1, options)
+### circles(p0, p1, options)
+### images(p0, p1, imgurl, options)
+### clear()
 TODO
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
 <!-- Markdown link -->
-[npm-image]: https://img.shields.io/npm/v/drawbetween-metrics.svg?style=flat-square
+[npm-image]: https://img.shields.io/npm/v/drawbetween.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/drawbetween
 [npm-downloads]: https://img.shields.io/npm/dm/drawbetween.svg?style=flat-square

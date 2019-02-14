@@ -250,3 +250,5 @@ class DrawBetween {
     img.src = imgurl;
   }
 }
+
+module.exports = DrawBetween;

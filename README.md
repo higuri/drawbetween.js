@@ -26,7 +26,8 @@ npm install drawbetween
 ```js
 const DrawBetween = require('drawbetween');
 
-const draw = new DrawBetween('#canvas');
+const canvas = document.querySelector('#canvas');
+const draw = new DrawBetween(canvas);
 draw.circles({x: 25, y: 25}, {x: 75, y: 75});
 ```
 

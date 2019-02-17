@@ -4,15 +4,15 @@
 function main() {
   let p0;
   let fixed = false;
+  const canvas = document.querySelector('#canvas');
   // drawbetween:
-  const draw = new DrawBetween('#canvas');
+  const draw = new DrawBetween(canvas);
   let lineOpts = {};
   let circlesOpts = {};
   let rectsOpts = {};
   let imagesOpts = {};
-  // canvas:
-  const canvas = document.querySelector('#canvas');
   let drawer = (p0, p1) => { draw.circles(p0, p1, circlesOpts) };
+  // canvas:
   canvas.addEventListener('click', (evt) => {
     if (p0 && !fixed) {
       fixed = true;

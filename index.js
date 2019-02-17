@@ -8,9 +8,7 @@
 
 // DrawBetween:
 class DrawBetween {
-  constructor(sel) {
-    // TODO: error handling.
-    const elem = document.querySelector(sel);
+  constructor(elem) {
     const cv = DrawBetween.appendCanvas(elem);
     this.ctx = cv.getContext('2d');
   }
@@ -251,4 +249,7 @@ class DrawBetween {
   }
 }
 
-module.exports = DrawBetween;
+// module.exports (for Node.js)
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = DrawBetween;
+}

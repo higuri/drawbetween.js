@@ -1,5 +1,5 @@
 # drawbetween.js
-A node module to draw images and shapes on the specified line segment.
+A JavaScript library for drawing images and shapes on the specified line segment.
 
 [![NPM Version][npm-image]][npm-url]
 [![Downloads Stats][npm-downloads]][npm-url]
@@ -11,6 +11,8 @@ https://higuri.github.io/drawbetween.js/sample/index.html
 
 ## Installation
 ```sh
+yarn add drawbetween
+# or...
 npm install drawbetween
 ```
 
@@ -28,13 +30,19 @@ const draw = new DrawBetween('#canvas');
 draw.circles({x: 25, y: 25}, {x: 75, y: 75});
 ```
 
-## API
-### line(p0, p1, options)
-### rects(p0, p1, options)
-### circles(p0, p1, options)
-### images(p0, p1, imgurl, options)
-### clear()
+## DrawBetween class API
+### Constructor
+#### `DrawBetween(targetDiv)`
+##### targetDiv
+A reference to an Element to be drawn.
+
+### Methods
 TODO
+#### `line(p0, p1, options)`
+#### `rects(p0, p1, options)`
+#### `circles(p0, p1, options)`
+#### `images(p0, p1, imgurl, options)`
+#### `clear()`
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.

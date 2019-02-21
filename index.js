@@ -1,10 +1,8 @@
 // drawbetween/index.js
 // TODO:
-// - add 'rotate' to opts
-// - add shape type 'triangle'
-// - add options 'nItems'
-// - lint
 // - add types (typescript)
+// - lint
+// - add 'rotate' to opts
 
 // DrawBetween:
 class DrawBetween {
@@ -110,6 +108,60 @@ class DrawBetween {
     this.ctx.clearRect(0, 0, cv.width, cv.height);
   }
 
+  // images()
+  images(p0, p1, imgurl, options) {
+    const defaultOptions = {
+      width: -1,
+      height: -1,
+      minInterval: 0,
+      borderColor: '#000',
+      borderWidth: 0
+    };
+    const opts = Object.assign(defaultOptions, options);
+    const minInterval = opts.minInterval;
+    if (opts.borderWidth) {
+      this.ctx.lineWidth = opts.borderWidth;
+      this.ctx.strokeStyle = opts.borderColor;
+    }
+    const doit = (img) => {
+      const width = opts.width < 0 ? img.width : opts.width;
+      const height = opts.height < 0 ? img.height : opts.height;
+      const m = (p0.y - p1.y) / (p0.x - p1.x);
+      const l = Math.sqrt(Math.pow(width, 2) + Math.pow(m * width, 2));
+      const dx = Math.sqrt(Math.pow(l, 2) / (Math.pow(m, 2) + 1));
+      const dy = m * dx;
+      DrawBetween.getPointsFor(
+        p0, p1, width, height, minInterval).forEach((p) => {
+        let x = p.x;
+        let y = p.y;
+        let w = width;
+        let h = height;
+        if (opts.borderWidth) {
+          this.ctx.beginPath();
+          this.ctx.rect(x, y, w, h);
+          this.ctx.stroke();
+          if (opts.borderWidth) {
+            x = x + opts.borderWidth;
+            y = y + opts.borderWidth;
+            w = w - opts.borderWidth * 2;
+            h = h - opts.borderWidth * 2;
+          } else {
+            x = x + 1;
+            y = y + 1;
+            w = w - 2;
+            h = h - 2;
+          }
+        }
+        this.ctx.drawImage(img, x, y, w, h);
+      });
+    };
+    const img = new Image();
+    img.onload = () => {
+      doit(img);
+    }
+    img.src = imgurl;
+  }
+
   // line()
   line(p0, p1, options) {
     const defaultOptions = {
@@ -193,59 +245,44 @@ class DrawBetween {
     });
   }
 
-  // images()
-  // TODO: anchor-pos (sx, sy)
-  images(p0, p1, imgurl, options) {
+  // triangles()
+  triangles(p0, p1, options) {
     const defaultOptions = {
-      width: -1,
-      height: -1,
+      edgeLength: 20,
       minInterval: 0,
-      borderColor: '#000',
-      borderWidth: 0
+      strokeColor: '#000',
+      strokeWidth: 1,
+      fillColor: ''
     };
     const opts = Object.assign(defaultOptions, options);
+    const edgeLength = opts.edgeLength;
+    const dx = Math.floor(edgeLength / 2);
+    const dy = Math.floor(edgeLength * Math.sqrt(3) / 2);
     const minInterval = opts.minInterval;
-    if (opts.borderWidth) {
-      this.ctx.lineWidth = opts.borderWidth;
-      this.ctx.strokeStyle = opts.borderColor;
+    if (opts.strokeWidth) {
+      this.ctx.lineWidth = opts.strokeWidth;
+      this.ctx.strokeStyle = opts.strokeColor;
     }
-    const doit = (img) => {
-      const width = opts.width < 0 ? img.width : opts.width;
-      const height = opts.height < 0 ? img.height : opts.height;
-      const m = (p0.y - p1.y) / (p0.x - p1.x);
-      const l = Math.sqrt(Math.pow(width, 2) + Math.pow(m * width, 2));
-      const dx = Math.sqrt(Math.pow(l, 2) / (Math.pow(m, 2) + 1));
-      const dy = m * dx;
-      DrawBetween.getPointsFor(
-        p0, p1, width, height, minInterval).forEach((p) => {
-        let x = p.x;
-        let y = p.y;
-        let w = width;
-        let h = height;
-        if (opts.borderWidth) {
-          this.ctx.beginPath();
-          this.ctx.rect(x, y, w, h);
-          this.ctx.stroke();
-          if (opts.borderWidth) {
-            x = x + opts.borderWidth;
-            y = y + opts.borderWidth;
-            w = w - opts.borderWidth * 2;
-            h = h - opts.borderWidth * 2;
-          } else {
-            x = x + 1;
-            y = y + 1;
-            w = w - 2;
-            h = h - 2;
-          }
-        }
-        this.ctx.drawImage(img, x, y, w, h);
-      });
-    };
-    const img = new Image();
-    img.onload = () => {
-      doit(img);
+    if (opts.fillColor) {
+      this.ctx.fillStyle = opts.fillColor;
     }
-    img.src = imgurl;
+    DrawBetween.getPointsFor(
+      p0, p1, edgeLength, edgeLength, minInterval).forEach((p) => {
+      this.ctx.beginPath();
+      this.ctx.moveTo(p.x, p.y);
+      // bottom-left
+      this.ctx.lineTo(p.x - dx, p.y + dy);
+      // bottom-right
+      this.ctx.lineTo(p.x + dx, p.y + dy);
+      // top
+      this.ctx.lineTo(p.x, p.y);
+      if (opts.fillColor) {
+        this.ctx.fill();
+      }
+      if (opts.strokeWidth) {
+        this.ctx.stroke();
+      }
+    });
   }
 }
 

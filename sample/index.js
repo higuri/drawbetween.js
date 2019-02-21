@@ -1,4 +1,5 @@
 // sample/index.js
+// TODO: add triangle
 
 // main()
 function main() {

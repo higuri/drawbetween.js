@@ -284,6 +284,40 @@ class DrawBetween {
       }
     });
   }
+
+  // crossMarks()
+  crossMarks(p0, p1, options) {
+    const defaultOptions = {
+      lineLength: 20,
+      minInterval: 0,
+      strokeColor: '#000',
+      strokeWidth: 1
+    };
+    const opts = Object.assign(defaultOptions, options);
+    const lineLength = opts.lineLength;
+    const d = Math.floor(lineLength / (2 * Math.sqrt(2)));
+    const size = Math.floor(lineLength / Math.sqrt(2));
+    const minInterval = opts.minInterval;
+    if (opts.strokeWidth) {
+      this.ctx.lineWidth = opts.strokeWidth;
+      this.ctx.strokeStyle = opts.strokeColor;
+    }
+    DrawBetween.getPointsFor(
+      p0, p1, size, size, minInterval).forEach((p) => {
+      this.ctx.beginPath();
+      // upper-left
+      this.ctx.moveTo(p.x - d, p.y - d);
+      // bottom-right
+      this.ctx.lineTo(p.x + d, p.y + d);
+      // upper-right
+      this.ctx.moveTo(p.x + d, p.y - d);
+      // bottom-left
+      this.ctx.lineTo(p.x - d, p.y + d);
+      if (opts.strokeWidth) {
+        this.ctx.stroke();
+      }
+    });
+  }
 }
 
 // module.exports (for Node.js)

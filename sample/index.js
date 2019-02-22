@@ -1,5 +1,4 @@
 // sample/index.js
-// TODO: add triangle
 
 // main()
 function main() {
@@ -10,7 +9,7 @@ function main() {
   const draw = new DrawBetween(canvas);
   let lineOpts = {};
   let circlesOpts = {};
-  let rectsOpts = {};
+  let crossMarksOpts = {};
   let imagesOpts = {};
   let drawer = (p0, p1) => { draw.circles(p0, p1, circlesOpts) };
   // canvas:
@@ -38,7 +37,7 @@ function main() {
   // drawtypes:
   const radios = document.querySelectorAll('.radio');
   const activateDrawType = ((t) => {
-    const types = ['line', 'circles', 'rects', 'images'];
+    const types = ['line', 'circles', 'cross_marks', 'images'];
     for (const t1 of types) {
       const eid0 = '#' + t1 + '_div';
       const e0 = document.querySelector(eid0);
@@ -72,11 +71,11 @@ function main() {
             };
             activateDrawType('circles');
             break;
-          case 'rects':
+          case 'cross_marks':
             drawer = (p0, p1) => {
-              draw.rects(p0, p1, rectsOpts)
+              draw.crossMarks(p0, p1, crossMarksOpts)
             };
-            activateDrawType('rects');
+            activateDrawType('cross_marks');
             break;
           case 'images':
             drawer = (p0, p1) => {
@@ -124,30 +123,22 @@ function main() {
     'change', (evt) => {
     circlesOpts.fillColor = evt.target.value;
   });
-  // rectsOpts:
-  document.querySelector('#rects_width').addEventListener(
+  // crossMarksOpts:
+  document.querySelector('#cross_marks_line_length').addEventListener(
     'change', (evt) => {
-    rectsOpts.width = parseInt(evt.target.value);
+    crossMarksOpts.lineLength = parseInt(evt.target.value);
   });
-  document.querySelector('#rects_height').addEventListener(
+  document.querySelector('#cross_marks_min_interval').addEventListener(
     'change', (evt) => {
-    rectsOpts.height = parseInt(evt.target.value);
+    crossMarksOpts.minInterval = parseInt(evt.target.value);
   });
-  document.querySelector('#rects_min_interval').addEventListener(
+  document.querySelector('#cross_marks_stroke_color').addEventListener(
     'change', (evt) => {
-    rectsOpts.minInterval = parseInt(evt.target.value);
+    crossMarksOpts.strokeColor = evt.target.value;
   });
-  document.querySelector('#rects_stroke_color').addEventListener(
+  document.querySelector('#cross_marks_stroke_width').addEventListener(
     'change', (evt) => {
-    rectsOpts.strokeColor = evt.target.value;
-  });
-  document.querySelector('#rects_stroke_width').addEventListener(
-    'change', (evt) => {
-    rectsOpts.strokeWidth = parseInt(evt.target.value);
-  });
-  document.querySelector('#rects_fill_color').addEventListener(
-    'change', (evt) => {
-    rectsOpts.fillColor = evt.target.value;
+    crossMarksOpts.strokeWidth = parseInt(evt.target.value);
   });
   // imagesOpts:
   document.querySelector('#images_width').addEventListener(

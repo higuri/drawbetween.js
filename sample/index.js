@@ -10,6 +10,7 @@ function main() {
   let lineOpts = {};
   let circlesOpts = {};
   let imagesOpts = {};
+  let withDrawerOpts = {};
   let withDrawerFunction = (() => {});
   let drawer = (p0, p1) => { draw.circles(p0, p1, circlesOpts) };
   // canvas:
@@ -79,7 +80,7 @@ function main() {
             break;
           case 'drawer':
             drawer = (p0, p1) => {
-              draw.withDrawer(p0, p1, withDrawerFunction)
+              draw.withDrawer(p0, p1, withDrawerFunction, withDrawerOpts)
             };
             activateDrawType('drawer');
             break;
@@ -148,6 +149,10 @@ function main() {
       imagesOpts.borderWidth = parseInt(evt.target.value);
     });
   // drawer:
+  document.querySelector('#drawer_min_interval').addEventListener(
+    'change', (evt) => {
+      withDrawerOpts.minInterval = parseInt(evt.target.value);
+    });
   const drawerFunction = document.querySelector('#drawer_function');
   const setDrawerFunction = (() => {
     const code = drawerFunction.value;
@@ -159,10 +164,15 @@ function main() {
   });
   drawerFunction.addEventListener('change', () => setDrawerFunction());
   drawerFunction.value = 
-    'ctx.fillStyle = \'#0ff\';\n' + 
+    'const len = 15;\n' +
+    'ctx.strokeStyle = \'#f00\';\n' + 
+    'ctx.lineWidth = \'5\';\n' +
     'ctx.beginPath();\n' + 
-    'ctx.rect(x, y, 10, 10);\n' + 
-    'ctx.fill();\n';
+    'ctx.moveTo(x, y);\n' +
+    'ctx.lineTo(x + len, y + len);\n' +
+    'ctx.moveTo(x + len, y);\n' +
+    'ctx.lineTo(x, y + len);\n' +
+    'ctx.stroke();';
   setDrawerFunction();
 }
 

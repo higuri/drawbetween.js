@@ -215,16 +215,14 @@ class DrawBetween {
   // rects()
   rects(p0, p1, options) {
     const defaultOptions = {
-      width: 20,
-      height: 20,
+      edgeLength: 20,
       minInterval: 0,
       strokeColor: '#000',
       strokeWidth: 1,
       fillColor: ''
     };
     const opts = Object.assign(defaultOptions, options);
-    const width = opts.width;
-    const height = opts.height;
+    const edgeLength = opts.edgeLength;
     const minInterval = opts.minInterval;
     if (opts.strokeWidth) {
       this.ctx.lineWidth = opts.strokeWidth;
@@ -234,9 +232,9 @@ class DrawBetween {
       this.ctx.fillStyle = opts.fillColor;
     }
     DrawBetween.getPointsFor(
-      p0, p1, width, height, minInterval).forEach((p) => {
+      p0, p1, edgeLength, edgeLength, minInterval).forEach((p) => {
       this.ctx.beginPath();
-      this.ctx.rect(p.x, p.y, width, height);
+      this.ctx.rect(p.x, p.y, edgeLength, edgeLength);
       if (opts.fillColor) {
         this.ctx.fill();
       }
@@ -321,20 +319,14 @@ class DrawBetween {
   }
 
   // withDrawer()
-  // TODO: width x height inference from drawer function.
   withDrawer(p0, p1, drawer, options) {
-    console.log(drawer);
     const defaultOptions = {
-      width: 10,
-      height: 10,
-      minInterval: 0
+      minInterval: 20
     };
     const opts = Object.assign(defaultOptions, options);
-    const width = opts.width;
-    const height = opts.height;
     const minInterval = opts.minInterval;
     DrawBetween.getPointsFor(
-      p0, p1, width, height, minInterval).forEach((p) => {
+      p0, p1, 0, 0, minInterval).forEach((p) => {
       drawer(this.ctx, p);
     });
   }

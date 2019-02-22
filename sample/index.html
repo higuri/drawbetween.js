@@ -82,12 +82,15 @@
     border-left: none;
   }
   .option {
-    width: calc(100% - 10px);
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    align-items: flex-end;
+    align-items: flex-start;
+  }
+  .option_item {
+    margin-left: 10px;
   }
   .option_value {
     width: 50px;
@@ -98,15 +101,14 @@
   #drawer_option {
     width: 100%;
     height: 100%;
+    margin-left: 10px;
   }
   #drawer_function {
-    width: 100%;
-    height: 100%;
+    width: calc(100% - 20px);
+    height: 200px;
     text-align: left;
-    border: none;
-    padding: 10px;
-    box-sizing: border-box;
     line-height: 24px;
+    box-sizing: border-box;
     font-size: 18px;
   }
   -->
@@ -249,10 +251,19 @@
           </div>
         </div>
         <!-- --------------------- -->
-        <!-- drawer for withDrawer -->
+        <!-- option for withDrawer -->
         <!-- --------------------- -->
-        <div id="drawer_option" class="hidden">
-          <textarea id="drawer_function" wrap="off"></textarea>
+        <div id="drawer_option" class="option hidden">
+          <div>
+            minInterval
+            <input
+              type="text" id="drawer_min_interval"
+              value="20" class="option_value" />
+          </div>
+          drawerFunction
+          <textarea
+            id="drawer_function" wrap="off"
+            class="option_value" />
         </div>
       </div>
     </div>

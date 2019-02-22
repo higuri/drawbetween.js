@@ -9,8 +9,8 @@ function main() {
   const draw = new DrawBetween(canvas);
   let lineOpts = {};
   let circlesOpts = {};
-  let crossMarksOpts = {};
   let imagesOpts = {};
+  let withDrawerFunction = (() => {});
   let drawer = (p0, p1) => { draw.circles(p0, p1, circlesOpts) };
   // canvas:
   canvas.addEventListener('click', (evt) => {
@@ -37,7 +37,7 @@ function main() {
   // drawtypes:
   const radios = document.querySelectorAll('.radio');
   const activateDrawType = ((t) => {
-    const types = ['line', 'circles', 'cross_marks', 'images'];
+    const types = ['line', 'circles', 'drawer', 'images'];
     for (const t1 of types) {
       const eid0 = '#' + t1 + '_div';
       const e0 = document.querySelector(eid0);
@@ -71,17 +71,17 @@ function main() {
             };
             activateDrawType('circles');
             break;
-          case 'cross_marks':
-            drawer = (p0, p1) => {
-              draw.crossMarks(p0, p1, crossMarksOpts)
-            };
-            activateDrawType('cross_marks');
-            break;
           case 'images':
             drawer = (p0, p1) => {
               draw.images(p0, p1, './image.png', imagesOpts)
             };
             activateDrawType('images');
+            break;
+          case 'drawer':
+            drawer = (p0, p1) => {
+              draw.withDrawer(p0, p1, withDrawerFunction)
+            };
+            activateDrawType('drawer');
             break;
           default:
             break;
@@ -89,80 +89,81 @@ function main() {
       }
     });
   }
+  // TODO: cleanup: set initial values at js instead of html.
   // lineOpts:
   document.querySelector('#line_width').addEventListener(
     'change', (evt) => {
-    lineOpts.width = parseInt(evt.target.value);
-  });
+      lineOpts.width = parseInt(evt.target.value);
+    });
   document.querySelector('#line_color').addEventListener(
     'change', (evt) => {
-    lineOpts.color = evt.target.value;
-  });
+      lineOpts.color = evt.target.value;
+    });
   document.querySelector('#line_dash').addEventListener(
     'change', (evt) => {
-    lineOpts.lineDash = evt.target.value.split(',').map(s => parseInt(s));
-  });
+      lineOpts.lineDash = evt.target.value.split(',').map(s => parseInt(s));
+    });
   // circlesOpts:
   document.querySelector('#circles_radius').addEventListener(
     'change', (evt) => {
-    circlesOpts.radius = parseInt(evt.target.value);
-  });
+      circlesOpts.radius = parseInt(evt.target.value);
+    });
   document.querySelector('#circles_min_interval').addEventListener(
     'change', (evt) => {
-    circlesOpts.minInterval = parseInt(evt.target.value);
-  });
+      circlesOpts.minInterval = parseInt(evt.target.value);
+    });
   document.querySelector('#circles_stroke_color').addEventListener(
     'change', (evt) => {
-    circlesOpts.strokeColor = evt.target.value;
-  });
+      circlesOpts.strokeColor = evt.target.value;
+    });
   document.querySelector('#circles_stroke_width').addEventListener(
     'change', (evt) => {
-    circlesOpts.strokeWidth = parseInt(evt.target.value);
-  });
+      circlesOpts.strokeWidth = parseInt(evt.target.value);
+    });
   document.querySelector('#circles_fill_color').addEventListener(
     'change', (evt) => {
-    circlesOpts.fillColor = evt.target.value;
-  });
-  // crossMarksOpts:
-  document.querySelector('#cross_marks_line_length').addEventListener(
-    'change', (evt) => {
-    crossMarksOpts.lineLength = parseInt(evt.target.value);
-  });
-  document.querySelector('#cross_marks_min_interval').addEventListener(
-    'change', (evt) => {
-    crossMarksOpts.minInterval = parseInt(evt.target.value);
-  });
-  document.querySelector('#cross_marks_stroke_color').addEventListener(
-    'change', (evt) => {
-    crossMarksOpts.strokeColor = evt.target.value;
-  });
-  document.querySelector('#cross_marks_stroke_width').addEventListener(
-    'change', (evt) => {
-    crossMarksOpts.strokeWidth = parseInt(evt.target.value);
-  });
+      circlesOpts.fillColor = evt.target.value;
+    });
   // imagesOpts:
   document.querySelector('#images_width').addEventListener(
     'change', (evt) => {
-    imagesOpts.width = evt.target.value ?
-      parseInt(evt.target.value) : 'auto';
-  });
+      imagesOpts.width = evt.target.value ?
+        parseInt(evt.target.value) : 'auto';
+    });
   document.querySelector('#images_height').addEventListener(
     'change', (evt) => {
-    imagesOpts.height = evt.target.value ?
-      parseInt(evt.target.value) : 'auto';
-  });
+      imagesOpts.height = evt.target.value ?
+        parseInt(evt.target.value) : 'auto';
+    });
   document.querySelector('#images_min_interval').addEventListener(
     'change', (evt) => {
-    imagesOpts.minInterval = parseInt(evt.target.value);
-  });
+      imagesOpts.minInterval = parseInt(evt.target.value);
+    });
   document.querySelector('#images_border_color').addEventListener(
     'change', (evt) => {
-    imagesOpts.borderColor = evt.target.value;
-  });
+      imagesOpts.borderColor = evt.target.value;
+    });
   document.querySelector('#images_border_width').addEventListener(
     'change', (evt) => {
-    imagesOpts.borderWidth = parseInt(evt.target.value);
+      imagesOpts.borderWidth = parseInt(evt.target.value);
+    });
+  // drawer:
+  const drawerFunction = document.querySelector('#drawer_function');
+  const setDrawerFunction = (() => {
+    const code = drawerFunction.value;
+    withDrawerFunction = ((ctx, p) => {
+      const x = p.x;
+      const y = p.y;
+      eval(code);
+    });
   });
+  drawerFunction.addEventListener('change', () => setDrawerFunction());
+  drawerFunction.value = 
+    'ctx.fillStyle = \'#0ff\';\n' + 
+    'ctx.beginPath();\n' + 
+    'ctx.rect(x, y, 10, 10);\n' + 
+    'ctx.fill();\n';
+  setDrawerFunction();
 }
 
 document.addEventListener('DOMContentLoaded', () => main());

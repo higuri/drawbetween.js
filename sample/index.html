@@ -8,11 +8,17 @@
   <script src="./index.js"></script>
   <style>
   <!--
+  * {
+    padding: 0;
+    margin: 0;
+  }
   #root {
     position: relative;
     width: 95vw;
     height: 95vh;
     margin: 0 auto;
+    font-family: sans-serif;
+    font-size: 18px;
   }
   #background {
     position: absolute;
@@ -21,7 +27,6 @@
     width: 100%;
     height: 60%;
     box-sizing: border-box;
-    font-family: sans-serif;
     font-size: 100px;
     font-weight: bold;
     text-align: center;
@@ -48,7 +53,7 @@
     justify-content: center;
   }
   #drawtypes {
-    width: 120px;
+    width: 100px;
     height: 100%;
   }
   .drawtype {
@@ -59,6 +64,9 @@
     justify-content: flex-center;
     align-items: center;
     border: solid 1px;
+  }
+  .radio {
+    margin: 0 5px;
   }
   .active {
     border-right: none;
@@ -71,11 +79,10 @@
     height: 100%;
     box-sizing: border-box;
     border: solid 1px;
-    padding-right: 10px;
     border-left: none;
   }
   .option {
-    width: 100%;
+    width: calc(100% - 10px);
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -87,6 +94,20 @@
   }
   .hidden {
     display: none;
+  }
+  #drawer_option {
+    width: 100%;
+    height: 100%;
+  }
+  #drawer_function {
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    border: none;
+    padding: 10px;
+    box-sizing: border-box;
+    line-height: 24px;
+    font-size: 18px;
   }
   -->
   </style>
@@ -118,18 +139,18 @@
           circles
           </input>
         </div>
-        <div id="cross_marks_div" class="drawtype inactive">
-          <input
-            type="radio" name="object"
-            value="cross_marks" class="radio">
-          crossMarks
-          </input>
-        </div>
         <div id="images_div" class="drawtype inactive">
           <input
             type="radio" name="object"
             value="images" class="radio">
           images
+          </input>
+        </div>
+        <div id="drawer_div" class="drawtype inactive">
+          <input
+            type="radio" name="object"
+            value="drawer" class="radio">
+          drawer
           </input>
         </div>
       </div>
@@ -192,35 +213,6 @@
               value="" class="option_value" />
           </div>
         </div>
-        <!-- --------------------- -->
-        <!-- option for crossMarks -->
-        <!-- --------------------- -->
-        <div id="cross_marks_option" class="option hidden">
-          <div class="option_item">
-            lineLength
-            <input
-              type="text" id="cross_marks_line_length"
-              value="20" class="option_value" />
-          </div>
-          <div class="option_item">
-            minInterval
-            <input
-              type="text" id="cross_marks_min_interval"
-              value="0" class="option_value" />
-          </div>
-          <div class="option_item">
-            strokeColor
-            <input
-              type="text" id="cross_marks_stroke_color"
-              value="#000" class="option_value" />
-          </div>
-          <div class="option_item">
-            strokeWidth
-            <input
-              type="text" id="cross_marks_stroke_width"
-              value="1" class="option_value" />
-          </div>
-        </div>
         <!-- ----------------- -->
         <!-- option for images -->
         <!-- ----------------- -->
@@ -255,6 +247,12 @@
               type="text" id="images_border_width"
               value="0" class="option_value" />
           </div>
+        </div>
+        <!-- --------------------- -->
+        <!-- drawer for withDrawer -->
+        <!-- --------------------- -->
+        <div id="drawer_option" class="hidden">
+          <textarea id="drawer_function" wrap="off"></textarea>
         </div>
       </div>
     </div>

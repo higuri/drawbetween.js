@@ -24,6 +24,7 @@ class DrawBetween {
     // TODO: actually it is not enough to just listen to
     //       windows' resize event.
     //       we should listen to the parent element's resize event...
+    //       use ResizeObserver ? (available in Chrome).
     window.addEventListener('resize', resizeCv);
     elem.appendChild(cv);
     return cv;
@@ -316,6 +317,25 @@ class DrawBetween {
       if (opts.strokeWidth) {
         this.ctx.stroke();
       }
+    });
+  }
+
+  // withDrawer()
+  // TODO: width x height inference from drawer function.
+  withDrawer(p0, p1, drawer, options) {
+    console.log(drawer);
+    const defaultOptions = {
+      width: 10,
+      height: 10,
+      minInterval: 0
+    };
+    const opts = Object.assign(defaultOptions, options);
+    const width = opts.width;
+    const height = opts.height;
+    const minInterval = opts.minInterval;
+    DrawBetween.getPointsFor(
+      p0, p1, width, height, minInterval).forEach((p) => {
+      drawer(this.ctx, p);
     });
   }
 }

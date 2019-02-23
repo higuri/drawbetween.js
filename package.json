@@ -1,6 +1,6 @@
 {
   "name": "drawbetween",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Draw images and shapes on the specified line segment",
   "main": "index.js",
   "keywords": [

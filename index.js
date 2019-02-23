@@ -22,9 +22,9 @@ class DrawBetween {
     resizeCv();
     // make canvas responsive:
     // TODO: actually it is not enough to just listen to
-    //       windows' resize event.
-    //       we should listen to the parent element's resize event...
-    //       use ResizeObserver ? (available in Chrome).
+    //       window.resize event. We should listen to
+    //       the parent element's resize event...
+    //       Use 'ResizeObserver' ? (available only in Chrome).
     window.addEventListener('resize', resizeCv);
     elem.appendChild(cv);
     return cv;
@@ -110,7 +110,7 @@ class DrawBetween {
   }
 
   // images()
-  images(p0, p1, imgurl, options) {
+  images(p0, p1, imageUrl, options) {
     const defaultOptions = {
       width: -1,
       height: -1,
@@ -160,7 +160,7 @@ class DrawBetween {
     img.onload = () => {
       doit(img);
     }
-    img.src = imgurl;
+    img.src = imageUrl;
   }
 
   // line()
@@ -215,14 +215,16 @@ class DrawBetween {
   // rects()
   rects(p0, p1, options) {
     const defaultOptions = {
-      edgeLength: 20,
+      width: 20,
+      height: 20,
       minInterval: 0,
       strokeColor: '#000',
       strokeWidth: 1,
       fillColor: ''
     };
     const opts = Object.assign(defaultOptions, options);
-    const edgeLength = opts.edgeLength;
+    const width = opts.width;
+    const height = opts.height;
     const minInterval = opts.minInterval;
     if (opts.strokeWidth) {
       this.ctx.lineWidth = opts.strokeWidth;
@@ -232,9 +234,9 @@ class DrawBetween {
       this.ctx.fillStyle = opts.fillColor;
     }
     DrawBetween.getPointsFor(
-      p0, p1, edgeLength, edgeLength, minInterval).forEach((p) => {
+      p0, p1, width, height, minInterval).forEach((p) => {
       this.ctx.beginPath();
-      this.ctx.rect(p.x, p.y, edgeLength, edgeLength);
+      this.ctx.rect(p.x, p.y, width, height);
       if (opts.fillColor) {
         this.ctx.fill();
       }

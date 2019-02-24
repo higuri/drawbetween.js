@@ -19,7 +19,7 @@ npm install drawbetween
 ## Usage Example
 ### HTML
 ```html
-<div id="canvas" style="width:100px; height:100px"></div>
+<div id="canvas" style="width:300px; height:150px"></div>
 ```
 
 ### JavaScript
@@ -28,11 +28,35 @@ const DrawBetween = require('drawbetween');
 
 const canvas = document.querySelector('#canvas');
 const draw = new DrawBetween(canvas);
-draw.circles({x: 25, y: 25}, {x: 75, y: 75});
+
+// draw images between (0,0) and (250,0).
+const imageUrl = 'YOUR_IMAGE_URL';
+draw.images({x: 0, y: 0}, {x: 250, y: 0}, imageUrl);
+
+// draw rects with default options.
+draw.rects({x: 0, y: 40}, {x: 250, y: 40});
+
+// draw crossMarks with custom options.
+draw.crossMarks({x: 10, y: 80}, {x: 260, y: 80}, {
+  minInterval: 40,
+  strokeColor: '#f00',
+  strokeWidth: 3
+});
+
+// draw custom paths.
+const drawer = (ctx, p) => {
+  ctx.beginPath();
+  ctx.arc(p.x, p.y, 10, 0, 2 * Math.PI);
+  ctx.fillStyle = '#0af';
+  ctx.fill();
+};
+draw.withDrawer({x: 10, y: 110}, {x: 260, y: 110}, drawer, {
+  minInterval: 35
+});
 ```
+[CodePen][pen-url]
 
 ## class DrawBetween
-TODO: usage example
 ### new `DrawBetween(targetDiv)`
 Create a new DrawBetween object.
 * `targetDiv`: Element - a reference to &lt;div&gt; to be drawn.
@@ -153,3 +177,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 [npm-url]: https://npmjs.org/package/drawbetween
 [npm-downloads]: https://img.shields.io/npm/dm/drawbetween.svg?style=flat-square
 [mdn-linedash]: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash#Parameters
+[pen-url]: https://codepen.io/higuri/pen/jJNNmB

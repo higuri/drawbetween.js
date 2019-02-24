@@ -36,7 +36,7 @@ draw.images({x: 0, y: 0}, {x: 250, y: 0}, imageUrl);
 // draw rects with default options.
 draw.rects({x: 0, y: 40}, {x: 250, y: 40});
 
-// draw crossMarks with custom options.
+// draw cross marks with custom options.
 draw.crossMarks({x: 10, y: 80}, {x: 260, y: 80}, {
   minInterval: 40,
   strokeColor: '#f00',

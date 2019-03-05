@@ -2,10 +2,14 @@
   "name": "drawbetween",
   "version": "0.0.6",
   "description": "Draw images and shapes on the specified line segment",
-  "main": "index.js",
+  "main": "dist/index_cjs.js",
+  "module": "dist/index_esm.js",
+  "unpkg": "dist/index_iife.js",
+  "types": "dist/index.d.ts",
   "keywords": [
     "drawbetween",
     "draw",
+    "canvas",
     "line segment",
     "shape",
     "line",
@@ -26,5 +30,14 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/higuri/drawbetween.js.git"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "build:watch": "rollup -cw"
+  },
+  "devDependencies": {
+    "rollup": "^1.4.1",
+    "rollup-plugin-typescript2": "^0.19.3",
+    "typescript": "^3.3.3333"
   }
 }

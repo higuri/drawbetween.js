@@ -5,7 +5,11 @@
 // - add 'rotate' to opts
 
 // DrawBetween:
-class DrawBetween {
+export default class DrawBetween {
+
+  // ctx:
+  private ctx: CanvasRenderingContext2D;
+
   constructor(elem) {
     const cv = DrawBetween.appendCanvas(elem);
     this.ctx = cv.getContext('2d');
@@ -118,7 +122,7 @@ class DrawBetween {
       borderColor: '#000',
       borderWidth: 0
     };
-    const opts = Object.assign(defaultOptions, options);
+    const opts = { ...defaultOptions, options }
     const minInterval = opts.minInterval;
     if (opts.borderWidth) {
       this.ctx.lineWidth = opts.borderWidth;
@@ -170,7 +174,7 @@ class DrawBetween {
       color: '#000000',
       lineDash: [0,0]
     }
-    const opts = Object.assign(defaultOptions, options);
+    const opts = { ...defaultOptions, options }
     this.ctx.beginPath();
     this.ctx.lineWidth = opts.width;
     this.ctx.strokeStyle = opts.color;
@@ -189,7 +193,7 @@ class DrawBetween {
       strokeWidth: 1,
       fillColor: ''
     };
-    const opts = Object.assign(defaultOptions, options);
+    const opts = { ...defaultOptions, options }
     const radius = opts.radius;
     const minInterval = opts.minInterval;
     if (opts.strokeWidth) {
@@ -222,7 +226,7 @@ class DrawBetween {
       strokeWidth: 1,
       fillColor: ''
     };
-    const opts = Object.assign(defaultOptions, options);
+    const opts = { ...defaultOptions, options }
     const width = opts.width;
     const height = opts.height;
     const minInterval = opts.minInterval;
@@ -255,7 +259,7 @@ class DrawBetween {
       strokeWidth: 1,
       fillColor: ''
     };
-    const opts = Object.assign(defaultOptions, options);
+    const opts = { ...defaultOptions, options }
     const edgeLength = opts.edgeLength;
     const dx = Math.floor(edgeLength / 2);
     const dy = Math.floor(edgeLength * Math.sqrt(3) / 2);
@@ -294,7 +298,7 @@ class DrawBetween {
       strokeColor: '#000',
       strokeWidth: 1
     };
-    const opts = Object.assign(defaultOptions, options);
+    const opts = { ...defaultOptions, options }
     const lineLength = opts.lineLength;
     const d = Math.floor(lineLength / (2 * Math.sqrt(2)));
     const size = Math.floor(lineLength / Math.sqrt(2));
@@ -325,16 +329,11 @@ class DrawBetween {
     const defaultOptions = {
       minInterval: 20
     };
-    const opts = Object.assign(defaultOptions, options);
+    const opts = { ...defaultOptions, options };
     const minInterval = opts.minInterval;
     DrawBetween.getPointsFor(
       p0, p1, 0, 0, minInterval).forEach((p) => {
       drawer(this.ctx, p);
     });
   }
-}
-
-// module.exports (for Node.js)
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = DrawBetween;
 }

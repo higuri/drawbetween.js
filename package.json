@@ -1,0 +1,15 @@
+{
+  "name": "drawbetween-github-pages",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/higuri/drawbetween.js",
+  "author": "higuri <higuri36@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "browserify main.js -o bundle.js"
+  },
+  "dependencies": {
+    "browserify": "^16.2.3",
+    "drawbetween": "^0.0.6"
+  }
+}

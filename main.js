@@ -1,4 +1,4 @@
-// sample/index.js
+// main.js
 
 const DrawBetween = require('drawbetween');
 

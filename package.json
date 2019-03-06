@@ -2,10 +2,10 @@
   "name": "drawbetween",
   "version": "0.0.6",
   "description": "Draw images and shapes on the specified line segment",
-  "main": "dist/index_cjs.js",
-  "module": "dist/index_esm.js",
-  "unpkg": "dist/index_iife.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/drawbetween_cjs.js",
+  "module": "dist/drawbetween_esm.js",
+  "unpkg": "dist/drawbetween_iife.js",
+  "types": "dist/drawbetween.d.ts",
   "keywords": [
     "drawbetween",
     "draw",
@@ -33,9 +33,11 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "build:watch": "rollup -cw"
+    "build:watch": "rollup -cw",
+    "test": "node test/run.js"
   },
   "devDependencies": {
+    "opn": "^5.4.0",
     "rollup": "^1.4.1",
     "rollup-plugin-typescript2": "^0.19.3",
     "typescript": "^3.3.3333"

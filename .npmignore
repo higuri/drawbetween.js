@@ -1,3 +1,4 @@
-# exclude everything except 'index.js'
+# exclude everything except src/ and dist/
 **/*
-!index.js
+!src
+!dist

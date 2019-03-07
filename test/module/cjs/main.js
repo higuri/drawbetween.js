@@ -1,7 +1,5 @@
 // cjs/main.js
-// TODO: ts
 
-// relative to 'index.html'
 const DrawBetween = require('../../../dist/drawbetween_cjs.js');
 
 // main()

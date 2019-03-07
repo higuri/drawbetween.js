@@ -17,6 +17,7 @@ npm install drawbetween
 ```
 
 ## Usage Example
+
 ### HTML
 ```html
 <div id="canvas" style="width:300px; height:150px"></div>
@@ -54,7 +55,9 @@ draw.withDrawer({x: 10, y: 110}, {x: 260, y: 110}, drawer, {
   minInterval: 35
 });
 ```
-[CodePen][pen-url]
+
+### CodePen
+https://codepen.io/higuri/pen/jJNNmB
 
 ## class DrawBetween
 ### new `DrawBetween(targetDiv)`
@@ -177,4 +180,3 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 [npm-url]: https://npmjs.org/package/drawbetween
 [npm-downloads]: https://img.shields.io/npm/dm/drawbetween.svg?style=flat-square
 [mdn-linedash]: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash#Parameters
-[pen-url]: https://codepen.io/higuri/pen/jJNNmB

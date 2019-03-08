@@ -4,7 +4,7 @@ import DrawBetween from '../../../dist/drawbetween_esm.js';
 
 // main()
 function main(): void {
-  const canvas = document.querySelector('#canvas');
+  const canvas = document.querySelector('#canvas') as HTMLElement
   const draw = new DrawBetween(canvas);
   draw.rects({x: 1, y: 1}, {x: 279, y: 279});
 }

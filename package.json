@@ -6,6 +6,10 @@
   "module": "dist/drawbetween_esm.js",
   "unpkg": "dist/drawbetween_iife.js",
   "types": "dist/drawbetween.d.ts",
+  "files": [
+    "/src",
+    "/dist"
+  ],
   "keywords": [
     "drawbetween",
     "draw",

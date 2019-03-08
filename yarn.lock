@@ -364,9 +364,9 @@ domain-browser@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-1.2.0.tgz#3d31f50191a6749dd1375a7f522e823d42e54eda"
 
-drawbetween@^0.0.7:
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/drawbetween/-/drawbetween-0.0.7.tgz#aa0bd24b57005e1af0b011f73f24cae48c29e89b"
+drawbetween@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/drawbetween/-/drawbetween-0.0.8.tgz#3b94059d5651c59a6c361a42e1cd7add82062290"
 
 duplexer2@^0.1.2, duplexer2@~0.1.0, duplexer2@~0.1.2:
   version "0.1.4"

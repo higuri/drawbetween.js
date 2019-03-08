@@ -7,9 +7,14 @@ const opn = require('opn');
   const bundle = await rollup.rollup({
     input: __dirname + '/main.ts',
     plugins: [
-      // TODO: prevent from emitting d.ts
       typescript({
-        typescript: require('typescript')
+        typescript: require('typescript'),
+        clean: true,
+        tsconfigOverride: {
+          compilerOptions: {
+            declaration: false
+          }
+        }
       })
     ]
   });

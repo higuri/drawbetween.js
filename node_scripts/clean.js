@@ -1,10 +1,15 @@
 // clean.js
 
-const rimraf = require('rimraf');
-const rm = (v) => {
-  rimraf(v, () => {});
-};
+const {execSync} = require('child_process');
+const {rm} = require('./utils');
+const {pushd, popd} = require('./utils');
 
 rm('./dist');
-rm('./test/module/cjs/bundle.js');
-rm('./test/module/esm/bundle.js');
+// cjs;
+pushd('./test/module/cjs/');
+execSync('yarn clean');
+popd();
+// esm;
+pushd('./test/module/esm/');
+execSync('yarn clean');
+popd();

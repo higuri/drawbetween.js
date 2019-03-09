@@ -23,6 +23,7 @@ export default {
     ...Object.keys(pkg.peerDependencies || {})
   ],
   plugins: [
+    // TODO: how to prevent from emitting MS Copyright?
     typescript({
       // use my typescript version.
       typescript: require('typescript'),

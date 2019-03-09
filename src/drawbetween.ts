@@ -1,7 +1,6 @@
 // drawbetween/index.js
 // TODO:
 // - README: cjs/esm/iife(unpkg)
-// - MS copyright (in dist)
 // - add 'rotate' to opts
 
 //

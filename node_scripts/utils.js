@@ -1,22 +1,23 @@
 // utils.js
 
-// rm()
-const rimraf = require('rimraf');
-const rm = (v) => {
-  rimraf(v, () => {});
-};
+const {execSync} = require('child_process');
 
 // pushd() / popd()
 const cwd = process.cwd();
-const pushd = (v) => {
-  console.log('pushd: ' + v);
-  process.chdir(v);
-};
-const popd = () => {
+function pushd(path) {
+  console.log('pushd: ' + path);
+  process.chdir(path);
+}
+function popd() {
   console.log('popd: ' + cwd);
   process.chdir(cwd);
-};
+}
+
+// exec()
+function exec(cmd) {
+  execSync(cmd, { stdio: 'inherit' });
+}
 
 module.exports = {
-  rm, pushd, popd
+  pushd, popd, exec
 }

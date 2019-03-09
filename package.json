@@ -36,14 +36,15 @@
     "url": "https://github.com/higuri/drawbetween.js.git"
   },
   "scripts": {
-    "build": "rollup -c",
-    "build:watch": "rollup -cw",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "build:modules": "rollup -c",
     "test": "node ./node_scripts/test.js",
     "clean": "node ./node_scripts/clean.js",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "yarn build:modules"
   },
   "devDependencies": {
-    "rimraf": "^2.6.3",
+    "fs-extra": "^7.0.1",
     "rollup": "^1.4.1",
     "rollup-plugin-typescript2": "^0.19.3",
     "typescript": "^3.3.3333"

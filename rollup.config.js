@@ -25,7 +25,8 @@ export default {
   plugins: [
     typescript({
       // use my typescript version.
-      typescript: require('typescript')
+      typescript: require('typescript'),
+      clean: true
     }),
   ]
 };

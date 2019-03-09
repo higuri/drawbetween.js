@@ -39,9 +39,11 @@
     "build": "rollup -c",
     "build:watch": "rollup -cw",
     "test": "echo TODO...",
+    "clean": "node ./node_scripts/clean.js",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
+    "rimraf": "^2.6.3",
     "rollup": "^1.4.1",
     "rollup-plugin-typescript2": "^0.19.3",
     "typescript": "^3.3.3333"

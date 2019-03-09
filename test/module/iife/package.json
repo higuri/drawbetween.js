@@ -1,0 +1,13 @@
+{
+  "name": "iife",
+  "version": "1.0.0",
+  "main": "",
+  "license": "MIT",
+  "devDependencies": {
+    "opn-cli": "^4.0.0"
+  },
+  "scripts": {
+    "build": "yarn link drawbetween",
+    "start": "opn index.html"
+  }
+}

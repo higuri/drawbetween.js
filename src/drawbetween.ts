@@ -1,6 +1,9 @@
 // drawbetween/index.js
 // TODO:
+// - README: cjs/esm/iife(unpkg)
+// - package.json: rollup only on releasae (use tsc)
 // - lint
+// - MS copyright (in dist)
 // - add 'rotate' to opts
 
 //

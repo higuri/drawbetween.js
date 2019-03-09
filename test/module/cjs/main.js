@@ -1,6 +1,6 @@
 // cjs/main.js
 
-const DrawBetween = require('../../../dist/drawbetween_cjs.js');
+const DrawBetween = require('drawbetween');
 
 // main()
 function main() {

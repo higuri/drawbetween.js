@@ -38,12 +38,10 @@
   "scripts": {
     "build": "rollup -c",
     "build:watch": "rollup -cw",
-    "test": "node test/run.js",
+    "test": "echo TODO...",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
-    "browserify": "^16.2.3",
-    "opn": "^5.4.0",
     "rollup": "^1.4.1",
     "rollup-plugin-typescript2": "^0.19.3",
     "typescript": "^3.3.3333"

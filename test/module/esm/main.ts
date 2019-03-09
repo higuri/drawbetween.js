@@ -1,6 +1,6 @@
 // esm/main.ts
 
-import DrawBetween from '../../../dist/drawbetween_esm.js';
+import DrawBetween from 'drawbetween';
 
 // main()
 function main(): void {

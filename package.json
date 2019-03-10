@@ -1,6 +1,6 @@
 {
   "name": "drawbetween",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Draw images and shapes on the specified line segment",
   "main": "dist/drawbetween_cjs.js",
   "module": "dist/drawbetween_esm.js",

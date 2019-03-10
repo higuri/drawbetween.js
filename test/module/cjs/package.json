@@ -4,9 +4,12 @@
   "main": "",
   "license": "MIT",
   "scripts": {
-    "build": "yarn link drawbetween && browserify main.js -o bundle.js",
+    "build": "browserify main.js -o bundle.js",
     "start": "opn ./index.html",
-    "clean": "yarn unlink drawbetween && rimraf ./bundle.js"
+    "clean": "rimraf ./bundle.js"
+  },
+  "dependencies": {
+    "drawbetween": "../../../drawbetween.tgz"
   },
   "devDependencies": {
     "browserify": "^16.2.3",

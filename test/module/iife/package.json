@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "main": "",
   "license": "MIT",
+  "scripts": {
+    "build": "# Nothing to do...",
+    "start": "opn index.html",
+    "clean": "# Nothing to do..."
+  },
+  "dependencies": {
+    "drawbetween": "../../../drawbetween.tgz"
+  },
   "devDependencies": {
     "opn-cli": "^4.0.0"
-  },
-  "scripts": {
-    "build": "yarn link drawbetween",
-    "start": "opn index.html",
-    "clean": "yarn unlink drawbetween"
   }
 }

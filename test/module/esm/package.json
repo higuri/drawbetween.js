@@ -4,9 +4,12 @@
   "main": "",
   "license": "MIT",
   "scripts": {
-    "build": "yarn link drawbetween && rollup -c",
+    "build": "rollup -c",
     "start": "opn ./index.html",
-    "clean": "yarn unlink drawbetween && rimraf ./bundle.js"
+    "clean": "rimraf ./bundle.js"
+  },
+  "dependencies": {
+    "drawbetween": "../../../drawbetween.tgz"
   },
   "devDependencies": {
     "opn-cli": "^4.0.0",

@@ -39,6 +39,7 @@
     "build": "tsc",
     "build:watch": "tsc --watch",
     "build:modules": "rollup -c",
+    "build:pack": "yarn pack --filename drawbetween.tgz",
     "lint": "eslint --fix ./src/*.ts",
     "test": "node ./node_scripts/test.js",
     "clean": "node ./node_scripts/clean.js",

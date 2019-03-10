@@ -1,26 +1,26 @@
 // test.js
 
-const {exec} = require('./utils');
+const {execSync} = require('./utils');
 const {pushd, popd} = require('./utils');
 
-// clean & build
-exec('yarn clean');
-exec('yarn build:modules');
+execSync('yarn clean');
+execSync('yarn build:modules');
+execSync('yarn build:pack');
 
 // test/module/cjs/
 pushd('./test/module/cjs/');
-exec('yarn install', { stdio: 'inherit' });
-exec('yarn build');
-exec('yarn start');
+execSync('yarn install', { stdio: 'inherit' });
+execSync('yarn build');
+execSync('yarn start');
 popd();
 // test/module/esm/
 pushd('./test/module/esm/');
-exec('yarn install');
-exec('yarn build');
-exec('yarn start');
+execSync('yarn install');
+execSync('yarn build');
+execSync('yarn start');
 popd();
 // test/module/iife/
 pushd('./test/module/iife/');
-exec('yarn install');
-exec('yarn build');
-exec('yarn start');
+execSync('yarn install');
+execSync('yarn build');
+execSync('yarn start');

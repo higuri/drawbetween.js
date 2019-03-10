@@ -1,6 +1,6 @@
 // utils.js
 
-const {execSync} = require('child_process');
+const child_process = require('child_process');
 
 // pushd() / popd()
 const cwd = process.cwd();
@@ -13,11 +13,11 @@ function popd() {
   process.chdir(cwd);
 }
 
-// exec()
-function exec(cmd) {
-  execSync(cmd, { stdio: 'inherit' });
+// execSync()
+function execSync(cmd) {
+  child_process.execSync(cmd, { stdio: 'inherit' });
 }
 
 module.exports = {
-  pushd, popd, exec
+  pushd, popd, execSync
 }

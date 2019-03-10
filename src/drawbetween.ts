@@ -1,6 +1,5 @@
 // drawbetween/index.js
 // TODO:
-// - README: cjs/esm/iife(unpkg)
 // - add 'rotate' to opts
 
 //

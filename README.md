@@ -10,10 +10,25 @@ A JavaScript library for drawing images and shapes on the specified line segment
 https://higuri.github.io/drawbetween.js/
 
 ## Installation
+### via NPM
 ```sh
-yarn add drawbetween
-# or...
 npm install drawbetween
+# or...
+yarn add drawbetween
+```
+
+#### CommonJS
+```js
+const DrawBetween = require('drawbetween');
+```
+#### ES Module
+```js
+import DrawBetween from 'drawbetween';
+```
+
+### via CDN
+```html
+<script scr="https://unpkg.com/drawbetween"></script>
 ```
 
 ## Usage Example
@@ -25,8 +40,6 @@ npm install drawbetween
 
 ### JavaScript
 ```js
-const DrawBetween = require('drawbetween');
-
 const canvas = document.querySelector('#canvas');
 const draw = new DrawBetween(canvas);
 
@@ -59,7 +72,7 @@ draw.withDrawer({x: 10, y: 110}, {x: 260, y: 110}, drawer, {
 ### CodePen
 https://codepen.io/higuri/pen/jJNNmB
 
-## class DrawBetween
+## API
 ### new `DrawBetween(targetDiv)`
 Create a new DrawBetween object.
 * `targetDiv`: Element - a reference to &lt;div&gt; to be drawn.

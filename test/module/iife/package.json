@@ -9,7 +9,7 @@
     "clean": "# Nothing to do..."
   },
   "dependencies": {
-    "drawbetween": "../../../drawbetween.tgz"
+    "drawbetween": "file:../../../drawbetween.tgz"
   },
   "devDependencies": {
     "opn-cli": "^4.0.0"

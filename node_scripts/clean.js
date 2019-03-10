@@ -11,6 +11,7 @@ fs.removeSync('./drawbetween.tgz');
 pushd('./test/module/cjs/');
 if (fs.existsSync('./node_modules')) {
   execSync('yarn clean');
+  fs.removeSync('./yarn.lock');
   fs.removeSync('./node_modules/');
 }
 popd();
@@ -19,6 +20,7 @@ popd();
 pushd('./test/module/esm/');
 if (fs.existsSync('./node_modules')) {
   execSync('yarn clean');
+  fs.removeSync('./yarn.lock');
   fs.removeSync('./node_modules');
 }
 popd();
@@ -27,6 +29,7 @@ popd();
 pushd('./test/module/iife/');
 if (fs.existsSync('./node_modules')) {
   execSync('yarn clean');
+  fs.removeSync('./yarn.lock');
   fs.removeSync('./node_modules');
 }
 popd();

@@ -1,4 +1,5 @@
-dist
-node_modules
 bundle.js
+node_modules
+/dist
+/drawbetween.tgz
 /test/module/*/yarn.lock

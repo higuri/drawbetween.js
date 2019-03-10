@@ -184,53 +184,27 @@ document.addEventListener('DOMContentLoaded', () => main());
 },{"drawbetween":2}],2:[function(require,module,exports){
 'use strict';
 
-/*! *****************************************************************************
-Copyright (c) Microsoft Corporation. All rights reserved.
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-this file except in compliance with the License. You may obtain a copy of the
-License at http://www.apache.org/licenses/LICENSE-2.0
-
-THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-MERCHANTABLITY OR NON-INFRINGEMENT.
-
-See the Apache Version 2.0 License for specific language governing permissions
-and limitations under the License.
-***************************************************************************** */
-
-var __assign = function() {
-    __assign = Object.assign || function __assign(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-
 // drawbetween/index.js
-var _ImagesOptions = /** @class */ (function () {
-    function _ImagesOptions() {
+// TODO:
+// - add 'rotate' to opts
+class _ImagesOptions {
+    constructor() {
         this.width = -1;
         this.height = -1;
         this.minInterval = 0;
         this.borderColor = "#000";
         this.borderWidth = 0;
     }
-    return _ImagesOptions;
-}());
-var _LineOptions = /** @class */ (function () {
-    function _LineOptions() {
+}
+class _LineOptions {
+    constructor() {
         this.width = 1;
         this.color = "#000000";
         this.lineDash = [0, 0];
     }
-    return _LineOptions;
-}());
-var _RectsOptions = /** @class */ (function () {
-    function _RectsOptions() {
+}
+class _RectsOptions {
+    constructor() {
         this.width = 20;
         this.height = 20;
         this.minInterval = 0;
@@ -238,55 +212,50 @@ var _RectsOptions = /** @class */ (function () {
         this.strokeWidth = 1;
         this.fillColor = "";
     }
-    return _RectsOptions;
-}());
-var _CirclesOptions = /** @class */ (function () {
-    function _CirclesOptions() {
+}
+class _CirclesOptions {
+    constructor() {
         this.radius = 10;
         this.minInterval = 0;
         this.strokeColor = "#000";
         this.strokeWidth = 1;
         this.fillColor = "";
     }
-    return _CirclesOptions;
-}());
-var _TrianglesOptions = /** @class */ (function () {
-    function _TrianglesOptions() {
+}
+class _TrianglesOptions {
+    constructor() {
         this.edgeLength = 20;
         this.minInterval = 0;
         this.strokeColor = "#000";
         this.strokeWidth = 1;
         this.fillColor = "";
     }
-    return _TrianglesOptions;
-}());
-var _CrossMarksOptions = /** @class */ (function () {
-    function _CrossMarksOptions() {
+}
+class _CrossMarksOptions {
+    constructor() {
         this.lineLength = 20;
         this.minInterval = 0;
         this.strokeColor = "#000";
         this.strokeWidth = 1;
     }
-    return _CrossMarksOptions;
-}());
-var _WithDrawerOptions = /** @class */ (function () {
-    function _WithDrawerOptions() {
+}
+class _WithDrawerOptions {
+    constructor() {
         this.minInterval = 20;
     }
-    return _WithDrawerOptions;
-}());
+}
 //
 // DrawBetween
 //
-var DrawBetween = /** @class */ (function () {
-    function DrawBetween(elem) {
-        var cv = DrawBetween.appendCanvas(elem);
+class DrawBetween {
+    constructor(elem) {
+        const cv = DrawBetween.appendCanvas(elem);
         this.ctx = cv.getContext("2d");
     }
     // appendCanvas()
-    DrawBetween.appendCanvas = function (elem) {
-        var cv = document.createElement("canvas");
-        var resizeCv = function () {
+    static appendCanvas(elem) {
+        const cv = document.createElement("canvas");
+        const resizeCv = () => {
             cv.width = elem.clientWidth;
             cv.height = elem.clientHeight;
         };
@@ -300,25 +269,25 @@ var DrawBetween = /** @class */ (function () {
         window.addEventListener("resize", resizeCv);
         elem.appendChild(cv);
         return cv;
-    };
+    }
     // getPointsBetween()
     //  return points between (p0, p1) with specified intervals.
-    DrawBetween.getPointsBetween = function (p0, p1, minInterval) {
+    static getPointsBetween(p0, p1, minInterval) {
         // len: length of (p0->p1)
-        var len = Math.sqrt(Math.pow(p0.x - p1.x, 2) + Math.pow(p0.y - p1.y, 2));
+        const len = Math.sqrt(Math.pow(p0.x - p1.x, 2) + Math.pow(p0.y - p1.y, 2));
         // n: number of points
         if (minInterval < 1) {
             return [];
         }
-        var _n = Math.floor(len / minInterval);
-        var remainder = len - _n * minInterval;
-        var n = _n + 1;
+        const _n = Math.floor(len / minInterval);
+        const remainder = len - _n * minInterval;
+        const n = _n + 1;
         // interval:
-        var interval = minInterval + remainder / n;
+        const interval = minInterval + remainder / n;
         // dx, dy: amount of change on X and Y to l on the Line(y=mx).
-        var l = interval;
-        var dx;
-        var dy;
+        const l = interval;
+        let dx;
+        let dy;
         if (p0.x === p1.x) {
             // line(p0->p1): x = C
             dx = 0;
@@ -329,7 +298,7 @@ var DrawBetween = /** @class */ (function () {
         }
         else {
             // line(p0->p1): y = mx
-            var m = (p0.y - p1.y) / (p0.x - p1.x);
+            const m = (p0.y - p1.y) / (p0.x - p1.x);
             // l^2 = x^2 + y^2
             // -> l^2 = x^2 + (mx)^2
             // -> x^2 = l^2 / (m^2 + 1)
@@ -340,22 +309,21 @@ var DrawBetween = /** @class */ (function () {
                 dy = -dy;
             }
         }
-        var points = [];
-        for (var i = 0; i < n; i++) {
+        const points = [];
+        for (let i = 0; i < n; i++) {
             points.push({
                 x: Math.floor(p0.x + dx * i),
                 y: Math.floor(p0.y + dy * i)
             });
         }
         return points;
-    };
+    }
     // getPointsFor()
     //   return points for drawing objects (width, height)
     //   at the specified intervals.
-    DrawBetween.getPointsFor = function (p0, p1, width, height, minInterval) {
-        if (minInterval === void 0) { minInterval = 0; }
+    static getPointsFor(p0, p1, width, height, minInterval = 0) {
         // len: object's length on line(p0->p1);
-        var len;
+        let len;
         if (p0.x === p1.x) {
             // y = C
             len = height;
@@ -366,7 +334,7 @@ var DrawBetween = /** @class */ (function () {
         }
         else {
             // line(p0->p1): y = mx
-            var m = (p0.y - p1.y) / (p0.x - p1.x);
+            const m = (p0.y - p1.y) / (p0.x - p1.x);
             if (Math.abs(m) * width < height) {
                 len = Math.sqrt(Math.pow(width, 2) + Math.pow(m * width, 2));
             }
@@ -375,34 +343,33 @@ var DrawBetween = /** @class */ (function () {
             }
         }
         return DrawBetween.getPointsBetween(p0, p1, len + minInterval);
-    };
+    }
     // clear()
-    DrawBetween.prototype.clear = function () {
-        var cv = this.ctx.canvas;
+    clear() {
+        const cv = this.ctx.canvas;
         this.ctx.clearRect(0, 0, cv.width, cv.height);
-    };
+    }
     // images()
-    DrawBetween.prototype.images = function (p0, p1, imageUrl, options) {
-        var _this = this;
-        var defaultOptions = new _ImagesOptions();
-        var opts = __assign({}, defaultOptions, { options: options });
-        var minInterval = opts.minInterval;
+    images(p0, p1, imageUrl, options) {
+        const defaultOptions = new _ImagesOptions();
+        const opts = Object.assign(defaultOptions, options);
+        const minInterval = opts.minInterval;
         if (opts.borderWidth) {
             this.ctx.lineWidth = opts.borderWidth;
             this.ctx.strokeStyle = opts.borderColor;
         }
-        var doit = function (img) {
-            var width = opts.width < 0 ? img.width : opts.width;
-            var height = opts.height < 0 ? img.height : opts.height;
-            DrawBetween.getPointsFor(p0, p1, width, height, minInterval).forEach(function (p) {
-                var x = p.x;
-                var y = p.y;
-                var w = width;
-                var h = height;
+        const doit = (img) => {
+            const width = opts.width < 0 ? img.width : opts.width;
+            const height = opts.height < 0 ? img.height : opts.height;
+            DrawBetween.getPointsFor(p0, p1, width, height, minInterval).forEach(p => {
+                let x = p.x;
+                let y = p.y;
+                let w = width;
+                let h = height;
                 if (opts.borderWidth) {
-                    _this.ctx.beginPath();
-                    _this.ctx.rect(x, y, w, h);
-                    _this.ctx.stroke();
+                    this.ctx.beginPath();
+                    this.ctx.rect(x, y, w, h);
+                    this.ctx.stroke();
                     if (opts.borderWidth) {
                         x = x + opts.borderWidth;
                         y = y + opts.borderWidth;
@@ -416,19 +383,19 @@ var DrawBetween = /** @class */ (function () {
                         h = h - 2;
                     }
                 }
-                _this.ctx.drawImage(img, x, y, w, h);
+                this.ctx.drawImage(img, x, y, w, h);
             });
         };
-        var img = new Image();
-        img.onload = function () {
+        const img = new Image();
+        img.onload = () => {
             doit(img);
         };
         img.src = imageUrl;
-    };
+    }
     // line()
-    DrawBetween.prototype.line = function (p0, p1, options) {
-        var defaultOptions = new _LineOptions();
-        var opts = __assign({}, defaultOptions, { options: options });
+    line(p0, p1, options) {
+        const defaultOptions = new _LineOptions();
+        const opts = Object.assign(defaultOptions, options);
         this.ctx.beginPath();
         this.ctx.lineWidth = opts.width;
         this.ctx.strokeStyle = opts.color;
@@ -436,14 +403,13 @@ var DrawBetween = /** @class */ (function () {
         this.ctx.moveTo(p0.x, p0.y);
         this.ctx.lineTo(p1.x, p1.y);
         this.ctx.stroke();
-    };
+    }
     // circles()
-    DrawBetween.prototype.circles = function (p0, p1, options) {
-        var _this = this;
-        var defaultOptions = new _CirclesOptions();
-        var opts = __assign({}, defaultOptions, { options: options });
-        var radius = opts.radius;
-        var minInterval = opts.minInterval;
+    circles(p0, p1, options) {
+        const defaultOptions = new _CirclesOptions();
+        const opts = Object.assign(defaultOptions, options);
+        const radius = opts.radius;
+        const minInterval = opts.minInterval;
         if (opts.strokeWidth) {
             this.ctx.lineWidth = opts.strokeWidth;
             this.ctx.strokeStyle = opts.strokeColor;
@@ -451,25 +417,24 @@ var DrawBetween = /** @class */ (function () {
         if (opts.fillColor) {
             this.ctx.fillStyle = opts.fillColor;
         }
-        DrawBetween.getPointsFor(p0, p1, radius * 2, radius * 2, minInterval).forEach(function (p) {
-            _this.ctx.beginPath();
-            _this.ctx.arc(p.x, p.y, radius, 0, 2 * Math.PI);
+        DrawBetween.getPointsFor(p0, p1, radius * 2, radius * 2, minInterval).forEach(p => {
+            this.ctx.beginPath();
+            this.ctx.arc(p.x, p.y, radius, 0, 2 * Math.PI);
             if (opts.strokeWidth) {
-                _this.ctx.stroke();
+                this.ctx.stroke();
             }
             if (opts.fillColor) {
-                _this.ctx.fill();
+                this.ctx.fill();
             }
         });
-    };
+    }
     // rects()
-    DrawBetween.prototype.rects = function (p0, p1, options) {
-        var _this = this;
-        var defaultOptions = new _RectsOptions();
-        var opts = __assign({}, defaultOptions, { options: options });
-        var width = opts.width;
-        var height = opts.height;
-        var minInterval = opts.minInterval;
+    rects(p0, p1, options) {
+        const defaultOptions = new _RectsOptions();
+        const opts = Object.assign(defaultOptions, options);
+        const width = opts.width;
+        const height = opts.height;
+        const minInterval = opts.minInterval;
         if (opts.strokeWidth) {
             this.ctx.lineWidth = opts.strokeWidth;
             this.ctx.strokeStyle = opts.strokeColor;
@@ -477,26 +442,25 @@ var DrawBetween = /** @class */ (function () {
         if (opts.fillColor) {
             this.ctx.fillStyle = opts.fillColor;
         }
-        DrawBetween.getPointsFor(p0, p1, width, height, minInterval).forEach(function (p) {
-            _this.ctx.beginPath();
-            _this.ctx.rect(p.x, p.y, width, height);
+        DrawBetween.getPointsFor(p0, p1, width, height, minInterval).forEach(p => {
+            this.ctx.beginPath();
+            this.ctx.rect(p.x, p.y, width, height);
             if (opts.fillColor) {
-                _this.ctx.fill();
+                this.ctx.fill();
             }
             if (opts.strokeWidth) {
-                _this.ctx.stroke();
+                this.ctx.stroke();
             }
         });
-    };
+    }
     // triangles()
-    DrawBetween.prototype.triangles = function (p0, p1, options) {
-        var _this = this;
-        var defaultOptions = new _TrianglesOptions();
-        var opts = __assign({}, defaultOptions, { options: options });
-        var edgeLength = opts.edgeLength;
-        var dx = Math.floor(edgeLength / 2);
-        var dy = Math.floor((edgeLength * Math.sqrt(3)) / 2);
-        var minInterval = opts.minInterval;
+    triangles(p0, p1, options) {
+        const defaultOptions = new _TrianglesOptions();
+        const opts = Object.assign(defaultOptions, options);
+        const edgeLength = opts.edgeLength;
+        const dx = Math.floor(edgeLength / 2);
+        const dy = Math.floor((edgeLength * Math.sqrt(3)) / 2);
+        const minInterval = opts.minInterval;
         if (opts.strokeWidth) {
             this.ctx.lineWidth = opts.strokeWidth;
             this.ctx.strokeStyle = opts.strokeColor;
@@ -504,63 +468,60 @@ var DrawBetween = /** @class */ (function () {
         if (opts.fillColor) {
             this.ctx.fillStyle = opts.fillColor;
         }
-        DrawBetween.getPointsFor(p0, p1, edgeLength, edgeLength, minInterval).forEach(function (p) {
-            _this.ctx.beginPath();
-            _this.ctx.moveTo(p.x, p.y);
+        DrawBetween.getPointsFor(p0, p1, edgeLength, edgeLength, minInterval).forEach(p => {
+            this.ctx.beginPath();
+            this.ctx.moveTo(p.x, p.y);
             // bottom-left
-            _this.ctx.lineTo(p.x - dx, p.y + dy);
+            this.ctx.lineTo(p.x - dx, p.y + dy);
             // bottom-right
-            _this.ctx.lineTo(p.x + dx, p.y + dy);
+            this.ctx.lineTo(p.x + dx, p.y + dy);
             // top
-            _this.ctx.lineTo(p.x, p.y);
+            this.ctx.lineTo(p.x, p.y);
             if (opts.fillColor) {
-                _this.ctx.fill();
+                this.ctx.fill();
             }
             if (opts.strokeWidth) {
-                _this.ctx.stroke();
+                this.ctx.stroke();
             }
         });
-    };
+    }
     // crossMarks()
-    DrawBetween.prototype.crossMarks = function (p0, p1, options) {
-        var _this = this;
-        var defaultOptions = new _CrossMarksOptions();
-        var opts = __assign({}, defaultOptions, { options: options });
-        var lineLength = opts.lineLength;
-        var d = Math.floor(lineLength / (2 * Math.sqrt(2)));
-        var size = Math.floor(lineLength / Math.sqrt(2));
-        var minInterval = opts.minInterval;
+    crossMarks(p0, p1, options) {
+        const defaultOptions = new _CrossMarksOptions();
+        const opts = Object.assign(defaultOptions, options);
+        const lineLength = opts.lineLength;
+        const d = Math.floor(lineLength / (2 * Math.sqrt(2)));
+        const size = Math.floor(lineLength / Math.sqrt(2));
+        const minInterval = opts.minInterval;
         if (opts.strokeWidth) {
             this.ctx.lineWidth = opts.strokeWidth;
             this.ctx.strokeStyle = opts.strokeColor;
         }
-        DrawBetween.getPointsFor(p0, p1, size, size, minInterval).forEach(function (p) {
-            _this.ctx.beginPath();
+        DrawBetween.getPointsFor(p0, p1, size, size, minInterval).forEach(p => {
+            this.ctx.beginPath();
             // upper-left
-            _this.ctx.moveTo(p.x - d, p.y - d);
+            this.ctx.moveTo(p.x - d, p.y - d);
             // bottom-right
-            _this.ctx.lineTo(p.x + d, p.y + d);
+            this.ctx.lineTo(p.x + d, p.y + d);
             // upper-right
-            _this.ctx.moveTo(p.x + d, p.y - d);
+            this.ctx.moveTo(p.x + d, p.y - d);
             // bottom-left
-            _this.ctx.lineTo(p.x - d, p.y + d);
+            this.ctx.lineTo(p.x - d, p.y + d);
             if (opts.strokeWidth) {
-                _this.ctx.stroke();
+                this.ctx.stroke();
             }
         });
-    };
+    }
     // withDrawer()
-    DrawBetween.prototype.withDrawer = function (p0, p1, drawer, options) {
-        var _this = this;
-        var defaultOptions = new _WithDrawerOptions();
-        var opts = __assign({}, defaultOptions, { options: options });
-        var minInterval = opts.minInterval;
-        DrawBetween.getPointsFor(p0, p1, 0, 0, minInterval).forEach(function (p) {
-            drawer(_this.ctx, p);
+    withDrawer(p0, p1, drawer, options) {
+        const defaultOptions = new _WithDrawerOptions();
+        const opts = Object.assign(defaultOptions, options);
+        const minInterval = opts.minInterval;
+        DrawBetween.getPointsFor(p0, p1, 0, 0, minInterval).forEach(p => {
+            drawer(this.ctx, p);
         });
-    };
-    return DrawBetween;
-}());
+    }
+}
 
 module.exports = DrawBetween;
 

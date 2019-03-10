@@ -1,3 +1,4 @@
 dist
 node_modules
 bundle.js
+/test/module/*/yarn.lock

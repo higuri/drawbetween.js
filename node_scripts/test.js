@@ -9,7 +9,7 @@ execSync('yarn build:pack');
 
 // test/module/cjs/
 pushd('./test/module/cjs/');
-execSync('yarn install', { stdio: 'inherit' });
+execSync('yarn install');
 execSync('yarn build');
 execSync('yarn start');
 popd();

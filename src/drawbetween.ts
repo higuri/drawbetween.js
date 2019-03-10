@@ -32,9 +32,9 @@ class _ImagesOptions implements ImagesOptions {
 }
 // LineOptions
 export interface LineOptions {
-  width: number;
-  color: string;
-  lineDash: number[];
+  width?: number;
+  color?: string;
+  lineDash?: number[];
 }
 class _LineOptions implements LineOptions {
   public width: number = 1;
@@ -43,12 +43,12 @@ class _LineOptions implements LineOptions {
 }
 // RectsOptions
 export interface RectsOptions {
-  width: number;
-  height: number;
-  minInterval: number;
-  strokeColor: string;
-  strokeWidth: number;
-  fillColor: string;
+  width?: number;
+  height?: number;
+  minInterval?: number;
+  strokeColor?: string;
+  strokeWidth?: number;
+  fillColor?: string;
 }
 class _RectsOptions implements RectsOptions {
   width: number = 20;
@@ -60,11 +60,11 @@ class _RectsOptions implements RectsOptions {
 }
 // CirclesOptions
 export interface CirclesOptions {
-  radius: number;
-  minInterval: number;
-  strokeColor: string;
-  strokeWidth: number;
-  fillColor: string;
+  radius?: number;
+  minInterval?: number;
+  strokeColor?: string;
+  strokeWidth?: number;
+  fillColor?: string;
 }
 class _CirclesOptions implements CirclesOptions {
   radius: number = 10;
@@ -75,11 +75,11 @@ class _CirclesOptions implements CirclesOptions {
 }
 // TrianglesOptions
 export interface TrianglesOptions {
-  edgeLength: number;
-  minInterval: number;
-  strokeColor: string;
-  strokeWidth: number;
-  fillColor: string;
+  edgeLength?: number;
+  minInterval?: number;
+  strokeColor?: string;
+  strokeWidth?: number;
+  fillColor?: string;
 }
 class _TrianglesOptions implements TrianglesOptions {
   edgeLength: number = 20;
@@ -90,10 +90,10 @@ class _TrianglesOptions implements TrianglesOptions {
 }
 // CrossMarksOptions
 export interface CrossMarksOptions {
-  lineLength: number;
-  minInterval: number;
-  strokeColor: string;
-  strokeWidth: number;
+  lineLength?: number;
+  minInterval?: number;
+  strokeColor?: string;
+  strokeWidth?: number;
 }
 class _CrossMarksOptions implements CrossMarksOptions {
   lineLength: number = 20;
@@ -103,7 +103,7 @@ class _CrossMarksOptions implements CrossMarksOptions {
 }
 // WithDrawerOptions
 export interface WithDrawerOptions {
-  minInterval: number;
+  minInterval?: number;
 }
 class _WithDrawerOptions implements WithDrawerOptions {
   public minInterval: number = 20;
@@ -232,7 +232,7 @@ export default class DrawBetween {
     options?: ImagesOptions
   ): void {
     const defaultOptions = new _ImagesOptions();
-    const opts = { ...defaultOptions, options };
+    const opts = Object.assign(defaultOptions, options);
     const minInterval = opts.minInterval;
     if (opts.borderWidth) {
       this.ctx.lineWidth = opts.borderWidth;
@@ -277,7 +277,7 @@ export default class DrawBetween {
   // line()
   line(p0: Point, p1: Point, options?: LineOptions): void {
     const defaultOptions = new _LineOptions();
-    const opts = { ...defaultOptions, options };
+    const opts = Object.assign(defaultOptions, options);
     this.ctx.beginPath();
     this.ctx.lineWidth = opts.width;
     this.ctx.strokeStyle = opts.color;
@@ -290,7 +290,7 @@ export default class DrawBetween {
   // circles()
   circles(p0: Point, p1: Point, options?: CirclesOptions): void {
     const defaultOptions = new _CirclesOptions();
-    const opts = { ...defaultOptions, options };
+    const opts = Object.assign(defaultOptions, options);
     const radius = opts.radius;
     const minInterval = opts.minInterval;
     if (opts.strokeWidth) {
@@ -321,7 +321,7 @@ export default class DrawBetween {
   // rects()
   rects(p0: Point, p1: Point, options?: RectsOptions): void {
     const defaultOptions = new _RectsOptions();
-    const opts = { ...defaultOptions, options };
+    const opts = Object.assign(defaultOptions, options);
     const width = opts.width;
     const height = opts.height;
     const minInterval = opts.minInterval;
@@ -347,7 +347,7 @@ export default class DrawBetween {
   // triangles()
   triangles(p0: Point, p1: Point, options?: TrianglesOptions): void {
     const defaultOptions = new _TrianglesOptions();
-    const opts = { ...defaultOptions, options };
+    const opts = Object.assign(defaultOptions, options);
     const edgeLength = opts.edgeLength;
     const dx = Math.floor(edgeLength / 2);
     const dy = Math.floor((edgeLength * Math.sqrt(3)) / 2);
@@ -386,7 +386,7 @@ export default class DrawBetween {
   // crossMarks()
   crossMarks(p0: Point, p1: Point, options?: CrossMarksOptions): void {
     const defaultOptions = new _CrossMarksOptions();
-    const opts = { ...defaultOptions, options };
+    const opts = Object.assign(defaultOptions, options);
     const lineLength = opts.lineLength;
     const d = Math.floor(lineLength / (2 * Math.sqrt(2)));
     const size = Math.floor(lineLength / Math.sqrt(2));
@@ -419,7 +419,7 @@ export default class DrawBetween {
     options?: WithDrawerOptions
   ): void {
     const defaultOptions = new _WithDrawerOptions();
-    const opts = { ...defaultOptions, options };
+    const opts = Object.assign(defaultOptions, options);
     const minInterval = opts.minInterval;
     DrawBetween.getPointsFor(p0, p1, 0, 0, minInterval).forEach(p => {
       drawer(this.ctx, p);

@@ -186,10 +186,11 @@ Draw specified paths on the specified line segment.
 Clear all drawings of the instance.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the MIT License - see the [LICENSE.md][lic-url] file for details.
 
 <!-- Markdown link -->
 [npm-image]: https://img.shields.io/npm/v/drawbetween.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/drawbetween
 [npm-downloads]: https://img.shields.io/npm/dm/drawbetween.svg?style=flat-square
 [mdn-linedash]: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash#Parameters
+[lic-url]: https://raw.githubusercontent.com/higuri/drawbetween.js/master/LICENSE

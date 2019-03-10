@@ -211,27 +211,93 @@ var __assign = function() {
 };
 
 // drawbetween/index.js
-// DrawBetween:
+var _ImagesOptions = /** @class */ (function () {
+    function _ImagesOptions() {
+        this.width = -1;
+        this.height = -1;
+        this.minInterval = 0;
+        this.borderColor = "#000";
+        this.borderWidth = 0;
+    }
+    return _ImagesOptions;
+}());
+var _LineOptions = /** @class */ (function () {
+    function _LineOptions() {
+        this.width = 1;
+        this.color = "#000000";
+        this.lineDash = [0, 0];
+    }
+    return _LineOptions;
+}());
+var _RectsOptions = /** @class */ (function () {
+    function _RectsOptions() {
+        this.width = 20;
+        this.height = 20;
+        this.minInterval = 0;
+        this.strokeColor = "#000";
+        this.strokeWidth = 1;
+        this.fillColor = "";
+    }
+    return _RectsOptions;
+}());
+var _CirclesOptions = /** @class */ (function () {
+    function _CirclesOptions() {
+        this.radius = 10;
+        this.minInterval = 0;
+        this.strokeColor = "#000";
+        this.strokeWidth = 1;
+        this.fillColor = "";
+    }
+    return _CirclesOptions;
+}());
+var _TrianglesOptions = /** @class */ (function () {
+    function _TrianglesOptions() {
+        this.edgeLength = 20;
+        this.minInterval = 0;
+        this.strokeColor = "#000";
+        this.strokeWidth = 1;
+        this.fillColor = "";
+    }
+    return _TrianglesOptions;
+}());
+var _CrossMarksOptions = /** @class */ (function () {
+    function _CrossMarksOptions() {
+        this.lineLength = 20;
+        this.minInterval = 0;
+        this.strokeColor = "#000";
+        this.strokeWidth = 1;
+    }
+    return _CrossMarksOptions;
+}());
+var _WithDrawerOptions = /** @class */ (function () {
+    function _WithDrawerOptions() {
+        this.minInterval = 20;
+    }
+    return _WithDrawerOptions;
+}());
+//
+// DrawBetween
+//
 var DrawBetween = /** @class */ (function () {
     function DrawBetween(elem) {
         var cv = DrawBetween.appendCanvas(elem);
-        this.ctx = cv.getContext('2d');
+        this.ctx = cv.getContext("2d");
     }
     // appendCanvas()
     DrawBetween.appendCanvas = function (elem) {
-        var cv = document.createElement('canvas');
-        var resizeCv = (function () {
+        var cv = document.createElement("canvas");
+        var resizeCv = function () {
             cv.width = elem.clientWidth;
             cv.height = elem.clientHeight;
-        });
-        cv.style.pointerEvents = 'none';
+        };
+        cv.style.pointerEvents = "none";
         resizeCv();
         // make canvas responsive:
         // TODO: actually it is not enough to just listen to
         //       window.resize event. We should listen to
         //       the parent element's resize event...
         //       Use 'ResizeObserver' ? (available only in Chrome).
-        window.addEventListener('resize', resizeCv);
+        window.addEventListener("resize", resizeCv);
         elem.appendChild(cv);
         return cv;
     };
@@ -239,13 +305,13 @@ var DrawBetween = /** @class */ (function () {
     //  return points between (p0, p1) with specified intervals.
     DrawBetween.getPointsBetween = function (p0, p1, minInterval) {
         // len: length of (p0->p1)
-        var len = Math.sqrt(Math.pow((p0.x - p1.x), 2) + Math.pow((p0.y - p1.y), 2));
+        var len = Math.sqrt(Math.pow(p0.x - p1.x, 2) + Math.pow(p0.y - p1.y, 2));
         // n: number of points
         if (minInterval < 1) {
             return [];
         }
         var _n = Math.floor(len / minInterval);
-        var remainder = len - (_n * minInterval);
+        var remainder = len - _n * minInterval;
         var n = _n + 1;
         // interval:
         var interval = minInterval + remainder / n;
@@ -301,7 +367,7 @@ var DrawBetween = /** @class */ (function () {
         else {
             // line(p0->p1): y = mx
             var m = (p0.y - p1.y) / (p0.x - p1.x);
-            if ((Math.abs(m) * width) < height) {
+            if (Math.abs(m) * width < height) {
                 len = Math.sqrt(Math.pow(width, 2) + Math.pow(m * width, 2));
             }
             else {
@@ -318,13 +384,7 @@ var DrawBetween = /** @class */ (function () {
     // images()
     DrawBetween.prototype.images = function (p0, p1, imageUrl, options) {
         var _this = this;
-        var defaultOptions = {
-            width: -1,
-            height: -1,
-            minInterval: 0,
-            borderColor: '#000',
-            borderWidth: 0
-        };
+        var defaultOptions = new _ImagesOptions();
         var opts = __assign({}, defaultOptions, { options: options });
         var minInterval = opts.minInterval;
         if (opts.borderWidth) {
@@ -334,7 +394,6 @@ var DrawBetween = /** @class */ (function () {
         var doit = function (img) {
             var width = opts.width < 0 ? img.width : opts.width;
             var height = opts.height < 0 ? img.height : opts.height;
-            var m = (p0.y - p1.y) / (p0.x - p1.x);
             DrawBetween.getPointsFor(p0, p1, width, height, minInterval).forEach(function (p) {
                 var x = p.x;
                 var y = p.y;
@@ -368,11 +427,7 @@ var DrawBetween = /** @class */ (function () {
     };
     // line()
     DrawBetween.prototype.line = function (p0, p1, options) {
-        var defaultOptions = {
-            width: 1,
-            color: '#000000',
-            lineDash: [0, 0]
-        };
+        var defaultOptions = new _LineOptions();
         var opts = __assign({}, defaultOptions, { options: options });
         this.ctx.beginPath();
         this.ctx.lineWidth = opts.width;
@@ -385,13 +440,7 @@ var DrawBetween = /** @class */ (function () {
     // circles()
     DrawBetween.prototype.circles = function (p0, p1, options) {
         var _this = this;
-        var defaultOptions = {
-            radius: 10,
-            minInterval: 0,
-            strokeColor: '#000',
-            strokeWidth: 1,
-            fillColor: ''
-        };
+        var defaultOptions = new _CirclesOptions();
         var opts = __assign({}, defaultOptions, { options: options });
         var radius = opts.radius;
         var minInterval = opts.minInterval;
@@ -416,14 +465,7 @@ var DrawBetween = /** @class */ (function () {
     // rects()
     DrawBetween.prototype.rects = function (p0, p1, options) {
         var _this = this;
-        var defaultOptions = {
-            width: 20,
-            height: 20,
-            minInterval: 0,
-            strokeColor: '#000',
-            strokeWidth: 1,
-            fillColor: ''
-        };
+        var defaultOptions = new _RectsOptions();
         var opts = __assign({}, defaultOptions, { options: options });
         var width = opts.width;
         var height = opts.height;
@@ -449,17 +491,11 @@ var DrawBetween = /** @class */ (function () {
     // triangles()
     DrawBetween.prototype.triangles = function (p0, p1, options) {
         var _this = this;
-        var defaultOptions = {
-            edgeLength: 20,
-            minInterval: 0,
-            strokeColor: '#000',
-            strokeWidth: 1,
-            fillColor: ''
-        };
+        var defaultOptions = new _TrianglesOptions();
         var opts = __assign({}, defaultOptions, { options: options });
         var edgeLength = opts.edgeLength;
         var dx = Math.floor(edgeLength / 2);
-        var dy = Math.floor(edgeLength * Math.sqrt(3) / 2);
+        var dy = Math.floor((edgeLength * Math.sqrt(3)) / 2);
         var minInterval = opts.minInterval;
         if (opts.strokeWidth) {
             this.ctx.lineWidth = opts.strokeWidth;
@@ -488,12 +524,7 @@ var DrawBetween = /** @class */ (function () {
     // crossMarks()
     DrawBetween.prototype.crossMarks = function (p0, p1, options) {
         var _this = this;
-        var defaultOptions = {
-            lineLength: 20,
-            minInterval: 0,
-            strokeColor: '#000',
-            strokeWidth: 1
-        };
+        var defaultOptions = new _CrossMarksOptions();
         var opts = __assign({}, defaultOptions, { options: options });
         var lineLength = opts.lineLength;
         var d = Math.floor(lineLength / (2 * Math.sqrt(2)));
@@ -521,9 +552,7 @@ var DrawBetween = /** @class */ (function () {
     // withDrawer()
     DrawBetween.prototype.withDrawer = function (p0, p1, drawer, options) {
         var _this = this;
-        var defaultOptions = {
-            minInterval: 20
-        };
+        var defaultOptions = new _WithDrawerOptions();
         var opts = __assign({}, defaultOptions, { options: options });
         var minInterval = opts.minInterval;
         DrawBetween.getPointsFor(p0, p1, 0, 0, minInterval).forEach(function (p) {

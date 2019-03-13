@@ -7,7 +7,7 @@ A JavaScript library for drawing images and shapes on the specified line segment
 ![](https://raw.githubusercontent.com/higuri/drawbetween.js/gh-pages/images/screenshot.gif)
 
 ## Demo
-https://higuri.github.io/drawbetween.js/
+https://higuri.github.io/drawbetween.js/sample/
 
 ## Installation
 ### via NPM

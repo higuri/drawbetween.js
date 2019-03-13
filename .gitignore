@@ -1,5 +1,5 @@
-bundle.js
 node_modules
 /dist
 /drawbetween.tgz
 /test/module/*/package-lock.json
+/test/module/*/bundle.js

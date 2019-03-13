@@ -41,8 +41,8 @@
     "build:modules": "rollup -c",
     "build:pack": "yarn pack --filename drawbetween.tgz",
     "lint": "eslint --fix ./src/*.ts",
-    "test": "node ./node_scripts/test.js",
-    "clean": "node ./node_scripts/clean.js",
+    "test": "node ./npm_scripts/test.js",
+    "clean": "node ./npm_scripts/clean.js",
     "prepublishOnly": "yarn build:modules"
   },
   "devDependencies": {

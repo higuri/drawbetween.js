@@ -1,6 +1,4 @@
 // drawbetween/index.js
-// TODO:
-// - add 'rotate' to opts
 
 //
 // Type definitions for parameters.
@@ -234,7 +232,7 @@ export default class DrawBetween {
     const defaultOptions = new _ImagesOptions();
     const opts = Object.assign(defaultOptions, options);
     const minInterval = opts.minInterval;
-    if (opts.borderWidth) {
+    if (0 < opts.borderWidth) {
       this.ctx.lineWidth = opts.borderWidth;
       this.ctx.strokeStyle = opts.borderColor;
     }
@@ -247,21 +245,14 @@ export default class DrawBetween {
           let y = p.y;
           let w = width;
           let h = height;
-          if (opts.borderWidth) {
+          if (0 < opts.borderWidth) {
             this.ctx.beginPath();
             this.ctx.rect(x, y, w, h);
             this.ctx.stroke();
-            if (opts.borderWidth) {
-              x = x + opts.borderWidth;
-              y = y + opts.borderWidth;
-              w = w - opts.borderWidth * 2;
-              h = h - opts.borderWidth * 2;
-            } else {
-              x = x + 1;
-              y = y + 1;
-              w = w - 2;
-              h = h - 2;
-            }
+            x += opts.borderWidth;
+            y += opts.borderWidth;
+            w -= opts.borderWidth * 2;
+            h -= opts.borderWidth * 2;
           }
           this.ctx.drawImage(img, x, y, w, h);
         }
@@ -293,11 +284,11 @@ export default class DrawBetween {
     const opts = Object.assign(defaultOptions, options);
     const radius = opts.radius;
     const minInterval = opts.minInterval;
-    if (opts.strokeWidth) {
+    if (0 < opts.strokeWidth) {
       this.ctx.lineWidth = opts.strokeWidth;
       this.ctx.strokeStyle = opts.strokeColor;
     }
-    if (opts.fillColor) {
+    if (opts.fillColor != '') {
       this.ctx.fillStyle = opts.fillColor;
     }
     DrawBetween.getPointsFor(
@@ -309,10 +300,10 @@ export default class DrawBetween {
     ).forEach(p => {
       this.ctx.beginPath();
       this.ctx.arc(p.x, p.y, radius, 0, 2 * Math.PI);
-      if (opts.strokeWidth) {
+      if (0 < opts.strokeWidth) {
         this.ctx.stroke();
       }
-      if (opts.fillColor) {
+      if (opts.fillColor !== '') {
         this.ctx.fill();
       }
     });
@@ -325,21 +316,21 @@ export default class DrawBetween {
     const width = opts.width;
     const height = opts.height;
     const minInterval = opts.minInterval;
-    if (opts.strokeWidth) {
+    if (0 < opts.strokeWidth) {
       this.ctx.lineWidth = opts.strokeWidth;
       this.ctx.strokeStyle = opts.strokeColor;
     }
-    if (opts.fillColor) {
+    if (opts.fillColor !== '') {
       this.ctx.fillStyle = opts.fillColor;
     }
     DrawBetween.getPointsFor(p0, p1, width, height, minInterval).forEach(p => {
       this.ctx.beginPath();
       this.ctx.rect(p.x, p.y, width, height);
-      if (opts.fillColor) {
-        this.ctx.fill();
-      }
-      if (opts.strokeWidth) {
+      if (0 < opts.strokeWidth) {
         this.ctx.stroke();
+      }
+      if (opts.fillColor !== '') {
+        this.ctx.fill();
       }
     });
   }
@@ -352,11 +343,11 @@ export default class DrawBetween {
     const dx = Math.floor(edgeLength / 2);
     const dy = Math.floor((edgeLength * Math.sqrt(3)) / 2);
     const minInterval = opts.minInterval;
-    if (opts.strokeWidth) {
+    if (0 < opts.strokeWidth) {
       this.ctx.lineWidth = opts.strokeWidth;
       this.ctx.strokeStyle = opts.strokeColor;
     }
-    if (opts.fillColor) {
+    if (opts.fillColor !== '') {
       this.ctx.fillStyle = opts.fillColor;
     }
     DrawBetween.getPointsFor(
@@ -374,11 +365,11 @@ export default class DrawBetween {
       this.ctx.lineTo(p.x + dx, p.y + dy);
       // top
       this.ctx.lineTo(p.x, p.y);
-      if (opts.fillColor) {
-        this.ctx.fill();
-      }
-      if (opts.strokeWidth) {
+      if (0 < opts.strokeWidth) {
         this.ctx.stroke();
+      }
+      if (opts.fillColor !== '') {
+        this.ctx.fill();
       }
     });
   }
@@ -391,7 +382,7 @@ export default class DrawBetween {
     const d = Math.floor(lineLength / (2 * Math.sqrt(2)));
     const size = Math.floor(lineLength / Math.sqrt(2));
     const minInterval = opts.minInterval;
-    if (opts.strokeWidth) {
+    if (0 < opts.strokeWidth) {
       this.ctx.lineWidth = opts.strokeWidth;
       this.ctx.strokeStyle = opts.strokeColor;
     }
@@ -405,7 +396,7 @@ export default class DrawBetween {
       this.ctx.moveTo(p.x + d, p.y - d);
       // bottom-left
       this.ctx.lineTo(p.x - d, p.y + d);
-      if (opts.strokeWidth) {
+      if (0 < opts.strokeWidth) {
         this.ctx.stroke();
       }
     });

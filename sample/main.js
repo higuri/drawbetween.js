@@ -171,13 +171,13 @@ function main() {
       circlesOpts.strokeColor = evt.target.value;
     });
   const circlesStrokeWidth = document.querySelector('#circles_stroke_width');
-  circlesStrokeWidthvalue = circlesOpts.strokeWidth;
+  circlesStrokeWidth.value = circlesOpts.strokeWidth;
   circlesStrokeWidth.addEventListener(
     'change', (evt) => {
       circlesOpts.strokeWidth = parseInt(evt.target.value);
     });
   const circlesFillColor = document.querySelector('#circles_fill_color');
-  circlesFillColorvalue = circlesOpts.fillColor;
+  circlesFillColor.value = circlesOpts.fillColor;
   circlesFillColor.addEventListener(
     'change', (evt) => {
       circlesOpts.fillColor = evt.target.value;

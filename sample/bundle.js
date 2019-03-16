@@ -229,9 +229,9 @@ var DrawBetween = /** @class */ (function () {
         if (opts.fillColor != '') {
             this.ctx.fillStyle = opts.fillColor;
         }
-        DrawBetween.getPointsFor(p0, p1, radius * 2 + opts.strokeWidth * 2, radius * 2 + opts.strokeWidth * 2, minInterval).forEach(function (p) {
+        DrawBetween.getPointsFor(p0, p1, radius * 2 + opts.strokeWidth, radius * 2 + opts.strokeWidth, minInterval).forEach(function (p) {
             _this.ctx.beginPath();
-            _this.ctx.arc(p.x + opts.strokeWidth, p.y + opts.strokeWidth, Math.floor(radius + opts.strokeWidth / 2), 0, 2 * Math.PI);
+            _this.ctx.arc(p.x, p.y, radius, 0, 2 * Math.PI);
             if (0 < opts.strokeWidth) {
                 _this.ctx.stroke();
             }
@@ -255,9 +255,9 @@ var DrawBetween = /** @class */ (function () {
         if (opts.fillColor !== '') {
             this.ctx.fillStyle = opts.fillColor;
         }
-        DrawBetween.getPointsFor(p0, p1, width + opts.strokeWidth * 2, height + opts.strokeWidth * 2, minInterval).forEach(function (p) {
+        DrawBetween.getPointsFor(p0, p1, width + opts.strokeWidth, height + opts.strokeWidth, minInterval).forEach(function (p) {
             _this.ctx.beginPath();
-            _this.ctx.rect(p.x + Math.floor(opts.strokeWidth / 2), p.y + Math.floor(opts.strokeWidth / 2), width + opts.strokeWidth, height + opts.strokeWidth);
+            _this.ctx.rect(p.x, p.y, width, height);
             if (0 < opts.strokeWidth) {
                 _this.ctx.stroke();
             }

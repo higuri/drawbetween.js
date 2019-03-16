@@ -1,4 +1,7 @@
 // drawbetween/index.js
+// TODO:
+// - rotate option.
+// - triangles @ 1 < strokeWidth
 
 //
 // Type definitions for parameters.
@@ -237,24 +240,28 @@ export default class DrawBetween {
       this.ctx.strokeStyle = opts.borderColor;
     }
     const doit = (img: HTMLImageElement) => {
-      const width = opts.width < 0 ? img.width : opts.width;
-      const height = opts.height < 0 ? img.height : opts.height;
-      DrawBetween.getPointsFor(p0, p1, width, height, minInterval).forEach(
+      const imageWidth = opts.width < 0 ? img.width : opts.width;
+      const imageHeight = opts.height < 0 ? img.height : opts.height;
+      DrawBetween.getPointsFor(
+        p0, p1,
+        imageWidth + opts.borderWidth * 2,
+        imageHeight + opts.borderWidth * 2,
+        minInterval).forEach(
         p => {
-          let x = p.x;
-          let y = p.y;
-          let w = width;
-          let h = height;
           if (0 < opts.borderWidth) {
             this.ctx.beginPath();
-            this.ctx.rect(x, y, w, h);
+            this.ctx.rect(
+              p.x + Math.floor(opts.borderWidth / 2),
+              p.y + Math.floor(opts.borderWidth / 2),
+              imageWidth + opts.borderWidth,
+              imageHeight + opts.borderWidth);
             this.ctx.stroke();
-            x += opts.borderWidth;
-            y += opts.borderWidth;
-            w -= opts.borderWidth * 2;
-            h -= opts.borderWidth * 2;
           }
-          this.ctx.drawImage(img, x, y, w, h);
+          this.ctx.drawImage(
+            img,
+            p.x + opts.borderWidth,
+            p.y + opts.borderWidth,
+            imageWidth, imageHeight);
         }
       );
     };
@@ -292,14 +299,17 @@ export default class DrawBetween {
       this.ctx.fillStyle = opts.fillColor;
     }
     DrawBetween.getPointsFor(
-      p0,
-      p1,
-      radius * 2,
-      radius * 2,
-      minInterval
-    ).forEach(p => {
+      p0, p1,
+      radius * 2 + opts.strokeWidth * 2,
+      radius * 2 + opts.strokeWidth * 2,
+      minInterval).forEach(
+      p => {
       this.ctx.beginPath();
-      this.ctx.arc(p.x, p.y, radius, 0, 2 * Math.PI);
+      this.ctx.arc(
+        p.x + opts.strokeWidth,
+        p.y + opts.strokeWidth,
+        Math.floor(radius + opts.strokeWidth / 2),
+        0, 2 * Math.PI);
       if (0 < opts.strokeWidth) {
         this.ctx.stroke();
       }
@@ -323,9 +333,18 @@ export default class DrawBetween {
     if (opts.fillColor !== '') {
       this.ctx.fillStyle = opts.fillColor;
     }
-    DrawBetween.getPointsFor(p0, p1, width, height, minInterval).forEach(p => {
+    DrawBetween.getPointsFor(
+      p0, p1,
+      width + opts.strokeWidth * 2,
+      height + opts.strokeWidth * 2,
+      minInterval).forEach(
+      p => {
       this.ctx.beginPath();
-      this.ctx.rect(p.x, p.y, width, height);
+      this.ctx.rect(
+        p.x + Math.floor(opts.strokeWidth / 2),
+        p.y + Math.floor(opts.strokeWidth / 2),
+        width + opts.strokeWidth,
+        height + opts.strokeWidth);
       if (0 < opts.strokeWidth) {
         this.ctx.stroke();
       }
@@ -380,13 +399,15 @@ export default class DrawBetween {
     const opts = Object.assign(defaultOptions, options);
     const lineLength = opts.lineLength;
     const d = Math.floor(lineLength / (2 * Math.sqrt(2)));
-    const size = Math.floor(lineLength / Math.sqrt(2));
+    const size = Math.floor(
+      (lineLength + opts.strokeWidth) / Math.sqrt(2));
     const minInterval = opts.minInterval;
     if (0 < opts.strokeWidth) {
       this.ctx.lineWidth = opts.strokeWidth;
       this.ctx.strokeStyle = opts.strokeColor;
     }
-    DrawBetween.getPointsFor(p0, p1, size, size, minInterval).forEach(p => {
+    DrawBetween.getPointsFor(
+      p0, p1, size, size, minInterval).forEach(p => {
       this.ctx.beginPath();
       // upper-left
       this.ctx.moveTo(p.x - d, p.y - d);

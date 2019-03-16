@@ -2,7 +2,9 @@
 'use strict';
 
 // drawbetween/index.js
-// TODO: rotate option.
+// TODO:
+// - rotate option.
+// - triangles @ 1 < strokeWidth
 var _ImagesOptions = /** @class */ (function () {
     function _ImagesOptions() {
         this.width = -1;
@@ -253,9 +255,9 @@ var DrawBetween = /** @class */ (function () {
         if (opts.fillColor !== '') {
             this.ctx.fillStyle = opts.fillColor;
         }
-        DrawBetween.getPointsFor(p0, p1, width, height, minInterval).forEach(function (p) {
+        DrawBetween.getPointsFor(p0, p1, width + opts.strokeWidth * 2, height + opts.strokeWidth * 2, minInterval).forEach(function (p) {
             _this.ctx.beginPath();
-            _this.ctx.rect(p.x, p.y, width, height);
+            _this.ctx.rect(p.x + Math.floor(opts.strokeWidth / 2), p.y + Math.floor(opts.strokeWidth / 2), width + opts.strokeWidth, height + opts.strokeWidth);
             if (0 < opts.strokeWidth) {
                 _this.ctx.stroke();
             }
@@ -304,7 +306,7 @@ var DrawBetween = /** @class */ (function () {
         var opts = Object.assign(defaultOptions, options);
         var lineLength = opts.lineLength;
         var d = Math.floor(lineLength / (2 * Math.sqrt(2)));
-        var size = Math.floor(lineLength / Math.sqrt(2));
+        var size = Math.floor((lineLength + opts.strokeWidth) / Math.sqrt(2));
         var minInterval = opts.minInterval;
         if (0 < opts.strokeWidth) {
             this.ctx.lineWidth = opts.strokeWidth;
@@ -514,13 +516,13 @@ function main() {
       circlesOpts.strokeColor = evt.target.value;
     });
   const circlesStrokeWidth = document.querySelector('#circles_stroke_width');
-  circlesStrokeWidthvalue = circlesOpts.strokeWidth;
+  circlesStrokeWidth.value = circlesOpts.strokeWidth;
   circlesStrokeWidth.addEventListener(
     'change', (evt) => {
       circlesOpts.strokeWidth = parseInt(evt.target.value);
     });
   const circlesFillColor = document.querySelector('#circles_fill_color');
-  circlesFillColorvalue = circlesOpts.fillColor;
+  circlesFillColor.value = circlesOpts.fillColor;
   circlesFillColor.addEventListener(
     'change', (evt) => {
       circlesOpts.fillColor = evt.target.value;

@@ -356,7 +356,7 @@ function main() {
   const draw = new DrawBetween(canvas);
   let lineOpts = {
     width: 1,
-    color: "#000000",
+    color: "#000",
     lineDash: [0, 0]
   };
   let trianglesOpts = {
@@ -550,7 +550,7 @@ function main() {
   rectsStrokeColor.value = rectsOpts.strokeColor;
   rectsStrokeColor.addEventListener(
     'change', (evt) => {
-      rectsOpts.strokeColor = parseInt(evt.target.value);
+      rectsOpts.strokeColor = evt.target.value;
     });
   const rectsStrokeWidth = document.querySelector('#rects_stroke_width');
   rectsStrokeWidth.value = rectsOpts.strokeWidth;
@@ -562,7 +562,7 @@ function main() {
   rectsFillColor.value = rectsOpts.fillColor;
   rectsFillColor.addEventListener(
     'change', (evt) => {
-      rectsOpts.fillColor = parseInt(evt.target.value);
+      rectsOpts.fillColor = evt.target.value;
     });
   // trianglesOpts:
   const trianglesEdgeLength = document.querySelector('#triangles_edge_length');
@@ -581,7 +581,7 @@ function main() {
   trianglesStrokeColor.value = trianglesOpts.strokeColor;
   trianglesStrokeColor.addEventListener(
     'change', (evt) => {
-      trianglesOpts.strokeColor = parseInt(evt.target.value);
+      trianglesOpts.strokeColor = evt.target.value;
     });
   const trianglesStrokeWidth = document.querySelector('#triangles_stroke_width');
   trianglesStrokeWidth.value = trianglesOpts.strokeWidth;
@@ -593,7 +593,7 @@ function main() {
   trianglesFillColor.value = trianglesOpts.fillColor;
   trianglesFillColor.addEventListener(
     'change', (evt) => {
-      trianglesOpts.fillColor = parseInt(evt.target.value);
+      trianglesOpts.fillColor = evt.target.value;
     });
   // crossMarksOpts:
   const crossMarksLineLength = document.querySelector('#cross_marks_line_length');
@@ -612,7 +612,7 @@ function main() {
   crossMarksStrokeColor.value = crossMarksOpts.strokeColor;
   crossMarksStrokeColor.addEventListener(
     'change', (evt) => {
-      crossMarksOpts.strokeColor = parseInt(evt.target.value);
+      crossMarksOpts.strokeColor = evt.target.value;
     });
   const crossMarksStrokeWidth = document.querySelector('#cross_marks_stroke_width');
   crossMarksStrokeWidth.value = crossMarksOpts.strokeWidth;

@@ -9,10 +9,28 @@ function main() {
   const canvas = document.querySelector('#canvas');
   // drawbetween:
   const draw = new DrawBetween(canvas);
-  let lineOpts = {};
-  let circlesOpts = {};
-  let imagesOpts = {};
-  let withDrawerOpts = {};
+  let lineOpts = {
+    width: 1,
+    color: "#000000",
+    lineDash: [0, 0]
+  };
+  let circlesOpts = {
+    radius: 10,
+    minInterval: 0,
+    strokeColor: "#000",
+    strokeWidth: 1,
+    fillColor: ""
+  };
+  let imagesOpts = {
+    width: -1,
+    height: -1,
+    minInterval: 0,
+    borderColor: "#000",
+    borderWidth: 0
+  };
+  let withDrawerOpts = {
+    minInterval: 20
+  };
   let withDrawerFunction = (() => {});
   let drawer = (p0, p1) => { draw.circles(p0, p1, circlesOpts) };
   // canvas:
@@ -92,66 +110,93 @@ function main() {
       }
     });
   }
-  // TODO: cleanup: set initial values at js instead of html.
   // lineOpts:
-  document.querySelector('#line_width').addEventListener(
+  const lineWidth = document.querySelector('#line_width');
+  lineWidth.value = lineOpts.width;;
+  lineWidth.addEventListener(
     'change', (evt) => {
       lineOpts.width = parseInt(evt.target.value);
     });
-  document.querySelector('#line_color').addEventListener(
+  const lineColor = document.querySelector('#line_color');
+  lineColor.value = lineOpts.color;
+  lineColor.addEventListener(
     'change', (evt) => {
       lineOpts.color = evt.target.value;
     });
-  document.querySelector('#line_dash').addEventListener(
+  const lineDash = document.querySelector('#line_dash');
+  lineDash.value = lineOpts.lineDash;
+  lineDash.addEventListener(
     'change', (evt) => {
       lineOpts.lineDash = evt.target.value.split(',').map(s => parseInt(s));
     });
   // circlesOpts:
-  document.querySelector('#circles_radius').addEventListener(
+  const circlesRadius = document.querySelector('#circles_radius');
+  circlesRadius.value = circlesOpts.radius;
+  circlesRadius.addEventListener(
     'change', (evt) => {
       circlesOpts.radius = parseInt(evt.target.value);
     });
-  document.querySelector('#circles_min_interval').addEventListener(
+  const circlesMinInterval = document.querySelector('#circles_min_interval');
+  circlesMinInterval.value = circlesOpts.minInterval;
+  circlesMinInterval.addEventListener(
     'change', (evt) => {
       circlesOpts.minInterval = parseInt(evt.target.value);
     });
-  document.querySelector('#circles_stroke_color').addEventListener(
+  const circlesStrokeColor = document.querySelector('#circles_stroke_color');
+  circlesStrokeColor.value = circlesOpts.strokeColor;
+  circlesStrokeColor.addEventListener(
     'change', (evt) => {
       circlesOpts.strokeColor = evt.target.value;
     });
-  document.querySelector('#circles_stroke_width').addEventListener(
+  const circlesStrokeWidth = document.querySelector('#circles_stroke_width');
+  circlesStrokeWidthvalue = circlesOpts.strokeWidth;
+  circlesStrokeWidth.addEventListener(
     'change', (evt) => {
       circlesOpts.strokeWidth = parseInt(evt.target.value);
     });
-  document.querySelector('#circles_fill_color').addEventListener(
+  const circlesFillColor = document.querySelector('#circles_fill_color');
+  circlesFillColorvalue = circlesOpts.fillColor;
+  circlesFillColor.addEventListener(
     'change', (evt) => {
       circlesOpts.fillColor = evt.target.value;
     });
   // imagesOpts:
-  document.querySelector('#images_width').addEventListener(
+  const imagesWidth = document.querySelector('#images_width');
+  imagesWidth.value = imagesOpts.width;
+  imagesWidth.addEventListener(
     'change', (evt) => {
       imagesOpts.width = evt.target.value ?
         parseInt(evt.target.value) : 'auto';
     });
-  document.querySelector('#images_height').addEventListener(
+  const imagesHeight = document.querySelector('#images_height');
+  imagesHeight.value = imagesOpts.height;
+  imagesHeight.addEventListener(
     'change', (evt) => {
       imagesOpts.height = evt.target.value ?
         parseInt(evt.target.value) : 'auto';
     });
-  document.querySelector('#images_min_interval').addEventListener(
+  const imagesMinInterval = document.querySelector('#images_min_interval');
+  imagesMinInterval.value = imagesOpts.minInterval;
+  imagesMinInterval.addEventListener(
     'change', (evt) => {
       imagesOpts.minInterval = parseInt(evt.target.value);
     });
-  document.querySelector('#images_border_color').addEventListener(
+  const imagesBorderColor = document.querySelector('#images_border_color');
+  imagesBorderColor.value = imagesOpts.borderColor;
+  imagesBorderColor.addEventListener(
     'change', (evt) => {
       imagesOpts.borderColor = evt.target.value;
     });
-  document.querySelector('#images_border_width').addEventListener(
+  const imagesBorderWidth = document.querySelector('#images_border_width');
+  imagesBorderWidth.value = imagesOpts.borderWidth;
+  imagesBorderWidth.addEventListener(
     'change', (evt) => {
       imagesOpts.borderWidth = parseInt(evt.target.value);
     });
   // drawer:
-  document.querySelector('#drawer_min_interval').addEventListener(
+  const drawerMinInterval = document.querySelector('#drawer_min_interval');
+  drawerMinInterval.value = withDrawerOpts.minInterval;
+  drawerMinInterval.addEventListener(
     'change', (evt) => {
       withDrawerOpts.minInterval = parseInt(evt.target.value);
     });

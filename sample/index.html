@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>drawbetween.js</title>
   <script src="./bundle.js"></script>
   <style>
@@ -42,16 +41,25 @@
     width: 100%;
     height: 60%;
   }
-  #selectors {
+  #selectors1 {
     position: absolute;
     top: 60%;
-    left: 0;
-    width: 100%;
+    left: 10%;
+    width: 40%;
     height: 40%;
     display: flex;
     justify-content: center;
   }
-  #drawtypes {
+  #selectors2 {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    width: 40%;
+    height: 40%;
+    display: flex;
+    justify-content: center;
+  }
+  .drawtypes {
     width: 100px;
     height: 100%;
   }
@@ -73,7 +81,7 @@
   .inactive {
     background-color: #aaa; 
   }
-  #options {
+  .options {
     width: 225px;
     height: 100%;
     box-sizing: border-box;
@@ -123,21 +131,209 @@
     </div>
     <!-- canvas -->
     <div id="canvas"></div>
-    <!-- selectors -->
-    <div id="selectors">
-      <div id="drawtypes">
-        <div id="line_div" class="drawtype inactive">
-          <input
-            type="radio" name="object"
-            value="line" class="radio">
-          line
-          </input>
-        </div>
+    <!-- selectors1 -->
+    <div id="selectors1">
+      <div class="drawtypes">
         <div id="circles_div" class="drawtype active">
           <input
             type="radio" name="object"
             value="circles" class="radio" checked>
           circles
+          </input>
+        </div>
+        <div id="rects_div" class="drawtype inactive">
+          <input
+            type="radio" name="object"
+            value="rects" class="radio">
+          rects
+          </input>
+        </div>
+        <div id="triangles_div" class="drawtype inactive">
+          <input
+            type="radio" name="object"
+            value="triangles" class="radio" checked>
+          triangles
+          </input>
+        </div>
+        <div id="cross_marks_div" class="drawtype inactive">
+          <input
+            type="radio" name="object"
+            value="cross_marks" class="radio">
+          crosses
+          </input>
+        </div>
+      </div>
+      <div class="options">
+        <!-- ------------------ -->
+        <!-- option for circles -->
+        <!-- ------------------ -->
+        <div id="circles_option" class="option">
+          <div class="option_item">
+            radius
+            <input
+              type="text" id="circles_radius"
+              class="option_value">
+            </input>
+          </div>
+          <div class="option_item">
+            minInterval
+            <input
+              type="text" id="circles_min_interval"
+              class="option_value">
+            </input>
+          </div>
+          <div class="option_item">
+            strokeColor
+            <input
+              type="text" id="circles_stroke_color"
+              class="option_value">
+            </input>
+          </div>
+          <div class="option_item">
+            strokeWidth
+            <input
+              type="text" id="circles_stroke_width"
+              class="option_value">
+            </input>
+          </div>
+          <div class="option_item">
+            fillColor
+            <input
+              type="text" id="circles_fill_color"
+              class="option_value">
+            </input>
+          </div>
+        </div>
+        <!-- ---------------- -->
+        <!-- option for rects -->
+        <!-- ---------------- -->
+        <div id="rects_option" class="option hidden">
+          <div class="option_item">
+            width
+            <input
+              type="text" id="rects_width"
+              class="option_value">
+            </input>
+          </div>
+          <div class="option_item">
+            height
+            <input
+              type="text" id="rects_height"
+              class="option_value">
+            </input>
+          </div>
+          <div class="option_item">
+            minInterval
+            <input
+              type="text" id="rects_min_interval"
+              class="option_value">
+            </input>
+          </div>
+          <div class="option_item">
+            strokeColor
+            <input
+              type="text" id="rects_stroke_color"
+              class="option_value">
+            </input>
+          </div>
+          <div class="option_item">
+            strokeWidth
+            <input
+              type="text" id="rects_stroke_width"
+              class="option_value">
+            </input>
+          </div>
+          <div class="option_item">
+            fillColor
+            <input
+              type="text" id="rects_fill_color"
+              class="option_value">
+            </input>
+          </div>
+        </div>
+        <!-- -------------------- -->
+        <!-- option for triangles -->
+        <!-- -------------------- -->
+        <div id="triangles_option" class="option hidden">
+          <div class="option_item">
+            edgeLength
+            <input
+              type="text" id="triangles_edge_length"
+              class="option_value">
+            </input>
+          </div>
+          <div class="option_item">
+            minInterval
+            <input
+              type="text" id="triangles_min_interval"
+              class="option_value">
+            </input>
+          </div>
+          <div class="option_item">
+            strokeColor
+            <input
+              type="text" id="triangles_stroke_color"
+              class="option_value">
+            </input>
+          </div>
+          <div class="option_item">
+            strokeWidth
+            <input
+              type="text" id="triangles_stroke_width"
+              class="option_value">
+            </input>
+          </div>
+          <div class="option_item">
+            fillColor
+            <input
+              type="text" id="triangles_fill_color"
+              class="option_value">
+            </input>
+          </div>
+        </div>
+        <!-- --------------------- -->
+        <!-- option for crossMarks -->
+        <!-- --------------------- -->
+        <div id="cross_marks_option" class="option hidden">
+          <div class="option_item">
+            lineLength
+            <input
+              type="text" id="cross_marks_line_length"
+              class="option_value">
+            </input>
+          </div>
+          <div class="option_item">
+            minInterval
+            <input
+              type="text" id="cross_marks_min_interval"
+              class="option_value">
+            </input>
+          </div>
+          <div class="option_item">
+            strokeColor
+            <input
+              type="text" id="cross_marks_stroke_color"
+              class="option_value">
+            </input>
+          </div>
+          <div class="option_item">
+            strokeWidth
+            <input
+              type="text" id="cross_marks_stroke_width"
+              class="option_value">
+            </input>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- selectors2 -->
+    <div id="selectors2">
+      <div class="drawtypes">
+        <div id="line_div" class="drawtype inactive">
+          <input
+            type="radio" name="object"
+            value="line" class="radio">
+          line
           </input>
         </div>
         <div id="images_div" class="drawtype inactive">
@@ -154,8 +350,10 @@
           drawer
           </input>
         </div>
+        <div class="drawtype inactive">
+        </div>
       </div>
-      <div id="options">
+      <div class="options">
         <!-- --------------- -->
         <!-- option for line -->
         <!-- --------------- -->
@@ -164,54 +362,22 @@
             width
             <input
               type="text" id="line_width"
-              class="option_value" />
+              class="option_value">
+            </input>
           </div>
           <div class="option_item">
             color
             <input
               type="text" id="line_color"
-              class="option_value" />
+              class="option_value">
+            </input>
           </div>
           <div class="option_item">
             lineDash
             <input
               type="text" id="line_dash"
-              class="option_value" />
-          </div>
-        </div>
-        <!-- ------------------ -->
-        <!-- option for circles -->
-        <!-- ------------------ -->
-        <div id="circles_option" class="option">
-          <div class="option_item">
-            radius
-            <input
-              type="text" id="circles_radius"
-              class="option_value" />
-          </div>
-          <div class="option_item">
-            minInterval
-            <input
-              type="text" id="circles_min_interval"
-              class="option_value" />
-          </div>
-          <div class="option_item">
-            strokeColor
-            <input
-              type="text" id="circles_stroke_color"
-              class="option_value" />
-          </div>
-          <div class="option_item">
-            strokeWidth
-            <input
-              type="text" id="circles_stroke_width"
-              class="option_value" />
-          </div>
-          <div class="option_item">
-            fillColor
-            <input
-              type="text" id="circles_fill_color"
-              class="option_value" />
+              class="option_value">
+            </input>
           </div>
         </div>
         <!-- ----------------- -->
@@ -222,31 +388,36 @@
             width
             <input
               type="text" id="images_width"
-              class="option_value" />
+              class="option_value">
+            </input>
           </div>
           <div class="option_item">
             height
             <input
               type="text" id="images_height"
-              class="option_value" />
+              class="option_value">
+            </input>
           </div>
           <div class="option_item">
             minInterval
             <input
               type="text" id="images_min_interval"
-              class="option_value" />
+              class="option_value">
+            </input>
           </div>
           <div class="option_item">
             borderColor
             <input
               type="text" id="images_border_color"
-              class="option_value" />
+              class="option_value">
+            </input>
           </div>
           <div class="option_item">
             borderWidth
             <input
               type="text" id="images_border_width"
-              class="option_value" />
+              class="option_value">
+            </input>
           </div>
         </div>
         <!-- --------------------- -->
@@ -257,12 +428,14 @@
             minInterval
             <input
               type="text" id="drawer_min_interval"
-              class="option_value" />
+              class="option_value">
+            </input>
           </div>
           drawer: (ctx, x, y) =&gt;
           <textarea
             id="drawer_function" wrap="off"
-            class="option_value" />
+            class="option_value">
+          </textarea>
         </div>
       </div>
     </div>

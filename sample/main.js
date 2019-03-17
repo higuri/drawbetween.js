@@ -43,8 +43,8 @@ function main() {
     fillColor: ""
   };
   let imagesOpts = {
-    width: -1,
-    height: -1,
+    width: 'auto',
+    height: 'auto',
     minInterval: 0,
     borderColor: "#000",
     borderWidth: 0
@@ -299,15 +299,15 @@ function main() {
   imagesWidth.value = imagesOpts.width;
   imagesWidth.addEventListener(
     'change', (evt) => {
-      imagesOpts.width = evt.target.value ?
-        parseInt(evt.target.value) : 'auto';
+      imagesOpts.width = evt.target.value === 'auto' ?
+        'auto' : parseInt(evt.target.value);
     });
   const imagesHeight = document.querySelector('#images_height');
   imagesHeight.value = imagesOpts.height;
   imagesHeight.addEventListener(
     'change', (evt) => {
-      imagesOpts.height = evt.target.value ?
-        parseInt(evt.target.value) : 'auto';
+      imagesOpts.height = evt.target.value === 'auto' ?
+        'auto' : parseInt(evt.target.value);
     });
   const imagesMinInterval = document.querySelector('#images_min_interval');
   imagesMinInterval.value = imagesOpts.minInterval;

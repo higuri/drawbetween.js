@@ -7,8 +7,8 @@
 // - triangles @ 1 < strokeWidth
 var _ImagesOptions = /** @class */ (function () {
     function _ImagesOptions() {
-        this.width = -1;
-        this.height = -1;
+        this.width = 'auto';
+        this.height = 'auto';
         this.minInterval = 0;
         this.borderColor = "#000";
         this.borderWidth = 0;
@@ -186,8 +186,8 @@ var DrawBetween = /** @class */ (function () {
             this.ctx.strokeStyle = opts.borderColor;
         }
         var doit = function (img) {
-            var imageWidth = opts.width < 0 ? img.width : opts.width;
-            var imageHeight = opts.height < 0 ? img.height : opts.height;
+            var imageWidth = opts.width === 'auto' ? img.width : opts.width;
+            var imageHeight = opts.height === 'auto' ? img.height : opts.height;
             DrawBetween.getPointsFor(p0, p1, imageWidth + opts.borderWidth * 2, imageHeight + opts.borderWidth * 2, minInterval).forEach(function (p) {
                 if (0 < opts.borderWidth) {
                     _this.ctx.beginPath();
@@ -388,8 +388,8 @@ function main() {
     fillColor: ""
   };
   let imagesOpts = {
-    width: -1,
-    height: -1,
+    width: 'auto',
+    height: 'auto',
     minInterval: 0,
     borderColor: "#000",
     borderWidth: 0
@@ -644,15 +644,15 @@ function main() {
   imagesWidth.value = imagesOpts.width;
   imagesWidth.addEventListener(
     'change', (evt) => {
-      imagesOpts.width = evt.target.value ?
-        parseInt(evt.target.value) : 'auto';
+      imagesOpts.width = evt.target.value === 'auto' ?
+        'auto' : parseInt(evt.target.value);
     });
   const imagesHeight = document.querySelector('#images_height');
   imagesHeight.value = imagesOpts.height;
   imagesHeight.addEventListener(
     'change', (evt) => {
-      imagesOpts.height = evt.target.value ?
-        parseInt(evt.target.value) : 'auto';
+      imagesOpts.height = evt.target.value === 'auto' ?
+        'auto' : parseInt(evt.target.value);
     });
   const imagesMinInterval = document.querySelector('#images_min_interval');
   imagesMinInterval.value = imagesOpts.minInterval;

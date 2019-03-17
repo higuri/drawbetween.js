@@ -18,15 +18,15 @@ export type Drawer = (ctx: CanvasRenderingContext2D, p: Point) => void;
 
 // ImagesOptions
 export interface ImagesOptions {
-  width?: number;
-  height?: number;
+  width?: 'auto' | number;
+  height?: 'auto' | number;
   minInterval?: number;
   borderColor?: string;
   borderWidth?: number;
 }
 class _ImagesOptions implements ImagesOptions {
-  public width: number = -1;
-  public height: number = -1;
+  public width: 'auto' | number = 'auto';
+  public height: 'auto' | number = 'auto';
   public minInterval: number = 0;
   public borderColor: string = "#000";
   public borderWidth: number = 0;
@@ -240,8 +240,8 @@ export default class DrawBetween {
       this.ctx.strokeStyle = opts.borderColor;
     }
     const doit = (img: HTMLImageElement) => {
-      const imageWidth = opts.width < 0 ? img.width : opts.width;
-      const imageHeight = opts.height < 0 ? img.height : opts.height;
+      const imageWidth = opts.width === 'auto' ? img.width : opts.width;
+      const imageHeight = opts.height === 'auto' ? img.height : opts.height;
       DrawBetween.getPointsFor(
         p0, p1,
         imageWidth + opts.borderWidth * 2,

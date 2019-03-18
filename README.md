@@ -96,12 +96,12 @@ Draw images on the specified line segment.
 * `p1`: {x: number, y: number} - an end point of the line segment.
 * `imageUrl`: string - a full URL of image to draw.
 * `options`:
-  * `width`: number - image width.
-    -1 means the original width of image.
-    <default: -1>
-  * `height`: number - image height.
-    -1 means original height of image.
-    <default: -1>
+  * `width`: 'original' | number - image width.
+    <default: 'original'>
+  * `height`: 'original' | number - image height.
+    <default: 'original'>
+  * `rotate`: 'auto' | number - rotation andgle in radians.
+    <default: 'auto'>
   * `minInterval`: number - minimum spacing between adjacent images.
     <default: 0>
   * `borderColor`: string - border color of image.
@@ -118,6 +118,8 @@ Draw rectangles on the specified line segment.
     <default: 20>
   * `height`: number - rectangle height.
     <default: 20>
+  * `rotate`: 'auto' | number - rotation andgle in radians.
+    <default: 'auto'>
   * `minInterval`: number - minimum spacing between adjacent rectangles.
     <default: 0>
   * `strokeColor`: string - stroke color of rectangle.
@@ -150,6 +152,8 @@ Draw cross marks on the specified line segment.
 * `options`:
   * `lineLength`: number - line length of cross mark.
     <default: 20>
+  * `rotate`: 'auto' | number - rotation andgle in radians.
+    <default: 'auto'>
   * `minInterval`: number - minimum spacing between adjacent cross marks.
     <default: 0>
   * `strokeColor`: string - stroke color of cross mark.
@@ -164,6 +168,8 @@ Draw triangles on the specified line segment.
 * `options`:
   * `edgeLength`: number - edge length of triangle.
     <default: 20>
+  * `rotate`: 'auto' | number - rotation andgle in radians.
+    <default: 'auto'>
   * `minInterval`: number - minimum spacing between adjacent triangles.
     <default: 0>
   * `strokeColor`: string - stroke color of triangle.

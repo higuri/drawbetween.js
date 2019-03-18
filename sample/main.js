@@ -16,6 +16,7 @@ function main() {
   };
   let trianglesOpts = {
     edgeLength: 20,
+    rotate: 'auto',
     minInterval: 0,
     strokeColor: "#000",
     strokeWidth: 1,
@@ -23,6 +24,7 @@ function main() {
   };
   let crossMarksOpts = {
     lineLength: 20,
+    rotate: 'auto',
     minInterval: 0,
     strokeColor: "#000",
     strokeWidth: 1
@@ -30,6 +32,7 @@ function main() {
   let rectsOpts = {
     width: 20,
     height: 20,
+    rotate: 'auto',
     minInterval: 0,
     strokeColor: "#000",
     strokeWidth: 1,
@@ -45,6 +48,7 @@ function main() {
   let imagesOpts = {
     width: 'auto',
     height: 'auto',
+    rotate: 'auto',
     minInterval: 0,
     borderColor: "#000",
     borderWidth: 0
@@ -195,6 +199,13 @@ function main() {
     'change', (evt) => {
       rectsOpts.height = parseInt(evt.target.value);
     });
+  const rectsRotate = document.querySelector('#rects_rotate');
+  rectsRotate.value = rectsOpts.rotate;
+  rectsRotate.addEventListener(
+    'change', (evt) => {
+      rectsOpts.rotate = evt.target.value === 'auto' ?
+        'auto' : parseInt(evt.target.value);
+    });
   const rectsMinInterval = document.querySelector('#rects_min_interval');
   rectsMinInterval.value = rectsOpts.minInterval;
   rectsMinInterval.addEventListener(
@@ -226,6 +237,13 @@ function main() {
     'change', (evt) => {
       trianglesOpts.edgeLength = parseInt(evt.target.value);
     });
+  const trianglesRotate = document.querySelector('#triangles_rotate');
+  trianglesRotate.value = trianglesOpts.rotate;
+  trianglesRotate.addEventListener(
+    'change', (evt) => {
+      trianglesOpts.rotate = evt.target.value === 'auto' ?
+        'auto' : parseInt(evt.target.value);
+    });
   const trianglesMinInterval = document.querySelector('#triangles_min_interval');
   trianglesMinInterval.value = trianglesOpts.minInterval;
   trianglesMinInterval.addEventListener(
@@ -256,6 +274,13 @@ function main() {
   crossMarksLineLength.addEventListener(
     'change', (evt) => {
       crossMarksOpts.lineLength = parseInt(evt.target.value);
+    });
+  const crossMarksRotate = document.querySelector('#cross_marks_rotate');
+  crossMarksRotate.value = crossMarksOpts.rotate;
+  crossMarksRotate.addEventListener(
+    'change', (evt) => {
+      crossMarksOpts.rotate = evt.target.value === 'auto' ?
+        'auto' : parseInt(evt.target.value);
     });
   const crossMarksMinInterval = document.querySelector('#cross_marks_min_interval');
   crossMarksMinInterval.value = crossMarksOpts.minInterval;
@@ -307,6 +332,13 @@ function main() {
   imagesHeight.addEventListener(
     'change', (evt) => {
       imagesOpts.height = evt.target.value === 'auto' ?
+        'auto' : parseInt(evt.target.value);
+    });
+  const imagesRotate = document.querySelector('#images_rotate');
+  imagesRotate.value = imagesOpts.rotate;
+  imagesRotate.addEventListener(
+    'change', (evt) => {
+      imagesOpts.rotate = evt.target.value === 'auto' ?
         'auto' : parseInt(evt.target.value);
     });
   const imagesMinInterval = document.querySelector('#images_min_interval');

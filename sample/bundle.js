@@ -3,12 +3,12 @@
 
 // drawbetween/index.js
 // TODO:
-// - rotate option.
 // - triangles @ 1 < strokeWidth
 var _ImagesOptions = /** @class */ (function () {
     function _ImagesOptions() {
         this.width = 'auto';
         this.height = 'auto';
+        this.rotate = 'auto';
         this.minInterval = 0;
         this.borderColor = "#000";
         this.borderWidth = 0;
@@ -27,6 +27,7 @@ var _RectsOptions = /** @class */ (function () {
     function _RectsOptions() {
         this.width = 20;
         this.height = 20;
+        this.rotate = 'auto';
         this.minInterval = 0;
         this.strokeColor = "#000";
         this.strokeWidth = 1;
@@ -47,6 +48,7 @@ var _CirclesOptions = /** @class */ (function () {
 var _TrianglesOptions = /** @class */ (function () {
     function _TrianglesOptions() {
         this.edgeLength = 20;
+        this.rotate = 'auto';
         this.minInterval = 0;
         this.strokeColor = "#000";
         this.strokeWidth = 1;
@@ -57,6 +59,7 @@ var _TrianglesOptions = /** @class */ (function () {
 var _CrossMarksOptions = /** @class */ (function () {
     function _CrossMarksOptions() {
         this.lineLength = 20;
+        this.rotate = 'auto';
         this.minInterval = 0;
         this.strokeColor = "#000";
         this.strokeWidth = 1;
@@ -188,13 +191,23 @@ var DrawBetween = /** @class */ (function () {
         var doit = function (img) {
             var imageWidth = opts.width === 'auto' ? img.width : opts.width;
             var imageHeight = opts.height === 'auto' ? img.height : opts.height;
+            var rotate = opts.rotate === 'auto' ?
+                Math.atan((p0.y - p1.y) / (p0.x - p1.x)) :
+                opts.rotate * Math.PI / 180;
             DrawBetween.getPointsFor(p0, p1, imageWidth + opts.borderWidth * 2, imageHeight + opts.borderWidth * 2, minInterval).forEach(function (p) {
+                _this.ctx.save();
+                _this.ctx.beginPath();
+                // change rotation center & rotate.
+                _this.ctx.translate(p.x, p.y);
+                _this.ctx.rotate(rotate);
+                // draw border.
                 if (0 < opts.borderWidth) {
-                    _this.ctx.beginPath();
-                    _this.ctx.rect(p.x + Math.floor(opts.borderWidth / 2), p.y + Math.floor(opts.borderWidth / 2), imageWidth + opts.borderWidth, imageHeight + opts.borderWidth);
+                    _this.ctx.rect(Math.floor(opts.borderWidth / 2), Math.floor(opts.borderWidth / 2), imageWidth + opts.borderWidth, imageHeight + opts.borderWidth);
                     _this.ctx.stroke();
                 }
-                _this.ctx.drawImage(img, p.x + opts.borderWidth, p.y + opts.borderWidth, imageWidth, imageHeight);
+                // draw image.
+                _this.ctx.drawImage(img, opts.borderWidth, opts.borderWidth, imageWidth, imageHeight);
+                _this.ctx.restore();
             });
         };
         var img = new Image();
@@ -247,6 +260,9 @@ var DrawBetween = /** @class */ (function () {
         var opts = Object.assign(defaultOptions, options);
         var width = opts.width;
         var height = opts.height;
+        var rotate = opts.rotate === 'auto' ?
+            Math.atan((p0.y - p1.y) / (p0.x - p1.x)) :
+            opts.rotate * Math.PI / 180;
         var minInterval = opts.minInterval;
         if (0 < opts.strokeWidth) {
             this.ctx.lineWidth = opts.strokeWidth;
@@ -256,14 +272,18 @@ var DrawBetween = /** @class */ (function () {
             this.ctx.fillStyle = opts.fillColor;
         }
         DrawBetween.getPointsFor(p0, p1, width + opts.strokeWidth, height + opts.strokeWidth, minInterval).forEach(function (p) {
+            _this.ctx.save();
+            _this.ctx.translate(p.x, p.y);
+            _this.ctx.rotate(rotate);
             _this.ctx.beginPath();
-            _this.ctx.rect(p.x, p.y, width, height);
+            _this.ctx.rect(0, 0, width, height);
             if (0 < opts.strokeWidth) {
                 _this.ctx.stroke();
             }
             if (opts.fillColor !== '') {
                 _this.ctx.fill();
             }
+            _this.ctx.restore();
         });
     };
     // triangles()
@@ -275,6 +295,9 @@ var DrawBetween = /** @class */ (function () {
         var dx = Math.floor(edgeLength / 2);
         var dy = Math.floor((edgeLength * Math.sqrt(3)) / 2);
         var minInterval = opts.minInterval;
+        var rotate = opts.rotate === 'auto' ?
+            Math.atan((p0.y - p1.y) / (p0.x - p1.x)) :
+            opts.rotate * Math.PI / 180;
         if (0 < opts.strokeWidth) {
             this.ctx.lineWidth = opts.strokeWidth;
             this.ctx.strokeStyle = opts.strokeColor;
@@ -283,20 +306,25 @@ var DrawBetween = /** @class */ (function () {
             this.ctx.fillStyle = opts.fillColor;
         }
         DrawBetween.getPointsFor(p0, p1, edgeLength, edgeLength, minInterval).forEach(function (p) {
+            _this.ctx.save();
+            _this.ctx.translate(p.x, p.y);
+            _this.ctx.rotate(rotate);
             _this.ctx.beginPath();
-            _this.ctx.moveTo(p.x, p.y);
-            // bottom-left
-            _this.ctx.lineTo(p.x - dx, p.y + dy);
-            // bottom-right
-            _this.ctx.lineTo(p.x + dx, p.y + dy);
             // top
-            _this.ctx.lineTo(p.x, p.y);
+            _this.ctx.moveTo(0, 0);
+            // bottom-left
+            _this.ctx.lineTo(-dx, +dy);
+            // bottom-right
+            _this.ctx.lineTo(+dx, +dy);
+            // top
+            _this.ctx.lineTo(0, 0);
             if (0 < opts.strokeWidth) {
                 _this.ctx.stroke();
             }
             if (opts.fillColor !== '') {
                 _this.ctx.fill();
             }
+            _this.ctx.restore();
         });
     };
     // crossMarks()
@@ -308,23 +336,31 @@ var DrawBetween = /** @class */ (function () {
         var d = Math.floor(lineLength / (2 * Math.sqrt(2)));
         var size = Math.floor((lineLength + opts.strokeWidth) / Math.sqrt(2));
         var minInterval = opts.minInterval;
+        var rotate = opts.rotate === 'auto' ?
+            Math.atan((p0.y - p1.y) / (p0.x - p1.x)) :
+            opts.rotate * Math.PI / 180;
         if (0 < opts.strokeWidth) {
             this.ctx.lineWidth = opts.strokeWidth;
             this.ctx.strokeStyle = opts.strokeColor;
         }
         DrawBetween.getPointsFor(p0, p1, size, size, minInterval).forEach(function (p) {
+            _this.ctx.save();
+            _this.ctx.translate(p.x, p.y);
+            _this.ctx.rotate(rotate);
+            _this.ctx.beginPath();
             _this.ctx.beginPath();
             // upper-left
-            _this.ctx.moveTo(p.x - d, p.y - d);
+            _this.ctx.moveTo(-d, -d);
             // bottom-right
-            _this.ctx.lineTo(p.x + d, p.y + d);
+            _this.ctx.lineTo(+d, +d);
             // upper-right
-            _this.ctx.moveTo(p.x + d, p.y - d);
+            _this.ctx.moveTo(+d, -d);
             // bottom-left
-            _this.ctx.lineTo(p.x - d, p.y + d);
+            _this.ctx.lineTo(-d, +d);
             if (0 < opts.strokeWidth) {
                 _this.ctx.stroke();
             }
+            _this.ctx.restore();
         });
     };
     // withDrawer()
@@ -361,6 +397,7 @@ function main() {
   };
   let trianglesOpts = {
     edgeLength: 20,
+    rotate: 'auto',
     minInterval: 0,
     strokeColor: "#000",
     strokeWidth: 1,
@@ -368,6 +405,7 @@ function main() {
   };
   let crossMarksOpts = {
     lineLength: 20,
+    rotate: 'auto',
     minInterval: 0,
     strokeColor: "#000",
     strokeWidth: 1
@@ -375,6 +413,7 @@ function main() {
   let rectsOpts = {
     width: 20,
     height: 20,
+    rotate: 'auto',
     minInterval: 0,
     strokeColor: "#000",
     strokeWidth: 1,
@@ -390,6 +429,7 @@ function main() {
   let imagesOpts = {
     width: 'auto',
     height: 'auto',
+    rotate: 'auto',
     minInterval: 0,
     borderColor: "#000",
     borderWidth: 0
@@ -540,6 +580,13 @@ function main() {
     'change', (evt) => {
       rectsOpts.height = parseInt(evt.target.value);
     });
+  const rectsRotate = document.querySelector('#rects_rotate');
+  rectsRotate.value = rectsOpts.rotate;
+  rectsRotate.addEventListener(
+    'change', (evt) => {
+      rectsOpts.rotate = evt.target.value === 'auto' ?
+        'auto' : parseInt(evt.target.value);
+    });
   const rectsMinInterval = document.querySelector('#rects_min_interval');
   rectsMinInterval.value = rectsOpts.minInterval;
   rectsMinInterval.addEventListener(
@@ -571,6 +618,13 @@ function main() {
     'change', (evt) => {
       trianglesOpts.edgeLength = parseInt(evt.target.value);
     });
+  const trianglesRotate = document.querySelector('#triangles_rotate');
+  trianglesRotate.value = trianglesOpts.rotate;
+  trianglesRotate.addEventListener(
+    'change', (evt) => {
+      trianglesOpts.rotate = evt.target.value === 'auto' ?
+        'auto' : parseInt(evt.target.value);
+    });
   const trianglesMinInterval = document.querySelector('#triangles_min_interval');
   trianglesMinInterval.value = trianglesOpts.minInterval;
   trianglesMinInterval.addEventListener(
@@ -601,6 +655,13 @@ function main() {
   crossMarksLineLength.addEventListener(
     'change', (evt) => {
       crossMarksOpts.lineLength = parseInt(evt.target.value);
+    });
+  const crossMarksRotate = document.querySelector('#cross_marks_rotate');
+  crossMarksRotate.value = crossMarksOpts.rotate;
+  crossMarksRotate.addEventListener(
+    'change', (evt) => {
+      crossMarksOpts.rotate = evt.target.value === 'auto' ?
+        'auto' : parseInt(evt.target.value);
     });
   const crossMarksMinInterval = document.querySelector('#cross_marks_min_interval');
   crossMarksMinInterval.value = crossMarksOpts.minInterval;
@@ -652,6 +713,13 @@ function main() {
   imagesHeight.addEventListener(
     'change', (evt) => {
       imagesOpts.height = evt.target.value === 'auto' ?
+        'auto' : parseInt(evt.target.value);
+    });
+  const imagesRotate = document.querySelector('#images_rotate');
+  imagesRotate.value = imagesOpts.rotate;
+  imagesRotate.addEventListener(
+    'change', (evt) => {
+      imagesOpts.rotate = evt.target.value === 'auto' ?
         'auto' : parseInt(evt.target.value);
     });
   const imagesMinInterval = document.querySelector('#images_min_interval');

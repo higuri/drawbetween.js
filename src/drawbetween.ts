@@ -1,6 +1,5 @@
 // drawbetween/index.js
 // TODO:
-// - rotate option.
 // - triangles @ 1 < strokeWidth
 
 //
@@ -20,6 +19,7 @@ export type Drawer = (ctx: CanvasRenderingContext2D, p: Point) => void;
 export interface ImagesOptions {
   width?: 'auto' | number;
   height?: 'auto' | number;
+  rotate?: 'auto' | number;
   minInterval?: number;
   borderColor?: string;
   borderWidth?: number;
@@ -27,6 +27,7 @@ export interface ImagesOptions {
 class _ImagesOptions implements ImagesOptions {
   public width: 'auto' | number = 'auto';
   public height: 'auto' | number = 'auto';
+  public rotate: 'auto' | number = 'auto';
   public minInterval: number = 0;
   public borderColor: string = "#000";
   public borderWidth: number = 0;
@@ -46,18 +47,20 @@ class _LineOptions implements LineOptions {
 export interface RectsOptions {
   width?: number;
   height?: number;
+  rotate?: 'auto' | number;
   minInterval?: number;
   strokeColor?: string;
   strokeWidth?: number;
   fillColor?: string;
 }
 class _RectsOptions implements RectsOptions {
-  width: number = 20;
-  height: number = 20;
-  minInterval: number = 0;
-  strokeColor: string = "#000";
-  strokeWidth: number = 1;
-  fillColor: string = "";
+  public width: number = 20;
+  public height: number = 20;
+  public rotate: 'auto' | number = 'auto';
+  public minInterval: number = 0;
+  public strokeColor: string = "#000";
+  public strokeWidth: number = 1;
+  public fillColor: string = "";
 }
 // CirclesOptions
 export interface CirclesOptions {
@@ -77,30 +80,34 @@ class _CirclesOptions implements CirclesOptions {
 // TrianglesOptions
 export interface TrianglesOptions {
   edgeLength?: number;
+  rotate: 'auto' | number;
   minInterval?: number;
   strokeColor?: string;
   strokeWidth?: number;
   fillColor?: string;
 }
 class _TrianglesOptions implements TrianglesOptions {
-  edgeLength: number = 20;
-  minInterval: number = 0;
-  strokeColor: string = "#000";
-  strokeWidth: number = 1;
-  fillColor: string = "";
+  public edgeLength: number = 20;
+  public rotate: 'auto' | number = 'auto';
+  public minInterval: number = 0;
+  public strokeColor: string = "#000";
+  public strokeWidth: number = 1;
+  public fillColor: string = "";
 }
 // CrossMarksOptions
 export interface CrossMarksOptions {
   lineLength?: number;
+  rotate: 'auto' | number;
   minInterval?: number;
   strokeColor?: string;
   strokeWidth?: number;
 }
 class _CrossMarksOptions implements CrossMarksOptions {
-  lineLength: number = 20;
-  minInterval: number = 0;
-  strokeColor: string = "#000";
-  strokeWidth: number = 1;
+  public lineLength: number = 20;
+  public rotate: 'auto' | number = 'auto';
+  public minInterval: number = 0;
+  public strokeColor: string = "#000";
+  public strokeWidth: number = 1;
 }
 // WithDrawerOptions
 export interface WithDrawerOptions {
@@ -242,26 +249,36 @@ export default class DrawBetween {
     const doit = (img: HTMLImageElement) => {
       const imageWidth = opts.width === 'auto' ? img.width : opts.width;
       const imageHeight = opts.height === 'auto' ? img.height : opts.height;
+      const rotate = opts.rotate === 'auto' ?
+        Math.atan((p0.y - p1.y) / (p0.x - p1.x)) :
+        opts.rotate * Math.PI / 180;
       DrawBetween.getPointsFor(
         p0, p1,
         imageWidth + opts.borderWidth * 2,
         imageHeight + opts.borderWidth * 2,
         minInterval).forEach(
         p => {
+          this.ctx.save()
+          this.ctx.beginPath();
+          // change rotation center & rotate.
+          this.ctx.translate(p.x, p.y);
+          this.ctx.rotate(rotate);
+          // draw border.
           if (0 < opts.borderWidth) {
-            this.ctx.beginPath();
             this.ctx.rect(
-              p.x + Math.floor(opts.borderWidth / 2),
-              p.y + Math.floor(opts.borderWidth / 2),
+              Math.floor(opts.borderWidth / 2),
+              Math.floor(opts.borderWidth / 2),
               imageWidth + opts.borderWidth,
               imageHeight + opts.borderWidth);
             this.ctx.stroke();
           }
+          // draw image.
           this.ctx.drawImage(
             img,
-            p.x + opts.borderWidth,
-            p.y + opts.borderWidth,
+            opts.borderWidth,
+            opts.borderWidth,
             imageWidth, imageHeight);
+          this.ctx.restore()
         }
       );
     };
@@ -321,6 +338,9 @@ export default class DrawBetween {
     const opts = Object.assign(defaultOptions, options);
     const width = opts.width;
     const height = opts.height;
+    const rotate = opts.rotate === 'auto' ?
+      Math.atan((p0.y - p1.y) / (p0.x - p1.x)) :
+      opts.rotate * Math.PI / 180;
     const minInterval = opts.minInterval;
     if (0 < opts.strokeWidth) {
       this.ctx.lineWidth = opts.strokeWidth;
@@ -335,14 +355,18 @@ export default class DrawBetween {
       height + opts.strokeWidth,
       minInterval).forEach(
       p => {
+      this.ctx.save()
+      this.ctx.translate(p.x, p.y);
+      this.ctx.rotate(rotate);
       this.ctx.beginPath();
-      this.ctx.rect(p.x, p.y, width, height);
+      this.ctx.rect(0, 0, width, height);
       if (0 < opts.strokeWidth) {
         this.ctx.stroke();
       }
       if (opts.fillColor !== '') {
         this.ctx.fill();
       }
+      this.ctx.restore();
     });
   }
 
@@ -354,6 +378,9 @@ export default class DrawBetween {
     const dx = Math.floor(edgeLength / 2);
     const dy = Math.floor((edgeLength * Math.sqrt(3)) / 2);
     const minInterval = opts.minInterval;
+    const rotate = opts.rotate === 'auto' ?
+      Math.atan((p0.y - p1.y) / (p0.x - p1.x)) :
+      opts.rotate * Math.PI / 180;
     if (0 < opts.strokeWidth) {
       this.ctx.lineWidth = opts.strokeWidth;
       this.ctx.strokeStyle = opts.strokeColor;
@@ -362,26 +389,27 @@ export default class DrawBetween {
       this.ctx.fillStyle = opts.fillColor;
     }
     DrawBetween.getPointsFor(
-      p0,
-      p1,
-      edgeLength,
-      edgeLength,
-      minInterval
+      p0, p1, edgeLength, edgeLength, minInterval
     ).forEach(p => {
+      this.ctx.save()
+      this.ctx.translate(p.x, p.y);
+      this.ctx.rotate(rotate);
       this.ctx.beginPath();
-      this.ctx.moveTo(p.x, p.y);
-      // bottom-left
-      this.ctx.lineTo(p.x - dx, p.y + dy);
-      // bottom-right
-      this.ctx.lineTo(p.x + dx, p.y + dy);
       // top
-      this.ctx.lineTo(p.x, p.y);
+      this.ctx.moveTo(0, 0);
+      // bottom-left
+      this.ctx.lineTo(-dx, +dy);
+      // bottom-right
+      this.ctx.lineTo(+dx, +dy);
+      // top
+      this.ctx.lineTo(0, 0);
       if (0 < opts.strokeWidth) {
         this.ctx.stroke();
       }
       if (opts.fillColor !== '') {
         this.ctx.fill();
       }
+      this.ctx.restore();
     });
   }
 
@@ -394,24 +422,32 @@ export default class DrawBetween {
     const size = Math.floor(
       (lineLength + opts.strokeWidth) / Math.sqrt(2));
     const minInterval = opts.minInterval;
+    const rotate = opts.rotate === 'auto' ?
+      Math.atan((p0.y - p1.y) / (p0.x - p1.x)) :
+      opts.rotate * Math.PI / 180;
     if (0 < opts.strokeWidth) {
       this.ctx.lineWidth = opts.strokeWidth;
       this.ctx.strokeStyle = opts.strokeColor;
     }
     DrawBetween.getPointsFor(
       p0, p1, size, size, minInterval).forEach(p => {
+      this.ctx.save()
+      this.ctx.translate(p.x, p.y);
+      this.ctx.rotate(rotate);
+      this.ctx.beginPath();
       this.ctx.beginPath();
       // upper-left
-      this.ctx.moveTo(p.x - d, p.y - d);
+      this.ctx.moveTo(-d, -d);
       // bottom-right
-      this.ctx.lineTo(p.x + d, p.y + d);
+      this.ctx.lineTo(+d, +d);
       // upper-right
-      this.ctx.moveTo(p.x + d, p.y - d);
+      this.ctx.moveTo(+d, -d);
       // bottom-left
-      this.ctx.lineTo(p.x - d, p.y + d);
+      this.ctx.lineTo(-d, +d);
       if (0 < opts.strokeWidth) {
         this.ctx.stroke();
       }
+      this.ctx.restore();
     });
   }
 

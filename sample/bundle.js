@@ -2,8 +2,6 @@
 'use strict';
 
 // drawbetween/index.js
-// TODO:
-// - triangles @ 1 < strokeWidth
 var _ImagesOptions = /** @class */ (function () {
     function _ImagesOptions() {
         this.width = 'original';

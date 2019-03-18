@@ -240,10 +240,6 @@ export default class DrawBetween {
     const defaultOptions = new _ImagesOptions();
     const opts = Object.assign(defaultOptions, options);
     const minInterval = opts.minInterval;
-    if (0 < opts.borderWidth) {
-      this.ctx.lineWidth = opts.borderWidth;
-      this.ctx.strokeStyle = opts.borderColor;
-    }
     const doit = (img: HTMLImageElement) => {
       const imageWidth = opts.width === 'original' ?
         img.width : opts.width;
@@ -251,17 +247,22 @@ export default class DrawBetween {
         img.height : opts.height;
       const rotate = opts.rotate === 'auto' ?
         Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
+      this.ctx.save();
+      if (0 < opts.borderWidth) {
+        this.ctx.lineWidth = opts.borderWidth;
+        this.ctx.strokeStyle = opts.borderColor;
+      }
       DrawBetween.getPointsFor(
         p0, p1,
         imageWidth + opts.borderWidth * 2,
         imageHeight + opts.borderWidth * 2,
         minInterval).forEach(
         p => {
-          this.ctx.save()
-          this.ctx.beginPath();
+          this.ctx.save();
           // change rotation center & rotate.
           this.ctx.translate(p.x, p.y);
           this.ctx.rotate(rotate);
+          this.ctx.beginPath();
           // draw border.
           if (0 < opts.borderWidth) {
             this.ctx.rect(
@@ -277,9 +278,12 @@ export default class DrawBetween {
             opts.borderWidth,
             opts.borderWidth,
             imageWidth, imageHeight);
-          this.ctx.restore()
+          // restore for next loop.
+          this.ctx.restore();
         }
       );
+      // restore for next call.
+      this.ctx.restore();
     };
     const img = new Image();
     img.onload = () => {
@@ -292,13 +296,15 @@ export default class DrawBetween {
   line(p0: Point, p1: Point, options?: LineOptions): void {
     const defaultOptions = new _LineOptions();
     const opts = Object.assign(defaultOptions, options);
-    this.ctx.beginPath();
+    this.ctx.save();
     this.ctx.lineWidth = opts.width;
     this.ctx.strokeStyle = opts.color;
     this.ctx.setLineDash(opts.lineDash);
+    this.ctx.beginPath();
     this.ctx.moveTo(p0.x, p0.y);
     this.ctx.lineTo(p1.x, p1.y);
     this.ctx.stroke();
+    this.ctx.restore();
   }
 
   // circles()
@@ -307,6 +313,7 @@ export default class DrawBetween {
     const opts = Object.assign(defaultOptions, options);
     const radius = opts.radius;
     const minInterval = opts.minInterval;
+    this.ctx.save();
     if (0 < opts.strokeWidth) {
       this.ctx.lineWidth = opts.strokeWidth;
       this.ctx.strokeStyle = opts.strokeColor;
@@ -329,6 +336,7 @@ export default class DrawBetween {
         this.ctx.fill();
       }
     });
+    this.ctx.restore();
   }
 
   // rects()
@@ -340,6 +348,7 @@ export default class DrawBetween {
     const rotate = opts.rotate === 'auto' ?
       Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
     const minInterval = opts.minInterval;
+    this.ctx.save();
     if (0 < opts.strokeWidth) {
       this.ctx.lineWidth = opts.strokeWidth;
       this.ctx.strokeStyle = opts.strokeColor;
@@ -353,7 +362,7 @@ export default class DrawBetween {
       height + opts.strokeWidth,
       minInterval).forEach(
       p => {
-      this.ctx.save()
+      this.ctx.save();
       this.ctx.translate(p.x, p.y);
       this.ctx.rotate(rotate);
       this.ctx.beginPath();
@@ -366,6 +375,7 @@ export default class DrawBetween {
       }
       this.ctx.restore();
     });
+    this.ctx.restore();
   }
 
   // triangles()
@@ -378,6 +388,7 @@ export default class DrawBetween {
     const minInterval = opts.minInterval;
     const rotate = opts.rotate === 'auto' ?
       Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
+    this.ctx.save()
     if (0 < opts.strokeWidth) {
       this.ctx.lineWidth = opts.strokeWidth;
       this.ctx.strokeStyle = opts.strokeColor;
@@ -409,6 +420,7 @@ export default class DrawBetween {
       }
       this.ctx.restore();
     });
+    this.ctx.restore();
   }
 
   // crossMarks()
@@ -422,6 +434,7 @@ export default class DrawBetween {
     const minInterval = opts.minInterval;
     const rotate = opts.rotate === 'auto' ?
       Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
+    this.ctx.save()
     if (0 < opts.strokeWidth) {
       this.ctx.lineWidth = opts.strokeWidth;
       this.ctx.strokeStyle = opts.strokeColor;
@@ -446,6 +459,7 @@ export default class DrawBetween {
       }
       this.ctx.restore();
     });
+    this.ctx.restore();
   }
 
   // withDrawer()

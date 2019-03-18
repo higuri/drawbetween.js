@@ -10,24 +10,24 @@ function main() {
   // drawbetween:
   const draw = new DrawBetween(canvas);
   let lineOpts = {
-    width: 1,
-    color: "#000",
-    lineDash: [0, 0]
+    width: 10,
+    strokeColor: "#0FF",
+    lineDash: [20, 10]
   };
   let trianglesOpts = {
     edgeLength: 20,
     rotate: 'auto',
     minInterval: 0,
     strokeColor: "#000",
-    strokeWidth: 1,
-    fillColor: ""
+    strokeWidth: 10,
+    fillColor: "#FF0"
   };
   let crossMarksOpts = {
-    lineLength: 20,
+    lineLength: 40,
     rotate: 'auto',
     minInterval: 0,
-    strokeColor: "#000",
-    strokeWidth: 1
+    strokeColor: "#F00",
+    strokeWidth: 10
   };
   let rectsOpts = {
     width: 20,
@@ -35,15 +35,15 @@ function main() {
     rotate: 'auto',
     minInterval: 0,
     strokeColor: "#000",
-    strokeWidth: 1,
-    fillColor: ""
+    strokeWidth: 10,
+    fillColor: "#FF0"
   };
   let circlesOpts = {
     radius: 10,
     minInterval: 0,
     strokeColor: "#000",
-    strokeWidth: 1,
-    fillColor: ""
+    strokeWidth: 10,
+    fillColor: "#FF0"
   };
   let imagesOpts = {
     width: 'original',
@@ -307,11 +307,11 @@ function main() {
     'change', (evt) => {
       lineOpts.width = parseInt(evt.target.value);
     });
-  const lineColor = document.querySelector('#line_color');
-  lineColor.value = lineOpts.color;
-  lineColor.addEventListener(
+  const lineStrokeColor = document.querySelector('#line_stroke_color');
+  lineStrokeColor.value = lineOpts.strokeColor;
+  lineStrokeColor.addEventListener(
     'change', (evt) => {
-      lineOpts.color = evt.target.value;
+      lineOpts.strokeColor = evt.target.value;
     });
   const lineDash = document.querySelector('#line_dash');
   lineDash.value = lineOpts.lineDash;

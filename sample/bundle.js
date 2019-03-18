@@ -16,7 +16,7 @@ var _ImagesOptions = /** @class */ (function () {
 var _LineOptions = /** @class */ (function () {
     function _LineOptions() {
         this.width = 1;
-        this.color = "#000000";
+        this.strokeColor = "#000000";
         this.lineDash = [0, 0];
     }
     return _LineOptions;
@@ -182,10 +182,6 @@ var DrawBetween = /** @class */ (function () {
         var defaultOptions = new _ImagesOptions();
         var opts = Object.assign(defaultOptions, options);
         var minInterval = opts.minInterval;
-        if (0 < opts.borderWidth) {
-            this.ctx.lineWidth = opts.borderWidth;
-            this.ctx.strokeStyle = opts.borderColor;
-        }
         var doit = function (img) {
             var imageWidth = opts.width === 'original' ?
                 img.width : opts.width;
@@ -193,12 +189,17 @@ var DrawBetween = /** @class */ (function () {
                 img.height : opts.height;
             var rotate = opts.rotate === 'auto' ?
                 Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
+            _this.ctx.save();
+            if (0 < opts.borderWidth) {
+                _this.ctx.lineWidth = opts.borderWidth;
+                _this.ctx.strokeStyle = opts.borderColor;
+            }
             DrawBetween.getPointsFor(p0, p1, imageWidth + opts.borderWidth * 2, imageHeight + opts.borderWidth * 2, minInterval).forEach(function (p) {
                 _this.ctx.save();
-                _this.ctx.beginPath();
                 // change rotation center & rotate.
                 _this.ctx.translate(p.x, p.y);
                 _this.ctx.rotate(rotate);
+                _this.ctx.beginPath();
                 // draw border.
                 if (0 < opts.borderWidth) {
                     _this.ctx.rect(Math.floor(opts.borderWidth / 2), Math.floor(opts.borderWidth / 2), imageWidth + opts.borderWidth, imageHeight + opts.borderWidth);
@@ -206,8 +207,11 @@ var DrawBetween = /** @class */ (function () {
                 }
                 // draw image.
                 _this.ctx.drawImage(img, opts.borderWidth, opts.borderWidth, imageWidth, imageHeight);
+                // restore for next loop.
                 _this.ctx.restore();
             });
+            // restore for next call.
+            _this.ctx.restore();
         };
         var img = new Image();
         img.onload = function () {
@@ -219,13 +223,15 @@ var DrawBetween = /** @class */ (function () {
     DrawBetween.prototype.line = function (p0, p1, options) {
         var defaultOptions = new _LineOptions();
         var opts = Object.assign(defaultOptions, options);
-        this.ctx.beginPath();
+        this.ctx.save();
         this.ctx.lineWidth = opts.width;
-        this.ctx.strokeStyle = opts.color;
+        this.ctx.strokeStyle = opts.strokeColor;
         this.ctx.setLineDash(opts.lineDash);
+        this.ctx.beginPath();
         this.ctx.moveTo(p0.x, p0.y);
         this.ctx.lineTo(p1.x, p1.y);
         this.ctx.stroke();
+        this.ctx.restore();
     };
     // circles()
     DrawBetween.prototype.circles = function (p0, p1, options) {
@@ -234,6 +240,7 @@ var DrawBetween = /** @class */ (function () {
         var opts = Object.assign(defaultOptions, options);
         var radius = opts.radius;
         var minInterval = opts.minInterval;
+        this.ctx.save();
         if (0 < opts.strokeWidth) {
             this.ctx.lineWidth = opts.strokeWidth;
             this.ctx.strokeStyle = opts.strokeColor;
@@ -251,6 +258,7 @@ var DrawBetween = /** @class */ (function () {
                 _this.ctx.fill();
             }
         });
+        this.ctx.restore();
     };
     // rects()
     DrawBetween.prototype.rects = function (p0, p1, options) {
@@ -262,6 +270,7 @@ var DrawBetween = /** @class */ (function () {
         var rotate = opts.rotate === 'auto' ?
             Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
         var minInterval = opts.minInterval;
+        this.ctx.save();
         if (0 < opts.strokeWidth) {
             this.ctx.lineWidth = opts.strokeWidth;
             this.ctx.strokeStyle = opts.strokeColor;
@@ -283,6 +292,7 @@ var DrawBetween = /** @class */ (function () {
             }
             _this.ctx.restore();
         });
+        this.ctx.restore();
     };
     // triangles()
     DrawBetween.prototype.triangles = function (p0, p1, options) {
@@ -295,6 +305,7 @@ var DrawBetween = /** @class */ (function () {
         var minInterval = opts.minInterval;
         var rotate = opts.rotate === 'auto' ?
             Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
+        this.ctx.save();
         if (0 < opts.strokeWidth) {
             this.ctx.lineWidth = opts.strokeWidth;
             this.ctx.strokeStyle = opts.strokeColor;
@@ -322,6 +333,7 @@ var DrawBetween = /** @class */ (function () {
             }
             _this.ctx.restore();
         });
+        this.ctx.restore();
     };
     // crossMarks()
     DrawBetween.prototype.crossMarks = function (p0, p1, options) {
@@ -334,6 +346,7 @@ var DrawBetween = /** @class */ (function () {
         var minInterval = opts.minInterval;
         var rotate = opts.rotate === 'auto' ?
             Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
+        this.ctx.save();
         if (0 < opts.strokeWidth) {
             this.ctx.lineWidth = opts.strokeWidth;
             this.ctx.strokeStyle = opts.strokeColor;
@@ -357,6 +370,7 @@ var DrawBetween = /** @class */ (function () {
             }
             _this.ctx.restore();
         });
+        this.ctx.restore();
     };
     // withDrawer()
     DrawBetween.prototype.withDrawer = function (p0, p1, drawer, options) {
@@ -386,24 +400,24 @@ function main() {
   // drawbetween:
   const draw = new DrawBetween(canvas);
   let lineOpts = {
-    width: 1,
-    color: "#000",
-    lineDash: [0, 0]
+    width: 10,
+    strokeColor: "#0FF",
+    lineDash: [20, 10]
   };
   let trianglesOpts = {
     edgeLength: 20,
     rotate: 'auto',
     minInterval: 0,
     strokeColor: "#000",
-    strokeWidth: 1,
-    fillColor: ""
+    strokeWidth: 10,
+    fillColor: "#FF0"
   };
   let crossMarksOpts = {
-    lineLength: 20,
+    lineLength: 40,
     rotate: 'auto',
     minInterval: 0,
-    strokeColor: "#000",
-    strokeWidth: 1
+    strokeColor: "#F00",
+    strokeWidth: 10
   };
   let rectsOpts = {
     width: 20,
@@ -411,15 +425,15 @@ function main() {
     rotate: 'auto',
     minInterval: 0,
     strokeColor: "#000",
-    strokeWidth: 1,
-    fillColor: ""
+    strokeWidth: 10,
+    fillColor: "#FF0"
   };
   let circlesOpts = {
     radius: 10,
     minInterval: 0,
     strokeColor: "#000",
-    strokeWidth: 1,
-    fillColor: ""
+    strokeWidth: 10,
+    fillColor: "#FF0"
   };
   let imagesOpts = {
     width: 'original',
@@ -683,11 +697,11 @@ function main() {
     'change', (evt) => {
       lineOpts.width = parseInt(evt.target.value);
     });
-  const lineColor = document.querySelector('#line_color');
-  lineColor.value = lineOpts.color;
-  lineColor.addEventListener(
+  const lineStrokeColor = document.querySelector('#line_stroke_color');
+  lineStrokeColor.value = lineOpts.strokeColor;
+  lineStrokeColor.addEventListener(
     'change', (evt) => {
-      lineOpts.color = evt.target.value;
+      lineOpts.strokeColor = evt.target.value;
     });
   const lineDash = document.querySelector('#line_dash');
   lineDash.value = lineOpts.lineDash;

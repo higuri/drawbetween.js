@@ -1,6 +1,4 @@
 // drawbetween/index.js
-// TODO:
-// - triangles @ 1 < strokeWidth
 
 //
 // Type definitions for parameters.
@@ -388,8 +386,10 @@ export default class DrawBetween {
       this.ctx.fillStyle = opts.fillColor;
     }
     DrawBetween.getPointsFor(
-      p0, p1, edgeLength, edgeLength, minInterval
-    ).forEach(p => {
+      p0, p1,
+      edgeLength + opts.strokeWidth,
+      edgeLength + opts.strokeWidth,
+      minInterval).forEach(p => {
       this.ctx.save()
       this.ctx.translate(p.x, p.y);
       this.ctx.rotate(rotate);
@@ -400,8 +400,7 @@ export default class DrawBetween {
       this.ctx.lineTo(-dx, +dy);
       // bottom-right
       this.ctx.lineTo(+dx, +dy);
-      // top
-      this.ctx.lineTo(0, 0);
+      this.ctx.closePath();
       if (0 < opts.strokeWidth) {
         this.ctx.stroke();
       }

@@ -304,7 +304,7 @@ var DrawBetween = /** @class */ (function () {
         if (opts.fillColor !== '') {
             this.ctx.fillStyle = opts.fillColor;
         }
-        DrawBetween.getPointsFor(p0, p1, edgeLength, edgeLength, minInterval).forEach(function (p) {
+        DrawBetween.getPointsFor(p0, p1, edgeLength + opts.strokeWidth, edgeLength + opts.strokeWidth, minInterval).forEach(function (p) {
             _this.ctx.save();
             _this.ctx.translate(p.x, p.y);
             _this.ctx.rotate(rotate);
@@ -315,8 +315,7 @@ var DrawBetween = /** @class */ (function () {
             _this.ctx.lineTo(-dx, +dy);
             // bottom-right
             _this.ctx.lineTo(+dx, +dy);
-            // top
-            _this.ctx.lineTo(0, 0);
+            _this.ctx.closePath();
             if (0 < opts.strokeWidth) {
                 _this.ctx.stroke();
             }

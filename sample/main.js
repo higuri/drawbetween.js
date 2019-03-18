@@ -46,8 +46,8 @@ function main() {
     fillColor: ""
   };
   let imagesOpts = {
-    width: 'auto',
-    height: 'auto',
+    width: 'original',
+    height: 'original',
     rotate: 'auto',
     minInterval: 0,
     borderColor: "#000",
@@ -204,7 +204,7 @@ function main() {
   rectsRotate.addEventListener(
     'change', (evt) => {
       rectsOpts.rotate = evt.target.value === 'auto' ?
-        'auto' : parseInt(evt.target.value);
+        'auto' : parseInt(evt.target.value) * Math.PI / 180;
     });
   const rectsMinInterval = document.querySelector('#rects_min_interval');
   rectsMinInterval.value = rectsOpts.minInterval;
@@ -242,7 +242,7 @@ function main() {
   trianglesRotate.addEventListener(
     'change', (evt) => {
       trianglesOpts.rotate = evt.target.value === 'auto' ?
-        'auto' : parseInt(evt.target.value);
+        'auto' : parseInt(evt.target.value) * Math.PI / 180;
     });
   const trianglesMinInterval = document.querySelector('#triangles_min_interval');
   trianglesMinInterval.value = trianglesOpts.minInterval;
@@ -280,7 +280,7 @@ function main() {
   crossMarksRotate.addEventListener(
     'change', (evt) => {
       crossMarksOpts.rotate = evt.target.value === 'auto' ?
-        'auto' : parseInt(evt.target.value);
+        'auto' : parseInt(evt.target.value) * Math.PI / 180;
     });
   const crossMarksMinInterval = document.querySelector('#cross_marks_min_interval');
   crossMarksMinInterval.value = crossMarksOpts.minInterval;
@@ -324,22 +324,22 @@ function main() {
   imagesWidth.value = imagesOpts.width;
   imagesWidth.addEventListener(
     'change', (evt) => {
-      imagesOpts.width = evt.target.value === 'auto' ?
-        'auto' : parseInt(evt.target.value);
+      imagesOpts.width = evt.target.value === 'original' ?
+        'original' : parseInt(evt.target.value);
     });
   const imagesHeight = document.querySelector('#images_height');
   imagesHeight.value = imagesOpts.height;
   imagesHeight.addEventListener(
     'change', (evt) => {
-      imagesOpts.height = evt.target.value === 'auto' ?
-        'auto' : parseInt(evt.target.value);
+      imagesOpts.height = evt.target.value === 'original' ?
+        'original' : parseInt(evt.target.value);
     });
   const imagesRotate = document.querySelector('#images_rotate');
   imagesRotate.value = imagesOpts.rotate;
   imagesRotate.addEventListener(
     'change', (evt) => {
       imagesOpts.rotate = evt.target.value === 'auto' ?
-        'auto' : parseInt(evt.target.value);
+        'auto' : parseInt(evt.target.value) * Math.PI / 180;
     });
   const imagesMinInterval = document.querySelector('#images_min_interval');
   imagesMinInterval.value = imagesOpts.minInterval;

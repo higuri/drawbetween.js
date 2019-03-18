@@ -17,16 +17,16 @@ export type Drawer = (ctx: CanvasRenderingContext2D, p: Point) => void;
 
 // ImagesOptions
 export interface ImagesOptions {
-  width?: 'auto' | number;
-  height?: 'auto' | number;
-  rotate?: 'auto' | number;
+  width?: 'original' | number;
+  height?: 'original' | number;
+  rotate?: 'auto' | number;   // in radians.
   minInterval?: number;
   borderColor?: string;
   borderWidth?: number;
 }
 class _ImagesOptions implements ImagesOptions {
-  public width: 'auto' | number = 'auto';
-  public height: 'auto' | number = 'auto';
+  public width: 'original' | number = 'original';
+  public height: 'original' | number = 'original';
   public rotate: 'auto' | number = 'auto';
   public minInterval: number = 0;
   public borderColor: string = "#000";
@@ -47,7 +47,7 @@ class _LineOptions implements LineOptions {
 export interface RectsOptions {
   width?: number;
   height?: number;
-  rotate?: 'auto' | number;
+  rotate?: 'auto' | number;   // in radians.
   minInterval?: number;
   strokeColor?: string;
   strokeWidth?: number;
@@ -80,7 +80,7 @@ class _CirclesOptions implements CirclesOptions {
 // TrianglesOptions
 export interface TrianglesOptions {
   edgeLength?: number;
-  rotate: 'auto' | number;
+  rotate?: 'auto' | number;   // in radians.
   minInterval?: number;
   strokeColor?: string;
   strokeWidth?: number;
@@ -97,7 +97,7 @@ class _TrianglesOptions implements TrianglesOptions {
 // CrossMarksOptions
 export interface CrossMarksOptions {
   lineLength?: number;
-  rotate: 'auto' | number;
+  rotate?: 'auto' | number;   // in radians.
   minInterval?: number;
   strokeColor?: string;
   strokeWidth?: number;
@@ -247,11 +247,12 @@ export default class DrawBetween {
       this.ctx.strokeStyle = opts.borderColor;
     }
     const doit = (img: HTMLImageElement) => {
-      const imageWidth = opts.width === 'auto' ? img.width : opts.width;
-      const imageHeight = opts.height === 'auto' ? img.height : opts.height;
+      const imageWidth = opts.width === 'original' ?
+        img.width : opts.width;
+      const imageHeight = opts.height === 'original' ?
+        img.height : opts.height;
       const rotate = opts.rotate === 'auto' ?
-        Math.atan((p0.y - p1.y) / (p0.x - p1.x)) :
-        opts.rotate * Math.PI / 180;
+        Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
       DrawBetween.getPointsFor(
         p0, p1,
         imageWidth + opts.borderWidth * 2,
@@ -339,8 +340,7 @@ export default class DrawBetween {
     const width = opts.width;
     const height = opts.height;
     const rotate = opts.rotate === 'auto' ?
-      Math.atan((p0.y - p1.y) / (p0.x - p1.x)) :
-      opts.rotate * Math.PI / 180;
+      Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
     const minInterval = opts.minInterval;
     if (0 < opts.strokeWidth) {
       this.ctx.lineWidth = opts.strokeWidth;
@@ -379,8 +379,7 @@ export default class DrawBetween {
     const dy = Math.floor((edgeLength * Math.sqrt(3)) / 2);
     const minInterval = opts.minInterval;
     const rotate = opts.rotate === 'auto' ?
-      Math.atan((p0.y - p1.y) / (p0.x - p1.x)) :
-      opts.rotate * Math.PI / 180;
+      Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
     if (0 < opts.strokeWidth) {
       this.ctx.lineWidth = opts.strokeWidth;
       this.ctx.strokeStyle = opts.strokeColor;
@@ -423,8 +422,7 @@ export default class DrawBetween {
       (lineLength + opts.strokeWidth) / Math.sqrt(2));
     const minInterval = opts.minInterval;
     const rotate = opts.rotate === 'auto' ?
-      Math.atan((p0.y - p1.y) / (p0.x - p1.x)) :
-      opts.rotate * Math.PI / 180;
+      Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
     if (0 < opts.strokeWidth) {
       this.ctx.lineWidth = opts.strokeWidth;
       this.ctx.strokeStyle = opts.strokeColor;

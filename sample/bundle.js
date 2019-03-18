@@ -6,8 +6,8 @@
 // - triangles @ 1 < strokeWidth
 var _ImagesOptions = /** @class */ (function () {
     function _ImagesOptions() {
-        this.width = 'auto';
-        this.height = 'auto';
+        this.width = 'original';
+        this.height = 'original';
         this.rotate = 'auto';
         this.minInterval = 0;
         this.borderColor = "#000";
@@ -189,11 +189,12 @@ var DrawBetween = /** @class */ (function () {
             this.ctx.strokeStyle = opts.borderColor;
         }
         var doit = function (img) {
-            var imageWidth = opts.width === 'auto' ? img.width : opts.width;
-            var imageHeight = opts.height === 'auto' ? img.height : opts.height;
+            var imageWidth = opts.width === 'original' ?
+                img.width : opts.width;
+            var imageHeight = opts.height === 'original' ?
+                img.height : opts.height;
             var rotate = opts.rotate === 'auto' ?
-                Math.atan((p0.y - p1.y) / (p0.x - p1.x)) :
-                opts.rotate * Math.PI / 180;
+                Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
             DrawBetween.getPointsFor(p0, p1, imageWidth + opts.borderWidth * 2, imageHeight + opts.borderWidth * 2, minInterval).forEach(function (p) {
                 _this.ctx.save();
                 _this.ctx.beginPath();
@@ -261,8 +262,7 @@ var DrawBetween = /** @class */ (function () {
         var width = opts.width;
         var height = opts.height;
         var rotate = opts.rotate === 'auto' ?
-            Math.atan((p0.y - p1.y) / (p0.x - p1.x)) :
-            opts.rotate * Math.PI / 180;
+            Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
         var minInterval = opts.minInterval;
         if (0 < opts.strokeWidth) {
             this.ctx.lineWidth = opts.strokeWidth;
@@ -296,8 +296,7 @@ var DrawBetween = /** @class */ (function () {
         var dy = Math.floor((edgeLength * Math.sqrt(3)) / 2);
         var minInterval = opts.minInterval;
         var rotate = opts.rotate === 'auto' ?
-            Math.atan((p0.y - p1.y) / (p0.x - p1.x)) :
-            opts.rotate * Math.PI / 180;
+            Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
         if (0 < opts.strokeWidth) {
             this.ctx.lineWidth = opts.strokeWidth;
             this.ctx.strokeStyle = opts.strokeColor;
@@ -337,8 +336,7 @@ var DrawBetween = /** @class */ (function () {
         var size = Math.floor((lineLength + opts.strokeWidth) / Math.sqrt(2));
         var minInterval = opts.minInterval;
         var rotate = opts.rotate === 'auto' ?
-            Math.atan((p0.y - p1.y) / (p0.x - p1.x)) :
-            opts.rotate * Math.PI / 180;
+            Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
         if (0 < opts.strokeWidth) {
             this.ctx.lineWidth = opts.strokeWidth;
             this.ctx.strokeStyle = opts.strokeColor;
@@ -427,8 +425,8 @@ function main() {
     fillColor: ""
   };
   let imagesOpts = {
-    width: 'auto',
-    height: 'auto',
+    width: 'original',
+    height: 'original',
     rotate: 'auto',
     minInterval: 0,
     borderColor: "#000",
@@ -585,7 +583,7 @@ function main() {
   rectsRotate.addEventListener(
     'change', (evt) => {
       rectsOpts.rotate = evt.target.value === 'auto' ?
-        'auto' : parseInt(evt.target.value);
+        'auto' : parseInt(evt.target.value) * Math.PI / 180;
     });
   const rectsMinInterval = document.querySelector('#rects_min_interval');
   rectsMinInterval.value = rectsOpts.minInterval;
@@ -623,7 +621,7 @@ function main() {
   trianglesRotate.addEventListener(
     'change', (evt) => {
       trianglesOpts.rotate = evt.target.value === 'auto' ?
-        'auto' : parseInt(evt.target.value);
+        'auto' : parseInt(evt.target.value) * Math.PI / 180;
     });
   const trianglesMinInterval = document.querySelector('#triangles_min_interval');
   trianglesMinInterval.value = trianglesOpts.minInterval;
@@ -661,7 +659,7 @@ function main() {
   crossMarksRotate.addEventListener(
     'change', (evt) => {
       crossMarksOpts.rotate = evt.target.value === 'auto' ?
-        'auto' : parseInt(evt.target.value);
+        'auto' : parseInt(evt.target.value) * Math.PI / 180;
     });
   const crossMarksMinInterval = document.querySelector('#cross_marks_min_interval');
   crossMarksMinInterval.value = crossMarksOpts.minInterval;
@@ -705,22 +703,22 @@ function main() {
   imagesWidth.value = imagesOpts.width;
   imagesWidth.addEventListener(
     'change', (evt) => {
-      imagesOpts.width = evt.target.value === 'auto' ?
-        'auto' : parseInt(evt.target.value);
+      imagesOpts.width = evt.target.value === 'original' ?
+        'original' : parseInt(evt.target.value);
     });
   const imagesHeight = document.querySelector('#images_height');
   imagesHeight.value = imagesOpts.height;
   imagesHeight.addEventListener(
     'change', (evt) => {
-      imagesOpts.height = evt.target.value === 'auto' ?
-        'auto' : parseInt(evt.target.value);
+      imagesOpts.height = evt.target.value === 'original' ?
+        'original' : parseInt(evt.target.value);
     });
   const imagesRotate = document.querySelector('#images_rotate');
   imagesRotate.value = imagesOpts.rotate;
   imagesRotate.addEventListener(
     'change', (evt) => {
       imagesOpts.rotate = evt.target.value === 'auto' ?
-        'auto' : parseInt(evt.target.value);
+        'auto' : parseInt(evt.target.value) * Math.PI / 180;
     });
   const imagesMinInterval = document.querySelector('#images_min_interval');
   imagesMinInterval.value = imagesOpts.minInterval;

@@ -33,12 +33,12 @@ class _ImagesOptions implements ImagesOptions {
 // LineOptions
 export interface LineOptions {
   width?: number;
-  color?: string;
+  strokeColor?: string;
   lineDash?: number[];
 }
 class _LineOptions implements LineOptions {
   public width: number = 1;
-  public color: string = "#000000";
+  public strokeColor: string = "#000000";
   public lineDash: number[] = [0, 0];
 }
 // RectsOptions
@@ -298,7 +298,7 @@ export default class DrawBetween {
     const opts = Object.assign(defaultOptions, options);
     this.ctx.save();
     this.ctx.lineWidth = opts.width;
-    this.ctx.strokeStyle = opts.color;
+    this.ctx.strokeStyle = opts.strokeColor;
     this.ctx.setLineDash(opts.lineDash);
     this.ctx.beginPath();
     this.ctx.moveTo(p0.x, p0.y);

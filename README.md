@@ -84,7 +84,7 @@ Draw a straight line between p0 and p1.
 * `options`:
   * `width`: number - line width.
     <default: 1>
-  * `color`: string - line color.
+  * `strokeColor`: string - line color.
     <default: '#000'>
   * `lineDash`: number[] - distances to alternately draw a line and a gap.
     See [CanvasRenderingContext2D.setLineDash()][mdn-linedash] for details.

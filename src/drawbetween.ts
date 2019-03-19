@@ -224,6 +224,13 @@ export default class DrawBetween {
     return DrawBetween.getPointsBetween(p0, p1, len + minInterval);
   }
 
+  // getRotateFor()
+  static getRotateFor(p0: Point, p1: Point): number {
+    const vx = p1.x - p0.x;
+    const m = Math.atan((p1.y - p0.y) / (p1.x - p0.x));
+    return (0 < vx) ? (m - Math.PI / 2) : (m + Math.PI / 2);
+  }
+
   // clear()
   clear(): void {
     const cv = this.ctx.canvas;
@@ -240,13 +247,13 @@ export default class DrawBetween {
     const defaultOptions = new _ImagesOptions();
     const opts = Object.assign(defaultOptions, options);
     const minInterval = opts.minInterval;
+    const rotate = (opts.rotate === 'auto') ?
+      DrawBetween.getRotateFor(p0, p1) : opts.rotate;
     const doit = (img: HTMLImageElement) => {
       const imageWidth = opts.width === 'original' ?
         img.width : opts.width;
       const imageHeight = opts.height === 'original' ?
         img.height : opts.height;
-      const rotate = opts.rotate === 'auto' ?
-        Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
       this.ctx.save();
       if (0 < opts.borderWidth) {
         this.ctx.lineWidth = opts.borderWidth;
@@ -255,9 +262,8 @@ export default class DrawBetween {
       DrawBetween.getPointsFor(
         p0, p1,
         imageWidth + opts.borderWidth * 2,
-        imageHeight + opts.borderWidth * 2,
-        minInterval).forEach(
-        p => {
+        imageWidth + opts.borderWidth * 2,
+        minInterval).forEach(p => {
           this.ctx.save();
           // change rotation center & rotate.
           this.ctx.translate(p.x, p.y);
@@ -345,8 +351,8 @@ export default class DrawBetween {
     const opts = Object.assign(defaultOptions, options);
     const width = opts.width;
     const height = opts.height;
-    const rotate = opts.rotate === 'auto' ?
-      Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
+    const rotate = (opts.rotate === 'auto') ?
+      DrawBetween.getRotateFor(p0, p1) : opts.rotate;
     const minInterval = opts.minInterval;
     this.ctx.save();
     if (0 < opts.strokeWidth) {
@@ -386,8 +392,8 @@ export default class DrawBetween {
     const dx = Math.floor(edgeLength / 2);
     const dy = Math.floor((edgeLength * Math.sqrt(3)) / 2);
     const minInterval = opts.minInterval;
-    const rotate = opts.rotate === 'auto' ?
-      Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
+    const rotate = (opts.rotate === 'auto') ?
+      DrawBetween.getRotateFor(p0, p1) : opts.rotate;
     this.ctx.save()
     if (0 < opts.strokeWidth) {
       this.ctx.lineWidth = opts.strokeWidth;
@@ -432,8 +438,8 @@ export default class DrawBetween {
     const size = Math.floor(
       (lineLength + opts.strokeWidth) / Math.sqrt(2));
     const minInterval = opts.minInterval;
-    const rotate = opts.rotate === 'auto' ?
-      Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
+    const rotate = (opts.rotate === 'auto') ?
+      DrawBetween.getRotateFor(p0, p1) : opts.rotate;
     this.ctx.save()
     if (0 < opts.strokeWidth) {
       this.ctx.lineWidth = opts.strokeWidth;

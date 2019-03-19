@@ -171,6 +171,12 @@ var DrawBetween = /** @class */ (function () {
         }
         return DrawBetween.getPointsBetween(p0, p1, len + minInterval);
     };
+    // getRotateFor()
+    DrawBetween.getRotateFor = function (p0, p1) {
+        var vx = p1.x - p0.x;
+        var m = Math.atan((p1.y - p0.y) / (p1.x - p0.x));
+        return (0 < vx) ? (m - Math.PI / 2) : (m + Math.PI / 2);
+    };
     // clear()
     DrawBetween.prototype.clear = function () {
         var cv = this.ctx.canvas;
@@ -182,19 +188,19 @@ var DrawBetween = /** @class */ (function () {
         var defaultOptions = new _ImagesOptions();
         var opts = Object.assign(defaultOptions, options);
         var minInterval = opts.minInterval;
+        var rotate = (opts.rotate === 'auto') ?
+            DrawBetween.getRotateFor(p0, p1) : opts.rotate;
         var doit = function (img) {
             var imageWidth = opts.width === 'original' ?
                 img.width : opts.width;
             var imageHeight = opts.height === 'original' ?
                 img.height : opts.height;
-            var rotate = opts.rotate === 'auto' ?
-                Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
             _this.ctx.save();
             if (0 < opts.borderWidth) {
                 _this.ctx.lineWidth = opts.borderWidth;
                 _this.ctx.strokeStyle = opts.borderColor;
             }
-            DrawBetween.getPointsFor(p0, p1, imageWidth + opts.borderWidth * 2, imageHeight + opts.borderWidth * 2, minInterval).forEach(function (p) {
+            DrawBetween.getPointsFor(p0, p1, imageWidth + opts.borderWidth * 2, imageWidth + opts.borderWidth * 2, minInterval).forEach(function (p) {
                 _this.ctx.save();
                 // change rotation center & rotate.
                 _this.ctx.translate(p.x, p.y);
@@ -267,8 +273,8 @@ var DrawBetween = /** @class */ (function () {
         var opts = Object.assign(defaultOptions, options);
         var width = opts.width;
         var height = opts.height;
-        var rotate = opts.rotate === 'auto' ?
-            Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
+        var rotate = (opts.rotate === 'auto') ?
+            DrawBetween.getRotateFor(p0, p1) : opts.rotate;
         var minInterval = opts.minInterval;
         this.ctx.save();
         if (0 < opts.strokeWidth) {
@@ -303,8 +309,8 @@ var DrawBetween = /** @class */ (function () {
         var dx = Math.floor(edgeLength / 2);
         var dy = Math.floor((edgeLength * Math.sqrt(3)) / 2);
         var minInterval = opts.minInterval;
-        var rotate = opts.rotate === 'auto' ?
-            Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
+        var rotate = (opts.rotate === 'auto') ?
+            DrawBetween.getRotateFor(p0, p1) : opts.rotate;
         this.ctx.save();
         if (0 < opts.strokeWidth) {
             this.ctx.lineWidth = opts.strokeWidth;
@@ -344,8 +350,8 @@ var DrawBetween = /** @class */ (function () {
         var d = Math.floor(lineLength / (2 * Math.sqrt(2)));
         var size = Math.floor((lineLength + opts.strokeWidth) / Math.sqrt(2));
         var minInterval = opts.minInterval;
-        var rotate = opts.rotate === 'auto' ?
-            Math.atan((p0.y - p1.y) / (p0.x - p1.x)) : opts.rotate;
+        var rotate = (opts.rotate === 'auto') ?
+            DrawBetween.getRotateFor(p0, p1) : opts.rotate;
         this.ctx.save();
         if (0 < opts.strokeWidth) {
             this.ctx.lineWidth = opts.strokeWidth;

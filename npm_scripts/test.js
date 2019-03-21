@@ -1,11 +1,17 @@
 // test.js
 
+const fs = require('fs');
 const {execSync} = require('./utils');
 const {pushd, popd} = require('./utils');
+const version = require('../package.json').version;
 
+// clean
 execSync('npm run clean');
-execSync('npm run build:modules');
-execSync('npm run build:pack');
+// build
+execSync('npm run build');
+// pack
+execSync('npm pack');
+fs.rename(`./drawbetween-${version}.tgz`, './drawbetween.tgz');
 
 // test/module/cjs/
 pushd('./test/module/cjs/');

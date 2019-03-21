@@ -36,12 +36,8 @@
     "url": "https://github.com/higuri/drawbetween.js.git"
   },
   "scripts": {
-    "compile": "tsc",
-    "compile:watch": "tsc",
     "build": "rollup -c",
     "build:watch": "rollup -cw",
-    "_build:pack": "yarn pack --filename drawbetween.tgz",
-    "build:pack": "run-s build _build:pack",
     "_build:sample": "browserify ./sample/main.js -o ./sample/bundle.js",
     "build:sample": "run-s build _build:sample",
     "_watch:sample": "watch 'npm run _build:sample' ./dist --wait=1",

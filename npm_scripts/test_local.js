@@ -1,4 +1,4 @@
-// test.js
+// test_local.js
 
 const fs = require('fs');
 const {execSync} = require('./utils');
@@ -13,22 +13,22 @@ execSync('npm run build');
 execSync('npm pack');
 fs.rename(`./drawbetween-${version}.tgz`, './drawbetween.tgz');
 
-// test/module/cjs/
-pushd('./test/module/cjs/');
+// test/module/local/cjs/
+pushd('./test/module/local/cjs/');
 // CAUTION: Don't use `yarn install` here. Use `npm install`.
 // https://github.com/yarnpkg/yarn/issues/2165
 execSync('npm install');
 execSync('npm run build');
 execSync('npm run start');
 popd();
-// test/module/esm/
-pushd('./test/module/esm/');
+// test/module/local/esm/
+pushd('./test/module/local/esm/');
 execSync('npm install');
 execSync('npm run build');
 execSync('npm run start');
 popd();
-// test/module/iife/
-pushd('./test/module/iife/');
+// test/module/local/iife/
+pushd('./test/module/local/iife/');
 execSync('npm install');
 execSync('npm run build');
 execSync('npm run start');

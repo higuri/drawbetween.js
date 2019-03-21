@@ -1,0 +1,19 @@
+{
+  "name": "cjs",
+  "version": "1.0.0",
+  "main": "",
+  "license": "MIT",
+  "scripts": {
+    "build": "browserify main.js -o bundle.js",
+    "start": "opn ./index.html",
+    "clean": "rimraf ./bundle.js"
+  },
+  "dependencies": {
+    "drawbetween": "latest"
+  },
+  "devDependencies": {
+    "browserify": "^16.2.3",
+    "opn-cli": "^4.0.0",
+    "rimraf": "^2.6.3"
+  }
+}

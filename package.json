@@ -39,7 +39,8 @@
     "build": "rollup -c",
     "lint": "eslint --fix ./src/*.ts",
     "start": "node ./npm_scripts/sample.js",
-    "test": "node ./npm_scripts/test.js",
+    "test:local": "node ./npm_scripts/test_local.js",
+    "test:published": "node ./npm_scripts/test_published.js",
     "clean": "node ./npm_scripts/clean.js",
     "prepublishOnly": "run-s clean build"
   },

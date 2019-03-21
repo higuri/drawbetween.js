@@ -1,0 +1,17 @@
+{
+  "name": "iife",
+  "version": "1.0.0",
+  "main": "",
+  "license": "MIT",
+  "scripts": {
+    "build": "# Nothing to do...",
+    "start": "opn index.html",
+    "clean": "# Nothing to do..."
+  },
+  "dependencies": {
+    "drawbetween": "latest"
+  },
+  "devDependencies": {
+    "opn-cli": "^4.0.0"
+  }
+}

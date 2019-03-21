@@ -1,0 +1,22 @@
+{
+  "name": "esm",
+  "version": "1.0.0",
+  "main": "",
+  "license": "MIT",
+  "scripts": {
+    "build": "rollup -c",
+    "start": "opn ./index.html",
+    "clean": "rimraf ./bundle.js"
+  },
+  "dependencies": {
+    "drawbetween": "latest"
+  },
+  "devDependencies": {
+    "opn-cli": "^4.0.0",
+    "rimraf": "^2.6.3",
+    "rollup": "^1.6.0",
+    "rollup-plugin-node-resolve": "^4.0.1",
+    "rollup-plugin-typescript2": "^0.19.3",
+    "typescript": "^3.3.3333"
+  }
+}

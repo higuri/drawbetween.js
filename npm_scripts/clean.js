@@ -7,8 +7,8 @@ const {pushd, popd} = require('./utils');
 fs.removeSync('./dist');
 fs.removeSync('./drawbetween.tgz');
 
-// test/module/cjs/
-pushd('./test/module/cjs/');
+// test/module/local/cjs/
+pushd('./test/module/local/cjs/');
 if (fs.existsSync('./node_modules')) {
   execSync('yarn clean');
   fs.removeSync('./yarn.lock');
@@ -16,8 +16,8 @@ if (fs.existsSync('./node_modules')) {
 }
 popd();
 
-// test/module/esm/
-pushd('./test/module/esm/');
+// test/module/local/esm/
+pushd('./test/module/local/esm/');
 if (fs.existsSync('./node_modules')) {
   execSync('yarn clean');
   fs.removeSync('./yarn.lock');
@@ -25,8 +25,8 @@ if (fs.existsSync('./node_modules')) {
 }
 popd();
 
-// test/module/iife/
-pushd('./test/module/iife/');
+// test/module/local/iife/
+pushd('./test/module/local/iife/');
 if (fs.existsSync('./node_modules')) {
   execSync('yarn clean');
   fs.removeSync('./yarn.lock');

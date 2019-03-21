@@ -37,13 +37,8 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "build:watch": "rollup -cw",
-    "_build:sample": "browserify ./sample/main.js -o ./sample/bundle.js",
-    "build:sample": "run-s build _build:sample",
-    "_watch:sample": "watch 'npm run _build:sample' ./dist --wait=1",
-    "_open:sample": "opn ./sample/index.html",
-    "start:sample": "run-p build:watch _watch:sample _open:sample",
     "lint": "eslint --fix ./src/*.ts",
+    "start": "node ./npm_scripts/sample.js",
     "test": "node ./npm_scripts/test.js",
     "clean": "node ./npm_scripts/clean.js",
     "prepublishOnly": "run-s clean build"
@@ -60,7 +55,6 @@
     "prettier": "^1.16.4",
     "rollup": "^1.4.1",
     "rollup-plugin-typescript2": "^0.19.3",
-    "typescript": "^3.3.3333",
-    "watch": "^1.0.2"
+    "typescript": "^3.3.3333"
   }
 }

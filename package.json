@@ -40,7 +40,7 @@
     "lint": "eslint --fix ./src/*.ts",
     "start": "node ./npm_scripts/sample.js",
     "test:local": "node ./npm_scripts/test_local.js",
-    "test:published": "node ./npm_scripts/test_published.js",
+    "test:published": "node ./test/module/published/run.js",
     "clean": "node ./npm_scripts/clean.js",
     "prepublishOnly": "run-s clean build"
   },
@@ -57,5 +57,9 @@
     "rollup": "^1.4.1",
     "rollup-plugin-typescript2": "^0.19.3",
     "typescript": "^3.3.3333"
+  },
+  "dependencies": {
+    "nightmare": "^3.0.1",
+    "node-resemble-js": "^0.2.0"
   }
 }

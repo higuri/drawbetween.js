@@ -18,6 +18,20 @@ function execSync(cmd) {
   child_process.execSync(cmd, { stdio: 'inherit' });
 }
 
+// takeScreenShot()
+function takeScreenShot(nightmare, url, selector, imagePath) {
+	return new Promise((resolve, reject) => {
+		nightmare
+			.goto(url)
+			.wait(selector)
+			.wait(500)
+			.screenshot(imagePath)
+      .then(() => {
+        resolve(nightmare);
+      });
+	});
+}
+
 module.exports = {
-  pushd, popd, execSync
+  pushd, popd, execSync, takeScreenShot
 }

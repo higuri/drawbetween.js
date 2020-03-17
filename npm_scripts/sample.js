@@ -9,4 +9,4 @@ execSync('npm run build');
 // build:sample
 execSync('npx browserify ./sample/main.js -o ./sample/bundle.js');
 // start:sample
-execSync('npx opn ./sample/index.html');
+execSync('npx open-cli ./sample/index.html');

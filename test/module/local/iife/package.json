@@ -5,13 +5,13 @@
   "license": "MIT",
   "scripts": {
     "build": "# Nothing to do...",
-    "start": "opn index.html",
+    "start": "open-cli index.html",
     "clean": "# Nothing to do..."
   },
   "dependencies": {
     "drawbetween": "file:../../../drawbetween.tgz"
   },
   "devDependencies": {
-    "opn-cli": "^4.0.0"
+    "open-cli": "^5.0.0"
   }
 }

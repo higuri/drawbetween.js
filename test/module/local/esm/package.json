@@ -5,18 +5,18 @@
   "license": "MIT",
   "scripts": {
     "build": "rollup -c",
-    "start": "opn ./index.html",
+    "start": "open-cli ./index.html",
     "clean": "rimraf ./bundle.js"
   },
   "dependencies": {
     "drawbetween": "file:../../../drawbetween.tgz"
   },
   "devDependencies": {
-    "opn-cli": "^4.0.0",
-    "rimraf": "^2.6.3",
-    "rollup": "^1.6.0",
-    "rollup-plugin-node-resolve": "^4.0.1",
-    "rollup-plugin-typescript2": "^0.19.3",
-    "typescript": "^3.3.3333"
+    "open-cli": "^5.0.0",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.0.6",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-typescript2": "^0.26.0",
+    "typescript": "^3.8.3"
   }
 }

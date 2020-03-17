@@ -245,7 +245,7 @@ export default class DrawBetween {
     options?: ImagesOptions
   ): void {
     const defaultOptions = new _ImagesOptions();
-    const opts = Object.assign(defaultOptions, options);
+    const opts = {...defaultOptions, ...options};
     const minInterval = opts.minInterval;
     const rotate = (opts.rotate === 'auto') ?
       DrawBetween.getRotateFor(p0, p1) : opts.rotate;
@@ -301,7 +301,7 @@ export default class DrawBetween {
   // line()
   line(p0: Point, p1: Point, options?: LineOptions): void {
     const defaultOptions = new _LineOptions();
-    const opts = Object.assign(defaultOptions, options);
+    const opts = {...defaultOptions, ...options};
     this.ctx.save();
     this.ctx.lineWidth = opts.width;
     this.ctx.strokeStyle = opts.strokeColor;
@@ -316,7 +316,7 @@ export default class DrawBetween {
   // circles()
   circles(p0: Point, p1: Point, options?: CirclesOptions): void {
     const defaultOptions = new _CirclesOptions();
-    const opts = Object.assign(defaultOptions, options);
+    const opts = {...defaultOptions, ...options};
     const radius = opts.radius;
     const minInterval = opts.minInterval;
     this.ctx.save();
@@ -348,7 +348,7 @@ export default class DrawBetween {
   // rects()
   rects(p0: Point, p1: Point, options?: RectsOptions): void {
     const defaultOptions = new _RectsOptions();
-    const opts = Object.assign(defaultOptions, options);
+    const opts = {...defaultOptions, ...options};
     const width = opts.width;
     const height = opts.height;
     const rotate = (opts.rotate === 'auto') ?
@@ -387,7 +387,7 @@ export default class DrawBetween {
   // triangles()
   triangles(p0: Point, p1: Point, options?: TrianglesOptions): void {
     const defaultOptions = new _TrianglesOptions();
-    const opts = Object.assign(defaultOptions, options);
+    const opts = {...defaultOptions, ...options};
     const edgeLength = opts.edgeLength;
     const dx = Math.floor(edgeLength / 2);
     const dy = Math.floor((edgeLength * Math.sqrt(3)) / 2);
@@ -432,7 +432,7 @@ export default class DrawBetween {
   // crossMarks()
   crossMarks(p0: Point, p1: Point, options?: CrossMarksOptions): void {
     const defaultOptions = new _CrossMarksOptions();
-    const opts = Object.assign(defaultOptions, options);
+    const opts = {...defaultOptions, ...options};
     const lineLength = opts.lineLength;
     const d = Math.floor(lineLength / (2 * Math.sqrt(2)));
     const size = Math.floor(
@@ -476,7 +476,7 @@ export default class DrawBetween {
     options?: WithDrawerOptions
   ): void {
     const defaultOptions = new _WithDrawerOptions();
-    const opts = Object.assign(defaultOptions, options);
+    const opts = {...defaultOptions, ...options};
     const minInterval = opts.minInterval;
     DrawBetween.getPointsFor(p0, p1, 0, 0, minInterval).forEach(p => {
       drawer(this.ctx, p);

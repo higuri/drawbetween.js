@@ -1,6 +1,32 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 'use strict';
 
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
+
 // drawbetween/index.js
 var _ImagesOptions = /** @class */ (function () {
     function _ImagesOptions() {
@@ -186,7 +212,7 @@ var DrawBetween = /** @class */ (function () {
     DrawBetween.prototype.images = function (p0, p1, imageUrl, options) {
         var _this = this;
         var defaultOptions = new _ImagesOptions();
-        var opts = Object.assign(defaultOptions, options);
+        var opts = __assign(__assign({}, defaultOptions), options);
         var minInterval = opts.minInterval;
         var rotate = (opts.rotate === 'auto') ?
             DrawBetween.getRotateFor(p0, p1) : opts.rotate;
@@ -228,7 +254,7 @@ var DrawBetween = /** @class */ (function () {
     // line()
     DrawBetween.prototype.line = function (p0, p1, options) {
         var defaultOptions = new _LineOptions();
-        var opts = Object.assign(defaultOptions, options);
+        var opts = __assign(__assign({}, defaultOptions), options);
         this.ctx.save();
         this.ctx.lineWidth = opts.width;
         this.ctx.strokeStyle = opts.strokeColor;
@@ -243,7 +269,7 @@ var DrawBetween = /** @class */ (function () {
     DrawBetween.prototype.circles = function (p0, p1, options) {
         var _this = this;
         var defaultOptions = new _CirclesOptions();
-        var opts = Object.assign(defaultOptions, options);
+        var opts = __assign(__assign({}, defaultOptions), options);
         var radius = opts.radius;
         var minInterval = opts.minInterval;
         this.ctx.save();
@@ -270,7 +296,7 @@ var DrawBetween = /** @class */ (function () {
     DrawBetween.prototype.rects = function (p0, p1, options) {
         var _this = this;
         var defaultOptions = new _RectsOptions();
-        var opts = Object.assign(defaultOptions, options);
+        var opts = __assign(__assign({}, defaultOptions), options);
         var width = opts.width;
         var height = opts.height;
         var rotate = (opts.rotate === 'auto') ?
@@ -304,7 +330,7 @@ var DrawBetween = /** @class */ (function () {
     DrawBetween.prototype.triangles = function (p0, p1, options) {
         var _this = this;
         var defaultOptions = new _TrianglesOptions();
-        var opts = Object.assign(defaultOptions, options);
+        var opts = __assign(__assign({}, defaultOptions), options);
         var edgeLength = opts.edgeLength;
         var dx = Math.floor(edgeLength / 2);
         var dy = Math.floor((edgeLength * Math.sqrt(3)) / 2);
@@ -345,7 +371,7 @@ var DrawBetween = /** @class */ (function () {
     DrawBetween.prototype.crossMarks = function (p0, p1, options) {
         var _this = this;
         var defaultOptions = new _CrossMarksOptions();
-        var opts = Object.assign(defaultOptions, options);
+        var opts = __assign(__assign({}, defaultOptions), options);
         var lineLength = opts.lineLength;
         var d = Math.floor(lineLength / (2 * Math.sqrt(2)));
         var size = Math.floor((lineLength + opts.strokeWidth) / Math.sqrt(2));
@@ -382,7 +408,7 @@ var DrawBetween = /** @class */ (function () {
     DrawBetween.prototype.withDrawer = function (p0, p1, drawer, options) {
         var _this = this;
         var defaultOptions = new _WithDrawerOptions();
-        var opts = Object.assign(defaultOptions, options);
+        var opts = __assign(__assign({}, defaultOptions), options);
         var minInterval = opts.minInterval;
         DrawBetween.getPointsFor(p0, p1, 0, 0, minInterval).forEach(function (p) {
             drawer(_this.ctx, p);
